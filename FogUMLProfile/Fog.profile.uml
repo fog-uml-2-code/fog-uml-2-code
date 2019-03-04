@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Profile xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_64pWQAB7Eemhcc6V9EGs0g" name="Fog" URI="http:///pusztai/thomas/architecture/fog" metamodelReference="_EFabQACREemhcc6V9EGs0g">
+  <eAnnotations xmi:id="_na_QoACwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_na_QoQCwEemUUuzUq75umw" name="Fog" nsURI="http:///pusztai/thomas/architecture/fog/1.0" nsPrefix="Fog">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_na_QogCwEemUUuzUq75umw" name="FogDevice">
+        <eAnnotations xmi:id="_na_QowCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Py23oACCEemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_na_QpACwEemUUuzUq75umw" name="cpu" ordered="false" lowerBound="1" eType="_na_QvACwEemUUuzUq75umw"/>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_na_QpgCwEemUUuzUq75umw" name="cpuCores" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_na_QqACwEemUUuzUq75umw" name="cpuClockMhz" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_na_QqgCwEemUUuzUq75umw" name="eepromKb" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_na_QrACwEemUUuzUq75umw" name="ramKb" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Real"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_na_QrgCwEemUUuzUq75umw" name="flashStorageKb" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_na_QsACwEemUUuzUq75umw" name="batteryMAh" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_na_QsgCwEemUUuzUq75umw" name="targetLanguage" ordered="false" lowerBound="1" eType="_na_QxQCwEemUUuzUq75umw"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_QtACwEemUUuzUq75umw" name="base_Interface" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_QtgCwEemUUuzUq75umw" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_QuACwEemUUuzUq75umw" name="base_Device" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Device"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_QugCwEemUUuzUq75umw" name="base_Package" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_na_QvACwEemUUuzUq75umw" name="CpuType">
+        <eAnnotations xmi:id="_na_QvQCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_kO9IYACCEemhcc6V9EGs0g"/>
+        <eLiterals xmi:id="_na_QvgCwEemUUuzUq75umw" name="AVR_8bit"/>
+        <eLiterals xmi:id="_na_QvwCwEemUUuzUq75umw" name="ARM_32bit" value="1"/>
+        <eLiterals xmi:id="_na_QwACwEemUUuzUq75umw" name="ARM_64bit" value="2"/>
+        <eLiterals xmi:id="_na_QwQCwEemUUuzUq75umw" name="MIPS_32bit" value="3"/>
+        <eLiterals xmi:id="_na_QwgCwEemUUuzUq75umw" name="MIPS_64bit" value="4"/>
+        <eLiterals xmi:id="_na_QwwCwEemUUuzUq75umw" name="x86_32bit" value="5"/>
+        <eLiterals xmi:id="_na_QxACwEemUUuzUq75umw" name="x86_64bit" value="6"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_na_QxQCwEemUUuzUq75umw" name="TargetLanguage">
+        <eAnnotations xmi:id="_na_QxgCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_t-9A0ACYEemhcc6V9EGs0g"/>
+        <eLiterals xmi:id="_na_QxwCwEemUUuzUq75umw" name="C"/>
+        <eLiterals xmi:id="_na_QyACwEemUUuzUq75umw" name="CPlusPlus" value="1"/>
+        <eLiterals xmi:id="_na_QyQCwEemUUuzUq75umw" name="Java" value="2"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_na_QygCwEemUUuzUq75umw" name="DataModel">
+        <eAnnotations xmi:id="_na_QywCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_tbUXAACSEemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_QzACwEemUUuzUq75umw" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_QzgCwEemUUuzUq75umw" name="base_Package" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_na_Q0ACwEemUUuzUq75umw" name="RESTEndpoint">
+        <eAnnotations xmi:id="_na_Q0QCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_kF3FgAB8Eemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_Q0gCwEemUUuzUq75umw" name="base_Interface" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_na_Q1ACwEemUUuzUq75umw" name="RESTController">
+        <eAnnotations xmi:id="_na_Q1QCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_k8lQIACSEemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_Q1gCwEemUUuzUq75umw" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_na_Q2ACwEemUUuzUq75umw" name="ActivityRealization">
+        <eAnnotations xmi:id="_na_Q2QCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_UaEIwACBEemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_Q2gCwEemUUuzUq75umw" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_Q3ACwEemUUuzUq75umw" name="base_Interface" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_Q3gCwEemUUuzUq75umw" name="base_Package" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_na_Q4ACwEemUUuzUq75umw" name="realizedActivity" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Activity"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eSubpackages xmi:id="_na_Q4gCwEemUUuzUq75umw" name="Devices" nsURI="http:///pusztai/thomas/architecture/fog/devices/1.0" nsPrefix="Fog.Devices">
+        <eAnnotations xmi:id="_na_Q4wCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/4.0.0/UML" references="_9JRUEACGEemhcc6V9EGs0g"/>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_na_Q5ACwEemUUuzUq75umw" name="ArduinoYun" eSuperTypes="_na_QogCwEemUUuzUq75umw">
+          <eAnnotations xmi:id="_na_Q5QCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Dr1CIACHEemhcc6V9EGs0g"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_na_Q5wCwEemUUuzUq75umw" name="RaspberryPi3BPlus" eSuperTypes="_na_QogCwEemUUuzUq75umw">
+          <eAnnotations xmi:id="_na_Q6ACwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="__9xfMACKEemhcc6V9EGs0g"/>
+        </eClassifiers>
+      </eSubpackages>
+    </contents>
+  </eAnnotations>
+  <elementImport xmi:id="_Zi1ysAB8Eemhcc6V9EGs0g">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
+  </elementImport>
+  <elementImport xmi:id="_Zi_jsAB8Eemhcc6V9EGs0g">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+  </elementImport>
+  <elementImport xmi:id="_Zi_jsQB8Eemhcc6V9EGs0g">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+  </elementImport>
+  <elementImport xmi:id="_Zi_jsgB8Eemhcc6V9EGs0g">
+    <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+  </elementImport>
+  <packageImport xmi:id="_EFabQACREemhcc6V9EGs0g">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_METAMODELS/UML.metamodel.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Package" xmi:id="_9JRUEACGEemhcc6V9EGs0g" name="Devices" URI="http:///pusztai/thomas/architecture/fog/devices">
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="_Dr1CIACHEemhcc6V9EGs0g" name="ArduinoYun">
+      <generalization xmi:id="_UNx8EACIEemhcc6V9EGs0g" general="_Py23oACCEemhcc6V9EGs0g"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="__9xfMACKEemhcc6V9EGs0g" name="RaspberryPi3BPlus">
+      <generalization xmi:id="__9xfMQCKEemhcc6V9EGs0g" general="_Py23oACCEemhcc6V9EGs0g"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_tbUXAACSEemhcc6V9EGs0g" name="DataModel">
+    <ownedAttribute xmi:id="_xibWUgCSEemhcc6V9EGs0g" name="base_Class" association="_xibWUACSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_xibWVQCSEemhcc6V9EGs0g" name="base_Package" association="_xibWUwCSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_kF3FgAB8Eemhcc6V9EGs0g" name="RESTEndpoint">
+    <ownedAttribute xmi:id="_izVrsgCSEemhcc6V9EGs0g" name="base_Interface" association="_izVrsACSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Interface"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_k8lQIACSEemhcc6V9EGs0g" name="RESTController">
+    <ownedAttribute xmi:id="_q0DZ0gCSEemhcc6V9EGs0g" name="base_Class" association="_q0DZ0ACSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_UaEIwACBEemhcc6V9EGs0g" name="ActivityRealization">
+    <ownedAttribute xmi:id="_bEE58gCSEemhcc6V9EGs0g" name="base_Class" association="_bEE58ACSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_bEE59QCSEemhcc6V9EGs0g" name="base_Interface" association="_bEE58wCSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Interface"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_bEE5-ACSEemhcc6V9EGs0g" name="base_Package" association="_bEE59gCSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_wZ5XQACuEemhcc6V9EGs0g" name="realizedActivity">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Activity"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Stereotype" xmi:id="_Py23oACCEemhcc6V9EGs0g" name="FogDevice">
+    <ownedAttribute xmi:id="_noygEACEEemhcc6V9EGs0g" name="cpu" type="_kO9IYACCEemhcc6V9EGs0g"/>
+    <ownedAttribute xmi:id="_1YCeUACEEemhcc6V9EGs0g" name="cpuCores">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_-1P_oACEEemhcc6V9EGs0g" name="cpuClockMhz">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_DTXCUACIEemhcc6V9EGs0g" name="eepromKb">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_DXv6cACFEemhcc6V9EGs0g" name="ramKb">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_IAJB4ACFEemhcc6V9EGs0g" name="flashStorageKb">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_N7XqMACFEemhcc6V9EGs0g" name="batteryMAh">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_N4K1IACZEemhcc6V9EGs0g" name="targetLanguage" type="_t-9A0ACYEemhcc6V9EGs0g"/>
+    <ownedAttribute xmi:id="__TerYgCSEemhcc6V9EGs0g" name="base_Interface" association="__TerYACSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Interface"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="__TerZQCSEemhcc6V9EGs0g" name="base_Class" association="__TerYwCSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="__TeraACSEemhcc6V9EGs0g" name="base_Device" association="__TerZgCSEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Device"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_CpXP0gCYEemhcc6V9EGs0g" name="base_Package" association="_CpXP0ACYEemhcc6V9EGs0g">
+      <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_kO9IYACCEemhcc6V9EGs0g" name="CpuType">
+    <ownedLiteral xmi:id="_2oRMkACDEemhcc6V9EGs0g" name="AVR_8bit"/>
+    <ownedLiteral xmi:id="_0KA24ACCEemhcc6V9EGs0g" name="ARM_32bit"/>
+    <ownedLiteral xmi:id="_2GApgACCEemhcc6V9EGs0g" name="ARM_64bit"/>
+    <ownedLiteral xmi:id="_w_2ykACDEemhcc6V9EGs0g" name="MIPS_32bit"/>
+    <ownedLiteral xmi:id="_yx27sACDEemhcc6V9EGs0g" name="MIPS_64bit"/>
+    <ownedLiteral xmi:id="_sDLSoACCEemhcc6V9EGs0g" name="x86_32bit"/>
+    <ownedLiteral xmi:id="_x6_akACCEemhcc6V9EGs0g" name="x86_64bit"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_t-9A0ACYEemhcc6V9EGs0g" name="TargetLanguage">
+    <ownedLiteral xmi:id="_1uFPsACYEemhcc6V9EGs0g" name="C"/>
+    <ownedLiteral xmi:id="_3VLwYACYEemhcc6V9EGs0g" name="CPlusPlus"/>
+    <ownedLiteral xmi:id="_6HF3UACYEemhcc6V9EGs0g" name="Java"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_bEE58ACSEemhcc6V9EGs0g" name="Class_ActivityRealization" memberEnd="_bEE58QCSEemhcc6V9EGs0g _bEE58gCSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_bEE58QCSEemhcc6V9EGs0g" name="extension_ActivityController" type="_UaEIwACBEemhcc6V9EGs0g" aggregation="composite" association="_bEE58ACSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_bEE58wCSEemhcc6V9EGs0g" name="Interface_ActivityRealization" memberEnd="_bEE59ACSEemhcc6V9EGs0g _bEE59QCSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_bEE59ACSEemhcc6V9EGs0g" name="extension_ActivityController" type="_UaEIwACBEemhcc6V9EGs0g" aggregation="composite" association="_bEE58wCSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_bEE59gCSEemhcc6V9EGs0g" name="Package_ActivityRealization" memberEnd="_bEE59wCSEemhcc6V9EGs0g _bEE5-ACSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_bEE59wCSEemhcc6V9EGs0g" name="extension_ActivityController" type="_UaEIwACBEemhcc6V9EGs0g" aggregation="composite" association="_bEE59gCSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_izVrsACSEemhcc6V9EGs0g" name="Interface_RESTEndpoint" memberEnd="_izVrsQCSEemhcc6V9EGs0g _izVrsgCSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_izVrsQCSEemhcc6V9EGs0g" name="extension_REST" type="_kF3FgAB8Eemhcc6V9EGs0g" aggregation="composite" association="_izVrsACSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_q0DZ0ACSEemhcc6V9EGs0g" name="Class_RESTController" memberEnd="_q0DZ0QCSEemhcc6V9EGs0g _q0DZ0gCSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_q0DZ0QCSEemhcc6V9EGs0g" name="extension_RESTController" type="_k8lQIACSEemhcc6V9EGs0g" aggregation="composite" association="_q0DZ0ACSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_xibWUACSEemhcc6V9EGs0g" name="Class_DataModel" memberEnd="_xibWUQCSEemhcc6V9EGs0g _xibWUgCSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_xibWUQCSEemhcc6V9EGs0g" name="extension_Model" type="_tbUXAACSEemhcc6V9EGs0g" aggregation="composite" association="_xibWUACSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_xibWUwCSEemhcc6V9EGs0g" name="Package_DataModel" memberEnd="_xibWVACSEemhcc6V9EGs0g _xibWVQCSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_xibWVACSEemhcc6V9EGs0g" name="extension_Model" type="_tbUXAACSEemhcc6V9EGs0g" aggregation="composite" association="_xibWUwCSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="__TerYACSEemhcc6V9EGs0g" name="Interface_FogDevice" memberEnd="__TerYQCSEemhcc6V9EGs0g __TerYgCSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="__TerYQCSEemhcc6V9EGs0g" name="extension_FogDevice" type="_Py23oACCEemhcc6V9EGs0g" aggregation="composite" association="__TerYACSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="__TerYwCSEemhcc6V9EGs0g" name="Class_FogDevice" memberEnd="__TerZACSEemhcc6V9EGs0g __TerZQCSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="__TerZACSEemhcc6V9EGs0g" name="extension_FogDevice" type="_Py23oACCEemhcc6V9EGs0g" aggregation="composite" association="__TerYwCSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="__TerZgCSEemhcc6V9EGs0g" name="Device_FogDevice" memberEnd="__TerZwCSEemhcc6V9EGs0g __TeraACSEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="__TerZwCSEemhcc6V9EGs0g" name="extension_FogDevice" type="_Py23oACCEemhcc6V9EGs0g" aggregation="composite" association="__TerZgCSEemhcc6V9EGs0g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Extension" xmi:id="_CpXP0ACYEemhcc6V9EGs0g" name="Package_FogDevice" memberEnd="_CpXP0QCYEemhcc6V9EGs0g _CpXP0gCYEemhcc6V9EGs0g">
+    <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_CpXP0QCYEemhcc6V9EGs0g" name="extension_FogDevice" type="_Py23oACCEemhcc6V9EGs0g" aggregation="composite" association="_CpXP0ACYEemhcc6V9EGs0g"/>
+  </packagedElement>
+</uml:Profile>

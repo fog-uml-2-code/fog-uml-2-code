@@ -1,0 +1,29 @@
+[comment encoding = UTF-8 /]
+[module headerUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[**
+ * Writes the beginning of an include guard for the specified header. 
+ */]
+[template public includeGuardStart(headerName : String) {
+	guardName : String = includeGuardName(headerName);
+}]
+#ifndef [guardName/]
+#define [guardName/]
+[/template]
+
+[**
+ * Writes the end of an include guard for the specified header. 
+ */]
+[template public includeGuardEnd(headerName : String) {
+	guardName : String = includeGuardName(headerName);
+}]
+#endif /* [guardName/] */
+[/template]
+
+
+[template private includeGuardName(headerName : String) {
+	headerUpperCase : String = headerName.toUpperCase();
+}]
+[if (headerUpperCase.endsWith('.H'))][headerUpperCase.replaceAll('\\.', '_')/][else][headerUpperCase/]_H[/if]
+[/template]
+

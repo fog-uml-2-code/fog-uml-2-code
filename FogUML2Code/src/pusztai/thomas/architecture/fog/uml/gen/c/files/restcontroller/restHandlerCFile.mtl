@@ -1,0 +1,92 @@
+[comment encoding = UTF-8 /]
+[module restHandlerCFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::headerUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::includeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::attributeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::operationUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::constraintUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::cTypeServices /]
+
+[**
+ * Generates the .c file for a REST controller.
+ */]
+[template public genRestHandlerCFile(restInterface : Interface, controller : Class) {
+	endpointClassifier : Classifier = getDefiningClassifier(restInterface, controller);
+	classifierName : String = endpointClassifier.restControllerCName();
+}]
+[file (endpointClassifier.restEndpointControllerModulePath() + '/' + cSrcPath() + '/' + endpointClassifier.restHandlerCFilePath(), false, 'UTF-8')]
+
+[restInterface.genDefaultIncludesForRestHandler(controller)/]
+
+[classifierName/] restController;
+
+bool [endpointClassifier.getRestHandlerSetUpFunctionName(classifierName)/]() {
+	restController = [endpointClassifier.getCtorName(classifierName)/]();
+	[genToDoImplBlock()/]
+	return true;
+}
+
+void [endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]() {
+	[endpointClassifier.getDtorName(classifierName)/](restController);
+	restController = NULL;
+}
+
+[for (op : Operation | restInterface.getAllOperations())]
+void [op.getGeneratedName(classifierName)/]Handler(/* ToDo Insert parameters for callback from ulfius library */) {
+	[classifierName/] target = restController;
+[for (param : Parameter | op.ownedParameter->asSequence()->select(param : Parameter | param.direction <> ParameterDirectionKind::return))]
+	[param.genParameterExtration()/]
+[/for]
+
+	bool validationResult = true;
+	[op.genPreConditionIfPresent()/]
+	if (!validationResult) {
+		// ToDo: Return REST error.
+		return;
+	}
+[if (not op.type.oclIsUndefined())]
+	[op.getReturnTypeName()/] result;
+[if (not op.type.oclIsKindOf(PrimitiveType))]result = [op.type.oclAsType(Classifier).getCtorName(op.getReturnTypeName())/]();[/if]
+[/if]
+
+	bool opSuccess = [op.getGeneratedName(classifierName)/](target[op.genParameterList()/]);
+	if (!opSuccess) {
+		validationResult = opSuccess;
+	}
+
+	[endpointClassifier.genInvariantsIfPresent()/]
+	if (validationResult) {
+		// ToDo: Send REST response.
+	} else {
+		// ToDo: Send REST error response.
+	}
+[if (not op.type.oclIsUndefined())]
+	[op.type.oclAsType(Classifier).getDtorName(op.getReturnTypeName())/](result);
+[/if]
+}
+
+[/for]
+
+[/file]
+[/template]
+
+[**
+ * Extracts the parameter from the REST request.
+*/]
+[template private genParameterExtration(param : Parameter)]
+[param.getTypeName()/] [param.name/]; // ToDo: Extract parameter
+[/template]
+
+[template private genParameterList(op : Operation) {
+	params : Sequence(Parameter) = op.ownedParameter->asSequence()->select(param : Parameter | param.direction <> ParameterDirectionKind::return);
+}]
+[for (param : Parameter | params) before(', ') separator(', ')][param.name/][if (not op.type.oclIsUndefined())], [op.genResultParameter()/][/if][/for]
+[/template]
+
+[template private genResultParameter(op : Operation)]
+[if (op.type.oclIsKindOf(PrimitiveType))]&[/if]result
+[/template]

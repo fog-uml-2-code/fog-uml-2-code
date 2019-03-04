@@ -1,0 +1,179 @@
+[comment encoding = UTF-8 /]
+[module fileUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+
+[**
+ * Gets the header file path for the include statement
+ */]
+[template public headerFilePath(type : Type)]
+[type.name/].h
+[/template]
+
+[**
+ * Gets the path of the main file for the specified REST controller within its module's src directory.
+ */]
+[template public controllerMainCPath(controller : Classifier)]
+main.c
+[/template]
+
+[**
+ * Gets the name of module that realizes the activity
+ */]
+[template public realizingModulePath(activity : Activity)]
+[cModulesPath() + '/' + activity.name.toLowerCase()/]
+[/template]
+
+
+[**
+ * Gets the path of the Activity JSON file
+ */]
+[template public actvitityJsonPath(activity : Activity)]
+[activity.realizingModulePath() + '/' + resourcesSrcPath() + '/Activity.json'/]
+[/template]
+
+[**
+ * Gets the path for the C modules
+ */]
+[template public cModulesPath(traceabilityContext: OclAny)]
+c
+[/template]
+
+[**
+ * Gets the name of the folder that contains the common module.
+ */]
+[template public commonModuleFolderName(traceabilityContext: OclAny)]
+common
+[/template]
+
+[**
+ * Gets the path for common module.
+ */]
+[template public commonModulePath(traceabilityContext: OclAny)]
+[cModulesPath()/]/[commonModuleFolderName()/]
+[/template]
+
+[**
+ * Gets the path for the C source code files
+ */]
+[template public cSrcPath(traceabilityContext: OclAny)]
+src
+[/template]
+
+[**
+ * Gets the path for the resource files
+ */]
+[template private resourcesSrcPath(traceabilityContext: OclAny)]
+resources
+[/template]
+
+[**
+ * Gets the name of the CMakeLists file
+ */]
+[template public cMakeListsFileName(traceabilityContext: OclAny)]
+CMakeLists.txt
+[/template]
+
+[**
+ * Gets the name of the folder for the module of the specified REST endpoint controller.
+ */]
+[template public restEndpointControllerModulePath(endpointClassifier : Classifier) {
+	realizedActivity : Activity = endpointClassifier.getRealizedActivity();
+}]
+[if (realizedActivity.oclIsUndefined()) ][cModulesPath() + '/' + endpointClassifier.name.toLowerCase()/][else][realizedActivity.realizingModulePath()/][/if]
+[/template]
+
+[**
+ * Generates the name of the folder for the module of the specified activity.
+ */]
+[template public modulePath(activity : Activity)]
+[cModulesPath() + '/' + activity.name.toLowerCase()/]
+[/template]
+
+[**
+ * Gets the path of the header file for the specified model class within its module's src directory.
+ */]
+[template public modelClassHeaderFilePath(modelClass : Class)]
+[modelClass.modelClassCName()/].h
+[/template]
+
+[**
+ * Gets the path of the private header file for the specified model class within its module's src directory.
+ */]
+[template public modelClassPrivateHeaderFilePath(modelClass : Class)]
+[modelClass.modelClassCName()/]_private.h
+[/template]
+
+[**
+ * Gets the path of the .c file for the specified model class within its module's src directory.
+ */]
+[template public modelClassCFilePath(modelClass : Class)]
+[modelClass.modelClassCName()/].c
+[/template]
+
+[**
+ * Gets the path of the header file for the specified REST base interface within its module's src directory.
+ */]
+[template public restBaseInterfaceHeaderFilePath(restInterface : Interface)]
+[restInterface.restBaseInterfaceCName()/].h
+[/template]
+
+[**
+ * Gets the path of the .c file for the specified REST base interface within its module's src directory.
+ */]
+[template public restBaseInterfaceCFilePath(restInterface : Interface)]
+[restInterface.restBaseInterfaceCName()/].c
+[/template]
+
+[**
+ * Gets the path of the .c file for the specified REST controller within its module's src directory.
+ */]
+[template public restControllerCFilePath(endpointClassifier : Classifier)]
+[endpointClassifier.restControllerCName()/].c
+[/template]
+
+[**
+ * Gets the path of the .h file for the specified REST handler within its module's src directory.
+ */]
+[template public restHandlerHFilePath(endpointClassifier : Classifier)]
+[endpointClassifier.restControllerCName()/]Handler.h
+[/template]
+
+[**
+ * Gets the path of the .c file for the specified REST handler within its module's src directory.
+ */]
+[template public restHandlerCFilePath(endpointClassifier : Classifier)]
+[endpointClassifier.restControllerCName()/]Handler.c
+[/template]
+
+[**
+ * Computes the package path for the given package (ex: /a/b/c/d/).
+ */]
+[template public packagePath(pkg : Package)]
+[pkg.ancestors(Package).name.toLower()->reverse()->sep('/', '/', '/')/]
+[/template]
+
+[**
+ * Computes the package path for the given type (ex: /a/b/c/d/).
+ * @param aType The type (class, interface or enumeration most of the time).
+ */]
+[template public packagePath(aType : Type)]
+[aType.ancestors(Package).name.toLower()->reverse()->sep('/', '/', '/')/]
+[/template]
+
+
+[**
+ * Gets the name of the fogPlatform header file (fogPlatform.h).
+ */]
+[template public fogPlatformHFileName(traceabilityContext: OclAny)]
+fogPlatform.h
+[/template]
+
+[**
+ * Gets the name of the folder that contains the platform specific headers for a module.
+ */]
+[template public platformHeadersFolderName(traceabilityContext: OclAny)]
+platform-include
+[/template]
+

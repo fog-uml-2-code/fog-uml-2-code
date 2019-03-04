@@ -1,0 +1,51 @@
+[comment encoding = UTF-8 /]
+[module decisionNodeHandlerJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::generic::activityRealizationUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::activityStateJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils/]
+
+[**
+ * Generates a handler class for a DecisionNode.
+ */]
+[template public genDecisionNodeHandlerJava(node : DecisionNode, activity : Activity) {
+	qualifiedClassName : String = node.qualifiedHandlerClassName(activity);
+	className : String = qualifiedClassName.tokenize('.')->last();
+	classFilePath : String = node.qualifiedHandlerClassName(activity).replaceAll('\\.', '/') + '.java';
+	qualifiedPackageName : String = qualifiedClassName.substring(1, qualifiedClassName.size() - className.size() - 1);
+	edgesWithConditions : Set(ActivityEdge) = node.outgoing->select(edge | edge.getEdgeDecisionMethodName() <> 'else');
+}]
+[file (activity.realizingModulePath() + '/' + javaSrcPath() + '/' + classFilePath, false, 'UTF-8')]
+package [qualifiedPackageName/];
+
+import io.micronaut.context.annotation.Prototype;
+import javax.inject.Inject;
+
+import [activity.qualifiedActivityStateServiceClass()/];
+
+/**
+ * This is the DecisionNode handler for [node.name/].
+ * 
+ * @generated
+ */
+@Prototype
+public class [className/] {
+
+	[activity.genInjectedActivityStateServiceField()/]
+
+	[for (edge : ActivityEdge | edgesWithConditions)]
+	/**
+	 * @generated
+	 * @return true if the ActivityEdge guarded by this condition should be taken, otherwise false.
+	 */
+	public boolean [edge.getEdgeDecisionMethodName()/]() {
+		[genToDoImplBlock()/]
+	}
+	[/for]
+
+}
+
+[/file]
+[/template]

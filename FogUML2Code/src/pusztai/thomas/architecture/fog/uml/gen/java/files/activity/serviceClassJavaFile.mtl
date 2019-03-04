@@ -1,0 +1,37 @@
+[comment encoding = UTF-8 /]
+[module serviceClassJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::attributeUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+
+[**
+ * Generates a singleton service class file for the specified class.
+ */]
+[template public genServiceClassJavaFile(service : Class, activity : Activity)]
+[file (activity.modulePath() + '/' + service.genFilePath(), false, 'UTF-8')]
+package [service.genPackageValue()/];
+
+[service.genDefaultImportsForServiceClass()/]
+
+/**
+ * This is the singleton service class for [service.serviceClassJavaName()/].
+ * 
+ * @generated
+ */
+@Singleton
+public class [service.serviceClassJavaName()/] {
+
+	[service.genAllPropertyFields()/]
+	[service.genAllPropertyAccessors()/]
+
+	[service.genAllOwnedOperations()/]
+
+}
+[/file]
+[/template]
+
+

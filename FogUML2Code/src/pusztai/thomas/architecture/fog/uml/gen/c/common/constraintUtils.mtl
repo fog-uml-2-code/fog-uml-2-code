@@ -1,0 +1,58 @@
+[comment encoding = UTF-8 /]
+[**
+ * Constraints are handled differently, depending on whether we are in a setter of a model class or in an operation of a REST interface:
+ * 
+ * - setter of model class:
+ *   Invariants are evaluated after setting the class field. There is a boolean validationResult,
+ *   which is initially true and may be set to false by every constraint evaluation.
+ *   The final value is then returned by the setter.
+ *   bool setHeight(ModelClass target, int_t height) {
+ *   	target->height = height;
+ *   	bool validationResult = true;
+ *   	validationResult &= constraint0 evaluation;
+ *   	validationResult &= constraint1 evaluation;
+ *   	return validationResult;
+ *   }
+ *   
+ * - REST interface operation:
+ *   The constraints are validated by the function that handles the REST request and forwards it to the function
+ *   that implements the business logic. Pre-conditions are evaluated before calling that function, invariants are 
+ *   evaluated after calling it. If the validation fails, an error is returned by the REST operation.
+ *   void handleStoreStatistics(Request *req, MessageBody *body) {
+ *   	Statistics statistics = parseBody(body);
+ *   	bool validationResult = true;
+ *   	validationResult &= preCondition evaluation;
+ *   	if (!validationResult) {
+ *   		respondWithError(req);
+ *   		return;	
+ *   	}
+ *   	Result result = storeStatistics(statistics);
+ *   	validationResult &= constraint0 evaluation;
+ *   	validationResult &= constraint1 evaluation;
+ *   	if (validationResult) {
+ *   		sendResponse(req, result);
+ *   	} else {
+ *   		respondWithError(req);
+ *   		return;	
+ *   	}
+ *   }
+ */]
+[module constraintUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::cConstraintServices/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+
+[template public genInvariantsIfPresent(classifier : Classifier)]
+[for (constraint : Constraint | classifier.ownedRule) before ('\n') separator ('\n')]
+[constraint.genConstraint(classifier, classifier)/][/for]
+[/template]
+
+[template public genPreConditionIfPresent(op : Operation) {
+	constraints : Sequence(Constraint) = op.ownedRule->asSequence();
+}]
+[if (not constraints->isEmpty())][constraints->first().genConstraint(op, op.owner.oclAsType(Classifier))/][/if]
+[/template]
+
+[template private genConstraint(constraint : Constraint, contextElement : Element, owningClassifier : Classifier)]
+validationResult &= [constraint.specification.oclAsType(OpaqueExpression).convertConstraintToCode()/];
+[/template]

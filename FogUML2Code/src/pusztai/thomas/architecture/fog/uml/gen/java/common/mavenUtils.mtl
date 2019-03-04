@@ -1,0 +1,88 @@
+[comment encoding = UTF-8 /]
+[module mavenUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::javaTypeServices /]
+
+[**
+ * Gets the groupId of all our Maven modules
+ */]
+[template public mavenGroupId(model : Model)]
+pusztai.thomas.[model.name.toLowerCase()/]
+[/template]
+
+
+[**
+ * Gets the artifactId of the common module
+ */]
+[template public mavenCommonModuleId(model : Model)]
+common
+[/template]
+
+
+[**
+ * Gets the version of our project
+ */]
+[template public mavenProjectVersion(model : Model)]
+1.0
+[/template]
+
+
+[**
+ * Gets the artifactId of the specified REST controller
+ */]
+[template public mavenControllerModuleId(controller : Classifier)]
+[controller.name.toLowerCase()/]
+[/template]
+
+
+[**
+ * Gets the Micronaut and JDK versions and the source encoding as XML
+ */]
+[template public mavenCommonProperties(model : Model)]
+<micronaut.version>1.0.4</micronaut.version>
+<jdk.version>1.8</jdk.version>
+<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+[/template]
+
+
+[**
+ * Generates the getters and setters for all non-private attributes of the specified class.
+ */]
+[template public genAllPropertyAccessors(class : Class)]
+[for (prop : Property | class.allAttributes())]
+[prop.genGetter()/]
+[prop.genSetter()/]
+[/for]
+[/template]
+
+
+[**
+ * Generates the getter for an attribute if it is not private.
+ */]
+[template public genGetter(prop : Property)]
+/**
+ * @return the [prop.name/]
+ * 
+ * @generated
+ */
+[if (prop.visibility <> VisibilityKind::private)][prop.visibility.toString()/] get[prop.name.toUpperFirst()/]() {
+	return [prop.name.toLowerFirst()/];
+}
+[/if]
+[/template]
+
+
+[**
+ * Generates the setter for an attribute if it is not private.
+ */]
+[template public genSetter(prop : Property)]
+/**
+ * @param [prop.name.toLowerFirst()/] the [prop.name/] to set.
+ * 
+ * @generated
+ */
+[if (prop.visibility <> VisibilityKind::private)][prop.visibility.toString()/] set[prop.name.toUpperFirst()/]([prop.getTypeName()/] [prop.name.toLowerFirst()/]) {
+	this.[prop.name.toLowerFirst()/] = [prop.name.toLowerFirst()/];
+}
+[/if]
+[/template]

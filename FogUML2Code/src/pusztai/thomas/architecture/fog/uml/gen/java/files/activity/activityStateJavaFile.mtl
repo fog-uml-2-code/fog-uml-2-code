@@ -1,0 +1,64 @@
+[comment encoding = UTF-8 /]
+[module activityStateJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::generic::activityRealizationHandlers/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+
+[**
+ * Generates a state class for an ActivityRealization.
+ */]
+[template public genActivityStateServiceJava(activity : Activity) {
+	realization : Package = activity.getActivityRealization();
+	classFilePath : String = activity.qualifiedActivityStateServiceClass().replaceAll('\\.', '/') + '.java';
+}]
+[file (activity.realizingModulePath() + '/' + javaSrcPath() + '/' + classFilePath, false, 'UTF-8')]
+package [realization.qualifiedActivityStatePackage()/];
+
+import javax.inject.Singleton;
+
+/**
+ * This is the singleton activity state service for the realization of the [activity.name/] activity.
+ * 
+ * ToDo: Implement this class. Note that this class MUST be thread safe.
+ */
+@Singleton
+public class [activity.activityStateServiceName()/] {
+
+	/** 
+	 * ToDo: Implement this class. Note that this class MUST be thread safe.
+ 	 */
+
+}
+
+[/file]
+[/template]
+
+[**
+ * Generates a dependency injected class field for the activity's state service.
+ */]
+[template public genInjectedActivityStateServiceField(activity : Activity)]
+@Inject
+private [activity.activityStateServiceName()/] activityState;
+[/template]
+
+[**
+ * Gets the name of the class that contains the activity's state.
+ */]
+[template public activityStateServiceName(activity : Activity)]
+ActivityState
+[/template]
+
+[**
+ * Gets the fully qualified name of the class that contains the activity's state.
+ */]
+[template public qualifiedActivityStateServiceClass(activity : Activity) {
+	realization : Package = activity.getActivityRealization();
+}]
+[realization.qualifiedActivityStatePackage() + '.' + activity.activityStateServiceName()/]
+[/template]
+
+[template private qualifiedActivityStatePackage(activityRealization : Package)]
+[activityRealization.ancestors(Package).name.toLowerCase()->reverse()->sep('', '.', '.') + activityRealization.name.toLowerCase() + '.state'/]
+[/template]

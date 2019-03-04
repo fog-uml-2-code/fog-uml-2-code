@@ -1,0 +1,30 @@
+[comment encoding = UTF-8 /]
+[module cMakeUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[**
+ * Gets the name of the variable that stores the paths of the source files of the common module
+ */]
+[template public cMakeCommonLibSourcesVar(traceabilityContext: OclAny)]
+COMMON_LIB_SRCS
+[/template]
+
+[**
+ * Gets the name of the CMake project for the specified REST controller.
+*/]
+[template public cMakeProjectName(endpointClassifier : Classifier)]
+[endpointClassifier.name.toLowerCase()/]
+[/template]
+
+[**
+ * Generates the definition of the minimum required CMake version
+*/]
+[template public genCMakeMinVersionRequired(traceabilityContext : OclAny)]
+cmake_minimum_required(VERSION 3.8)
+[/template]
+
+[**
+ * Generates the setting of the CMake C standard version
+*/]
+[template public genCMakeSetCStandard(traceabilityContext : OclAny)]
+set(CMAKE_C_STANDARD 11)
+[/template]

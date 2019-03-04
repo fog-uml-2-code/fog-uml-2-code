@@ -1,0 +1,50 @@
+[comment encoding = UTF-8 /]
+[module opaqueActionHandlerJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::generic::activityRealizationUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::activityStateJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils/]
+
+[**
+ * Generates a handler class for an OpaqueAction.
+ */]
+[template public genOpaqueActionHandlerJava(node : OpaqueAction, activity : Activity) {
+	qualifiedClassName : String = node.qualifiedHandlerClassName(activity);
+	className : String = qualifiedClassName.tokenize('.')->last();
+	classFilePath : String = node.qualifiedHandlerClassName(activity).replaceAll('\\.', '/') + '.java';
+	qualifiedPackageName : String = qualifiedClassName.substring(1, qualifiedClassName.size() - className.size() - 1);
+}]
+[file (activity.realizingModulePath() + '/' + javaSrcPath() + '/' + classFilePath, false, 'UTF-8')]
+package [qualifiedPackageName/];
+
+import io.micronaut.context.annotation.Prototype;
+import javax.inject.Inject;
+import pusztai.thomas.architecture.fog.activity.realization.OpaqueActionHandler;
+
+import [activity.qualifiedActivityStateServiceClass()/];
+
+/**
+ * This is the OpaqueAction handler for [node.name/].
+ * 
+ * @generated
+ */
+@Prototype
+public class [className/] implements OpaqueActionHandler {
+
+	[activity.genInjectedActivityStateServiceField()/]
+
+	/**
+	 * Executes the OpaqueAction.
+	 * @generated
+	 * @return The parameter(s) that should be passed to the upcoming call of the operation.
+	 */
+	@Override
+	public void executeAction() {
+		[genToDoImplBlock()/]
+	}
+
+}
+
+[/file]
+[/template]

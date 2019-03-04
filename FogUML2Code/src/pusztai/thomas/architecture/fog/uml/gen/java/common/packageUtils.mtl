@@ -1,0 +1,101 @@
+[comment encoding = UTF-8 /]
+[module packageUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::javaTypeServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::javaConstraintServices/]
+
+[template public qualifiedJavaPackage(pkg : Package)]
+[pkg.ancestors(Package).name.toLowerCase()->reverse()->sep('', '.', '.') + pkg.name.toLowerCase()/]
+[/template]
+
+[**
+ * Gets the name of the root package of specified type
+ */]
+[template public rootPackageName(type: Type)]
+[type.ancestors(Package)->last().name.toLowerCase()/]
+[/template]
+
+[**
+ * Returns the package value for the given type (ex: a.b.c.d).
+ * @param aType The type (class, interface or enumeration most of the time).
+ */]
+[template public genPackageValue(aType : Type)]
+[aType.ancestors(Package).name.toLowerCase()->reverse()->sep('.')/]
+[/template]
+
+[**
+ * Gets the package of the main class for the specified REST controller.
+ */]
+[template public genControllerMainClassPackage(controller : Classifier)]
+[controller.rootPackageName()/].[controller.name.toLowerCase()/]
+[/template]
+
+[**
+ * Generates the default import block for the given classifier
+ */]
+[template public genDefaultImports(aClassifier : Classifier)]
+import java.util.*;
+import pusztai.thomas.architecture.fog.validation.*;
+[if (aClassifier.checkIfConstraintsPresent())]import [aClassifier.genPackageValue()/].constraints;[/if]
+
+[for (type : Type | aClassifier.getAllRequiredImports())]
+import [type.getQualifiedName() /];
+[/for]
+[/template]
+
+[**
+ * Generates the default import block for a REST base interface
+ */]
+[template public genDefaultImportsForRestBaseInterface(restInterface : Interface)]
+// [protected ('for imports')]
+[restInterface.genDefaultImports() /]
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
+[if (restInterface.checkIfConstraintsPresent())]import [restInterface.genPackageValue()/].constraints;[/if]
+// [/protected]
+[/template]
+
+[**
+ * Generates the default import block for a REST client interface
+ */]
+[template public genDefaultImportsForRestClient(restInterface : Interface)]
+// [protected ('for imports')]
+[restInterface.genDefaultImports() /]
+import io.micronaut.http.annotation.Client;
+// [/protected]
+[/template]
+
+[**
+ * Generates the default import block for a REST controller
+ */]
+[template public genDefaultImportsForRestController(restInterface : Interface, controller : Class)]
+// [protected ('for imports')]
+[if (not controller.oclIsUndefined())]
+[controller.genDefaultImports() /]
+[else]
+[restInterface.genDefaultImports() /]
+[/if]
+import [restInterface.getQualifiedName()/];
+import io.micronaut.http.annotation.Controller;
+// [/protected]
+[/template]
+
+[**
+ * Generates the default import block for service class
+ */]
+[template public genDefaultImportsForServiceClass(service : Class)]
+// [protected ('for imports')]
+[service.genDefaultImports() /]
+import javax.inject.*;
+// [/protected]
+[/template]
+
+[**
+ * Generates the default import block for a model class
+ */]
+[template public genDefaultImportsForModelClass(modelClass : Class)]
+// [protected ('for imports')]
+[modelClass.genDefaultImports() /]
+// [/protected]
+[/template]

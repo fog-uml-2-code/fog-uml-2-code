@@ -1,0 +1,62 @@
+[comment encoding = UTF-8 /]
+[module modelClassHFiles('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::headerUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::includeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::attributeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::operationUtils/]
+
+[**
+ * Generates the .h files for a model class.
+ */]
+[template public genModelClassHFiles(modelClass : Class) {
+	commonModuleSrcPath : String = commonModulePath() + '/' + cSrcPath() + '/';
+}]
+[modelClass.genModelClassPublicHFile(commonModuleSrcPath)/]
+[modelClass.genModelClassPrivateHFile(commonModuleSrcPath)/]
+[/template]
+
+[template private genModelClassPublicHFile(modelClass : Class, commonModuleSrcPath : String) {
+	className : String = modelClass.modelClassCName();
+}]
+[file (commonModuleSrcPath + modelClass.modelClassHeaderFilePath(), false, 'UTF-8')]
+[className.includeGuardStart()/]
+
+[modelClass.genDefaultIncludesForModelClass(false)/]
+
+/**
+ * Describes a [className/] model type.
+ */
+typedef struct [className/]* [className/];
+
+[modelClass.genConstructorDeclaration(className)/]
+
+[modelClass.genDestructorDeclaration(className)/]
+
+[modelClass.genAllPropertyAccessorDeclarations(className)/]
+[modelClass.genAllOwnedOperationDeclarations(className)/]
+
+[className.includeGuardEnd()/]
+
+[/file]
+[/template]
+
+[template private genModelClassPrivateHFile(modelClass : Class, commonModuleSrcPath : String) {
+	className : String = modelClass.modelClassCName();
+	includeGuardName : String = className + '_private';
+}]
+[file (commonModuleSrcPath + modelClass.modelClassPrivateHeaderFilePath(), false, 'UTF-8')]
+[includeGuardName.includeGuardStart()/]
+
+[modelClass.genDefaultIncludesForModelClass(true)/]
+
+struct [className/] {
+	[modelClass.genAllPropertyFields()/]
+};
+
+[includeGuardName.includeGuardEnd()/]
+
+[/file]
+[/template]

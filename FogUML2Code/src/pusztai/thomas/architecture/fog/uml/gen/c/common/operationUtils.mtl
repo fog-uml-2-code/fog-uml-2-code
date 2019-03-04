@@ -1,0 +1,202 @@
+[comment encoding = UTF-8 /]
+[module operationUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::cTypeServices /]
+
+[**
+ * Generates the declaration of the constructor function for the specified classifier.
+ */]
+[template public genConstructorDeclaration(classifier : Classifier, classTypedefName : String)]
+[classifier.genCtorSignature(classTypedefName)/];
+[/template]
+
+[**
+ * Generates the definition of the constructor function for the specified classifier.
+ */]
+[template public genConstructorDefinition(classifier : Classifier, classTypedefName : String)]
+[classifier.genCtorSignature(classTypedefName)/] {
+	return calloc(1, sizeof(struct [classTypedefName/]));
+}
+[/template]
+
+[**
+ * Generates the declaration of the destructor function for the specified classifier.
+ */]
+[template public genDestructorDeclaration(classifier : Classifier, classTypedefName : String)]
+[classifier.genDtorSignature(classTypedefName)/];
+[/template]
+
+[**
+ * Generates the definition of the destructor function for the specified classifier.
+ */]
+[template public genDestructorDefinition(classifier : Classifier, classTypedefName : String)]
+[classifier.genDtorSignature(classTypedefName)/] {
+	free(target);
+}
+[/template]
+
+[**
+ * Generates the declarations of all owned (not inherited) methods of a class.
+ */]
+[template public genAllOwnedOperationDeclarations(class : Class, classTypedefName : String)]
+[for (op : Operation | class.ownedOperation) separator ('\n')]
+[op.genDocumentation()/]
+[op.genSignature(classTypedefName)/];
+
+[/for]
+[/template]
+
+
+[**
+ * Generates the definitions of all owned (not inherited) methods of a class.
+ */]
+[template public genAllOwnedOperationDefinitions(class : Class, classTypedefName : String)]
+[for (op : Operation | class.ownedOperation) separator ('\n')]
+[op.genSignature(classTypedefName)/] {
+	[genToDoImplBlock()/]
+}
+
+[/for]
+[/template]
+
+[**
+ * Generates the declaration of a REST interface operation
+ */]
+[template public genRestOpDeclaration(op : Operation, classifierTypedefName : String)]
+[op.genRestOpDocumentation()/]
+[op.genRestOpSignature(classifierTypedefName)/];
+[/template]
+
+[**
+ * Generates the definition of all REST controller operation.
+ */]
+[template public genRestOpDefinition(op : Operation, classifierTypedefName : String)]
+[op.genRestOpSignature(classifierTypedefName)/] {
+	[genToDoImplBlock()/]
+	return true;
+}
+[/template]
+
+[**
+ * Gets the name of the constructor for the classifier.
+ */]
+[template public getCtorName(classifier : Classifier, classifierTypedefName : String)]
+new[classifierTypedefName/]
+[/template]
+
+[**
+ * Gets the name of the destructor for the classifier.
+ */]
+[template public getDtorName(classifier : Classifier, classifierTypedefName : String)]
+delete[classifierTypedefName/]
+[/template]
+
+[**
+ * Gets the name of the operation
+ */]
+[template public getGeneratedName(op : Operation, classifierTypedefName : String)]
+[classifierTypedefName/]_[op.name.toLowerFirst()/]
+[/template]
+
+[**
+ * Gets the name of the setUp function for the specified REST handler
+*/]
+[template public getRestHandlerSetUpFunctionName(endpointClassifier : Classifier, classifierTypedefName : String)]
+[classifierTypedefName/]_setUpHandler
+[/template]
+
+[**
+ * Gets the name of the shutdown function for the specified REST handler
+*/]
+[template public getRestHandlerShutdownFunctionName(endpointClassifier : Classifier, classifierTypedefName : String)]
+[classifierTypedefName/]_setUpHandler
+[/template]
+
+[**
+ * Generates the default ToDo block.
+ */]
+[template public genToDoImplBlock(traceabilityContext : OclAny)]
+// ToDo: Implement this function.
+[/template]
+
+
+[**
+ * Generates the signature of an operation
+ */]
+[template private genSignature(op : Operation, classTypedefName : String)]
+[op.getReturnTypeName()/] [op.getGeneratedName(classTypedefName)/]([classTypedefName/] target[op.parameters()/])
+[/template]
+
+[**
+ * Generates the signature of a REST interface operation
+ */]
+[template private genRestOpSignature(op : Operation, classifierTypedefName : String) {
+	resultIsVoid : Boolean = op.type.oclIsUndefined();
+}]
+bool [op.getGeneratedName(classifierTypedefName)/]([classifierTypedefName/] target[op.parameters()/][if (not resultIsVoid)], [op.restOpResultType()/]result[/if])
+[/template]
+
+
+[**
+ * Generates the documentation for an operation.
+ */]
+[template private genDocumentation(op : Operation)]
+/**
+ * Documentation of the method [op.name.toLowerFirst()/].
+ * [for (aComment : Comment | op.ownedComment)] [aComment._body/][/for]
+[op.genParameterDocumentation()/]
+[if (not op.type.oclIsUndefined())]
+ * @return
+[/if]
+ * 
+ * @generated
+ */
+[/template]
+
+[**
+ * Generates the documentation for a REST operation.
+ */]
+[template private genRestOpDocumentation(op : Operation)]
+/**
+ * Documentation of the REST interface operation [op.name.toLowerFirst()/].
+ * [for (aComment : Comment | op.ownedComment)] [aComment._body/][/for]
+[op.genParameterDocumentation()/]
+[if (not op.type.oclIsUndefined())] * @param result The result of the REST operation.[/if]
+ * @return true if the operation completed successfully, otherwise false.
+ * 
+ * @generated
+ */
+[/template]
+
+[**
+ * Generates the documentation for the parameters of an operation.
+ */]
+[template private genParameterDocumentation(op : Operation)]
+[for (aParameter : Parameter | op.ownedParameter->select(param : Parameter | param.direction <> ParameterDirectionKind::return)) separator('\n')] * @param [aParameter.name/][/for]
+[/template]
+
+
+[**
+ * Generates the parameters list of an operation
+ */]
+[template private parameters(anOperation : Operation)]
+[for (param : Parameter | anOperation.ownedParameter->reject(param : Parameter | param.direction = ParameterDirectionKind::return)) before (', ') separator(', ')][param.getTypeName()/] [param.name.toLowerFirst()/][/for]
+[/template]
+
+[**
+ * Generates the type of the result of a REST operation
+ */]
+[template private restOpResultType(op : Operation) {
+	resultIsPrimitiveType : Boolean = op.type.oclIsKindOf(PrimitiveType);
+}]
+[op.getReturnTypeName()/] [if (resultIsPrimitiveType)]*[/if]
+[/template]
+
+
+[template private genCtorSignature(classifier : Classifier, classifierTypedefName : String)]
+[classifierTypedefName/] [classifier.getCtorName(classifierTypedefName)/]()
+[/template]
+
+[template private genDtorSignature(classifier : Classifier, classifierTypedefName : String)]
+void [classifier.getDtorName(classifierTypedefName)/]([classifierTypedefName/] target)
+[/template]

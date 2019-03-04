@@ -1,0 +1,62 @@
+[comment encoding = UTF-8 /]
+[module constraintClassJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::javaConstraintServices/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+
+[template public genConstraintsIfPresent(classifier : Classifier)]
+[for (constraint : Constraint | classifier.ownedRule) before ('\n') separator ('\n')]
+[constraint.genConstraint(classifier, classifier)/][/for]
+[/template]
+
+[template public genConstraintsIfPresent(op : Operation) {
+	constraints : Sequence(Constraint) = op.ownedRule->asSequence();
+}]
+[if (not constraints->isEmpty())]
+
+[constraints->first().genConstraint(op, op.owner.oclAsType(Classifier))/][/if]
+[/template]
+
+[template private genConstraint(constraint : Constraint, contextElement : Element, owningClassifier : Classifier)]
+[constraint.genConstraintClassJavaFile(owningClassifier)/][if (contextElement.oclIsKindOf(Operation))]@PreCondition([constraint.name.toUpperFirst()/])[else]@Invariant([constraint.name.toUpperFirst()/])[/if]
+[/template]
+
+[**
+ * Generates a class for a constraint
+ */]
+[template private genConstraintClassJavaFile(constraint : Constraint, owningClassifier : Classifier)]
+[file (commonModulePath() + '/' + constraint.genConstraintFilePath(owningClassifier), false, 'UTF-8')]
+package [owningClassifier.genPackageValue()/].constraints;
+
+import io.micronaut.aop.MethodInterceptor;
+import io.micronaut.aop.MethodInvocationContext;
+import javax.inject.Singleton;
+
+import [owningClassifier.genPackageValue()/].[owningClassifier.name.toUpperFirst()/];
+
+/**
+ * This class implements the constraint [constraint.name/].
+ * 
+ * @generated
+ */
+@Singleton
+public class [constraint.name.toUpperFirst()/] implements MethodInterceptor<[owningClassifier.name.toUpperFirst()/], Object> {
+
+	@Override
+	public Object intercept(MethodInvocationContext<[owningClassifier.name.toUpperFirst()/], Object> context) {
+		[owningClassifier.name.toUpperFirst()/] self = context.getTarget();
+		boolean validationResult = [constraint.specification.oclAsType(OpaqueExpression).convertConstraintToCode()/];
+		if (validationResult) {
+			return context.proceed();
+		} else {
+			throw new RuntimeException("The constraint [constraint.name/] has been violated.");
+		}
+	}
+
+}
+[/file]
+[/template]
+
+

@@ -1,0 +1,44 @@
+[comment encoding = UTF-8 /]
+[module commonModuleCMakeListsFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::cMakeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::fileUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+
+[**
+ *  Generates the CMakeLists.txt file for the common module
+ */]
+[template public genCommonModuleCMakeLists(fogModel : Model) {
+	filePath : String = commonModulePath() + '/' + cMakeListsFileName();
+}]
+[file (filePath, false, 'UTF-8')]
+
+set([cMakeCommonLibSourcesVar()/]
+[for (modelClass : Class | fogModel.getAllModelClasses())]
+	[modelClass.modelClassFiles()/]
+[/for]
+[comment][for (restInterface : Interface | fogModel.getAllRestInterfaces())]
+	[restInterface.restBaseInterfaceFiles()/]
+[/for][/comment]
+)
+
+[/file]
+[/template]
+
+
+[template private modelClassFiles(modelClass : Class) {
+	srcFilePathPrefix : String = '${CMAKE_CURRENT_LIST_DIR}/' + cSrcPath() + '/';
+}]
+"[srcFilePathPrefix/][modelClass.modelClassHeaderFilePath()/]"
+"[srcFilePathPrefix/][modelClass.modelClassPrivateHeaderFilePath()/]"
+"[srcFilePathPrefix/][modelClass.modelClassCFilePath()/]"
+[/template]
+
+[comment]
+[template private restBaseInterfaceFiles(restInterface : Interface) {
+	srcFilePathPrefix : String = '${CMAKE_CURRENT_LIST_DIR}/' + cSrcPath() + '/';
+}]
+"[srcFilePathPrefix/][restInterface.restBaseInterfaceHeaderFilePath()/]"
+"[srcFilePathPrefix/][restInterface.restBaseInterfaceCFilePath()/]"
+[/template]
+[/comment]

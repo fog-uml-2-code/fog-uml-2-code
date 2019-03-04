@@ -1,0 +1,68 @@
+[comment encoding = UTF-8 /]
+[module restControllers('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::restcontroller::restControllerCMakeListsFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::restcontroller::restControllerMainCFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::restcontroller::restControllerCFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::restcontroller::restHandlerHFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::restcontroller::restHandlerCFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::fogPlatformHFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::restcontroller::restControllerApplicationJavaFile /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::restcontroller::restControllerJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::restcontroller::restControllerPomXmlFile /]
+
+[**
+ *  Generates the REST controllers.
+ *  Each controller that is not part of an activity realization gets its own module.
+ */]
+[template public genRestControllers(fogModel : Model)]
+
+[for (restInterface : Interface | fogModel.getAllRestInterfaces())]
+	[if (restInterface.getRealizingClasses()->size() > 0)]
+		[for (controller : Class | restInterface.getRealizingClasses())]
+			[restInterface.genRestControllerGeneric(controller, fogModel)/]
+		[/for]
+	[else]
+		[restInterface.genRestControllerGeneric(null, fogModel)/]
+	[/if]
+[/for]
+
+[/template]
+
+
+[template private genRestControllerGeneric(restInterface : Interface, controller : Class, fogModel : Model) {
+	targetLanguage : String = getDefiningClassifier(restInterface, controller).getRestControllerTargetLanguage();
+}]
+[if (targetLanguage = 'Java')]
+	[restInterface.genRestControllerJava(controller, fogModel)/]
+[/if]
+[if (targetLanguage = 'C')]
+	[restInterface.genRestControllerC(controller, fogModel)/]
+[/if]
+[/template]
+
+
+[template private genRestControllerC(restInterface : Interface, controller : Class, fogModel : Model){
+	endpointClassifier : Classifier = getDefiningClassifier(restInterface, controller);
+}]
+[if (endpointClassifier.getRealizedActivity().oclIsUndefined())]
+	[endpointClassifier.genRestControllerModuleCMakeLists()/]
+	[endpointClassifier.genFogPlatformHFile()/]
+	[restInterface.genRestControllerMainCFile(controller)/]
+	[restInterface.genRestControllerCFile(controller)/]
+	[restInterface.genRestHandlerHFile(controller)/]
+	[restInterface.genRestHandlerCFile(controller)/]
+[/if]
+[/template]
+
+
+[template private genRestControllerJava(restInterface : Interface, controller : Class, fogModel : Model) {
+	endpointClassifier : Classifier = getDefiningClassifier(restInterface, controller);
+}]
+[if (endpointClassifier.getRealizedActivity().oclIsUndefined())]
+	[restInterface.genRestControllerPomXmlFile(controller, fogModel)/]
+	[restInterface.genRestControllerApplicationJavaFile(controller)/]
+[/if]
+[restInterface.genRestControllerJavaFile(controller)/]
+[/template]

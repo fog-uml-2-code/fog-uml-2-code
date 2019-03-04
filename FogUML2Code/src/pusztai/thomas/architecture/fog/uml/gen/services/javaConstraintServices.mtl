@@ -1,0 +1,10 @@
+[comment encoding = UTF-8 /]
+[module javaConstraintServices('http://www.eclipse.org/uml2/5.0.0/UML')/]
+
+[query public checkIfConstraintsPresent(classifier : Classifier) : Boolean
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.JavaConstraintServices', 'checkIfConstraintsPresent(org.eclipse.uml2.uml.Classifier)', Sequence{classifier})
+/]
+
+[query public convertConstraintToCode(constraintSpec : OpaqueExpression) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.JavaConstraintServices', 'convertConstraintToCode(org.eclipse.uml2.uml.OpaqueExpression)', Sequence{constraintSpec})
+/]

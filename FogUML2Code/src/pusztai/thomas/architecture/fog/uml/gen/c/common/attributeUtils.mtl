@@ -1,0 +1,87 @@
+[comment encoding = UTF-8 /]
+[module attributeUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::cTypeServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::constraintUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+
+[**
+ * Generates the private fields for all attributes of the specified class.
+ */]
+[template public genAllPropertyFields(class : Class)]
+[for (prop : Property | class.getAllAttributesWithAssociations())]
+[prop.genProperty()/]
+[/for]
+[/template]
+
+
+[**
+ * Generates the private field for an attribute.
+ */]
+[template public genProperty(prop : Property)]
+[if (not prop.type.oclIsKindOf(PrimitiveType))]struct [/if][prop.getTypeName()/] [prop.name.toLowerFirst()/];
+[/template]
+
+
+[**
+ * Generates the declaration of the getters and setters for all non-private attributes of the specified class.
+ */]
+[template public genAllPropertyAccessorDeclarations(class : Class, classTypedefName : String)]
+[for (prop : Property | class.allAttributes()->select(p : Property | p.visibility <> VisibilityKind::private)) separator ('\n')]
+[prop.genGetterSignature(classTypedefName)/];
+
+[prop.genSetterSignature(classTypedefName)/];
+[/for]
+[/template]
+
+
+[**
+ * Generates the getters and setters for all non-private attributes of the specified class.
+ */]
+[template public genAllPropertyAccessorDefinitions(class : Class, classTypedefName : String)]
+[for (prop : Property | class.allAttributes()->select(p : Property | p.visibility <> VisibilityKind::private)) separator ('\n')]
+[prop.genGetter(classTypedefName)/]
+
+[prop.genSetter(classTypedefName, class)/]
+[/for]
+[/template]
+
+
+[**
+ * Generates the signature of the getter for an attribute.
+ */]
+[template private genGetterSignature(prop : Property, classTypedefName : String)]
+[prop.getTypeName()/] [classTypedefName/]_get[prop.name.toUpperFirst()/]([classTypedefName/] target)
+[/template]
+
+
+[**
+ * Generates the getter for an attribute.
+ */]
+[template private genGetter(prop : Property, classTypedefName : String)]
+[prop.genGetterSignature(classTypedefName)/] {
+	return target->[prop.name.toLowerFirst()/];
+}
+[/template]
+
+
+[**
+ * Generates the setter for an attribute.
+ */]
+[template public genSetterSignature(prop : Property, classTypedefName : String)]
+bool [classTypedefName/]_set[prop.name.toUpperFirst()/]([classTypedefName/] target, [prop.getTypeName()/] [prop.name.toLowerFirst()/])
+[/template]
+
+
+[**
+ * Generates the setter for an attribute.
+ */]
+[template public genSetter(prop : Property, classTypedefName : String, class : Class)]
+[prop.genSetterSignature(classTypedefName)/] {
+	target->[prop.name.toLowerFirst()/] = [prop.name.toLowerFirst()/];
+	bool validationResult = true;
+	[class.genInvariantsIfPresent()/]
+	return validationResult;
+}
+[/template]

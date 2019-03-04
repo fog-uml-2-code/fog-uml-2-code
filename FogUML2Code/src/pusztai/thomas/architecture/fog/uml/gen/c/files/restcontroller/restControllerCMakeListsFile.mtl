@@ -1,0 +1,30 @@
+[comment encoding = UTF-8 /]
+[module restControllerCMakeListsFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::cMakeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::fileUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+
+[**
+ *  Generates the CMakeLists.txt file for the specified REST controller module
+ */]
+[template public genRestControllerModuleCMakeLists(endpointClassifier : Classifier) {
+	filePath : String = endpointClassifier.restEndpointControllerModulePath() + '/' + cMakeListsFileName();
+}]
+[file (filePath, false, 'UTF-8')]
+project([endpointClassifier.cMakeProjectName()/] C)
+
+include("../[commonModuleFolderName()/]/[cMakeListsFileName()/]" "[cSrcPath()/]/[platformHeadersFolderName()/]")
+
+set(SRCS
+	"[cSrcPath()/]/[endpointClassifier.controllerMainCPath()/]"
+	"[cSrcPath()/]/[endpointClassifier.restControllerCFilePath()/]"
+	"[cSrcPath()/]/[endpointClassifier.restHandlerCFilePath()/]"
+)
+
+add_executable([endpointClassifier.cMakeProjectName()/] ${SRCS} ${[cMakeCommonLibSourcesVar()/]})
+
+target_include_directories([endpointClassifier.cMakeProjectName()/] PUBLIC "../[commonModuleFolderName()/]/[cSrcPath()/]" "[cSrcPath()/]/[platformHeadersFolderName()/]")
+
+[/file]
+[/template]

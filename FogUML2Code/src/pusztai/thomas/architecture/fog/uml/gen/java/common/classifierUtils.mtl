@@ -1,0 +1,27 @@
+[comment encoding = UTF-8 /]
+[module classifierUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[**
+ * Returns the Java interface name for the specified REST base interface.
+ */]
+[template public restBaseInterfaceJavaName(restInterface : Interface)]
+[restInterface.name.toUpperFirst()/]
+[/template]
+
+[**
+ * Returns the Java interface name for the specified REST client interface.
+ */]
+[template public restClientInterfaceJavaName(restInterface : Interface)]
+[restInterface.name.toUpperFirst()/]Client
+[/template]
+
+[**
+ * Returns the Java class name for the specified singleton service.
+ */]
+[template public serviceClassJavaName(service : Class)]
+[service.name.toUpperFirst()/]
+[/template]
+
+[template public activityRealizationApplicationClassName(activity : Activity)]
+Application
+[/template]

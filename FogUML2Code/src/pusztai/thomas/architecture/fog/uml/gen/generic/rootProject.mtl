@@ -1,0 +1,24 @@
+[comment encoding = UTF-8 /]
+[module rootProject('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::rootCMakeListsFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::rootPomXmlFile/]
+
+[** 
+ * Generates the root project file for all languages.
+ */]
+[template public genRootProject(fogModel : Model)]
+	[fogModel.genRootProjectC()/]
+	[fogModel.genRootProjectJava()/]
+[/template]
+
+
+[template private genRootProjectC(fogModel : Model)]
+	[fogModel.genRootCMakeLists()/]
+[/template]
+
+
+
+[template private genRootProjectJava(fogModel : Model)]
+	[fogModel.genRootPomXmlFile()/]
+[/template]

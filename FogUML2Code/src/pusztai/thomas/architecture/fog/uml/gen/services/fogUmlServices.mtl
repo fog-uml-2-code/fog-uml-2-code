@@ -1,0 +1,81 @@
+[comment encoding = UTF-8 /]
+[module fogUmlServices('http://www.eclipse.org/uml2/5.0.0/UML')/]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::request/]
+
+[query public getAllModelClasses(model : Model) : Sequence(Class)
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getAllModelClasses(org.eclipse.uml2.uml.Model)', Sequence{model})
+/]
+
+[query public getAllRestInterfaces(model : Model) : Sequence(Interface)
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getAllRestInterfaces(org.eclipse.uml2.uml.Model)', Sequence{model})
+/]
+
+[query public getAllActivities(model : Model) : Sequence(Activity)
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getAllActivities(org.eclipse.uml2.uml.Model)', Sequence{model})
+/]
+
+[query public getRealizingClasses(anInterface : Interface) : Sequence(Class)
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getRealizingClasses(org.eclipse.uml2.uml.Interface)', Sequence{anInterface})
+/]
+
+[query public getRealizedActivity(pkg : Package) : Activity
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getRealizedActivity(org.eclipse.uml2.uml.Package)', Sequence{pkg})
+/]
+
+[query public getRealizedActivity(classifier : Classifier) : Activity
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getRealizedActivity(org.eclipse.uml2.uml.Classifier)', Sequence{classifier})
+/]
+
+[query public getAllInvokedInterfaces(activity : Activity) : Sequence(Interface)
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getAllInvokedInterfaces(org.eclipse.uml2.uml.Activity)', Sequence{activity})
+/]
+
+[query public getAllServiceClasses(activity : Activity) : Sequence(Class)
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getAllServiceClasses(org.eclipse.uml2.uml.Activity)', Sequence{activity})
+/]
+
+[query public getDefiningClassifier(baseInterface : Interface, realizingClass : Class) : Classifier
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getDefiningClassifier(org.eclipse.uml2.uml.Interface, org.eclipse.uml2.uml.Class)', Sequence{baseInterface, realizingClass})
+/]
+
+[query public getActivityRealization(activity : Activity) : Package
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getActivityRealization(org.eclipse.uml2.uml.Activity)', Sequence{activity})
+/]
+
+[query public getActivityRealizationTargetLanguage(realization : Package) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getActivityRealizationTargetLanguage(org.eclipse.uml2.uml.Package)', Sequence{realization})
+/]
+
+[query public getRestControllerTargetLanguage(restController : Classifier) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getRestControllerTargetLanguage(org.eclipse.uml2.uml.Classifier)', Sequence{restController})
+/]
+
+[query public getActivityInitialNode(activity : Activity) : InitialNode
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getActivityInitialNode(org.eclipse.uml2.uml.Activity)', Sequence{activity})
+/]
+
+[query public getHandlerClassName(node : ActivityNode, activity : Activity) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getHandlerClassName(org.eclipse.uml2.uml.ActivityNode, org.eclipse.uml2.uml.Activity)', Sequence{node, activity})
+/]
+
+[query public getActivityNodeId(node : ActivityNode, activity : Activity) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getActivityNodeId(org.eclipse.uml2.uml.ActivityNode, org.eclipse.uml2.uml.Activity)', Sequence{node, activity})
+/]
+
+[query public getEdgeDecisionMethodName(edge : ActivityEdge) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'getEdgeDecisionMethodName(org.eclipse.uml2.uml.ActivityEdge)', Sequence{edge})
+/]
+
+[query public parseDurationToMsec(timeEvent : AcceptEventAction) : Integer
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'parseDurationToMsec(org.eclipse.uml2.uml.AcceptEventAction)', Sequence{timeEvent})
+/]
+
+[query public throwError(msg : String) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices', 'throwError(java.lang.String)', Sequence{msg})
+/]
+
+[query public getAllAttributesWithAssociations(classifier : Classifier) : Set(Property) 
+	= classifier.allAttributes()->union(classifier.reqOutgoingNavigableOwnedEnd())
+/]
+

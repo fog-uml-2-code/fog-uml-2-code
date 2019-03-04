@@ -1,0 +1,114 @@
+[comment encoding = UTF-8 /]
+[**
+ * This is a modified version of a file from the org.eclipse.acceleo.examples.uml2java example.
+ */]
+[module fileUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+
+[**
+ * Generates the file path for the given type (ex: /a/b/c/d/type.java).
+ * @param aType The type (class, interface or enumeration most of the time).
+ */]
+[template public genFilePath(aType : Type)]
+[javaSrcPath() + aType.packagePath() + aType.name/].java
+[/template]
+
+[**
+ * Generates the file path for the given REST client interface type (ex: /a/b/c/d/InterfaceClient.java).
+ */]
+[template public genRestClientFilePath(interface : Interface)]
+[javaSrcPath() + interface.packagePath() + interface.name/]Client.java
+[/template]
+
+
+[**
+ * Generates the file path for the class that implements the specified constraint.
+ */]
+[template public genConstraintFilePath(constraint : Constraint, owningClassifier : Classifier)]
+[javaSrcPath() + owningClassifier.packagePath() + 'constraints/' + constraint.name.toUpperFirst()/].java
+[/template]
+
+
+[**
+ * Gets the path of the main class for the specified REST controller.
+ */]
+[template public genControllerMainClassPath(controller : Classifier)]
+src/main/java/[controller.rootPackageName()/]/[controller.name.toLowerCase()/]/Application.java
+[/template]
+
+[**
+ * Gets the name of module that realizes the activity
+ */]
+[template public realizingModulePath(activity : Activity)]
+[javaModulesPath() + '/' + activity.name.toLowerCase()/]
+[/template]
+
+
+[**
+ * Gets the path of the Activity JSON file
+ */]
+[template public actvitityJsonPath(activity : Activity)]
+[activity.realizingModulePath() + '/' + resourcesSrcPath() + '/Activity.json'/]
+[/template]
+
+[**
+ * Gets the path for the Java modules
+ */]
+[template public javaModulesPath(traceabilityContext: OclAny)]
+java
+[/template]
+
+[**
+ * Gets the path for common module.
+ */]
+[template public commonModulePath(traceabilityContext: OclAny)]
+[javaModulesPath()/]/common
+[/template]
+
+[**
+ * Gets the path for the Java source code files
+ */]
+[template public javaSrcPath(traceabilityContext: OclAny)]
+src/main/java
+[/template]
+
+[**
+ * Gets the path for the resource files
+ */]
+[template private resourcesSrcPath(traceabilityContext: OclAny)]
+src/main/resources
+[/template]
+
+[**
+ * Gets the name of the folder for the Maven module of the specified REST endpoint controller.
+ */]
+[template public restEndpointControllerModulePath(endpointClassifier : Classifier) {
+	realizedActivity : Activity = endpointClassifier.getRealizedActivity();
+}]
+[if (realizedActivity.oclIsUndefined()) ][javaModulesPath() + '/' + endpointClassifier.name.toLowerCase()/][else][realizedActivity.realizingModulePath()/][/if]
+[/template]
+
+[**
+ * Generates the name of the folder for the Maven module of the specified activity.
+ */]
+[template public modulePath(activity : Activity)]
+[javaModulesPath() + '/' + activity.name.toLowerCase()/]
+[/template]
+
+[**
+ * Computes the package path for the given package (ex: /a/b/c/d/).
+ */]
+[template public packagePath(pkg : Package)]
+[pkg.ancestors(Package).name.toLower()->reverse()->sep('/', '/', '/')/]
+[/template]
+
+[**
+ * Computes the package path for the given type (ex: /a/b/c/d/).
+ * @param aType The type (class, interface or enumeration most of the time).
+ */]
+[template public packagePath(aType : Type)]
+[aType.ancestors(Package).name.toLower()->reverse()->sep('/', '/', '/')/]
+[/template]

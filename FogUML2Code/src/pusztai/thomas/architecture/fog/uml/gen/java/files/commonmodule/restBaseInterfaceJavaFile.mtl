@@ -1,0 +1,40 @@
+[comment encoding = UTF-8 /]
+[**
+ * This is a modified version of interfaceJavaFile.mtl from the org.eclipse.acceleo.examples.uml2java example.
+ */]
+[module restBaseInterfaceJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::constraintClassJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+
+[**
+ * Generates a base interface file for the specified REST interface using
+ * Micronaut annotations.
+ */]
+[template public genRestBaseInterfaceJavaFile(restInterface : Interface)]
+[file (restInterface.commonModulePath() + '/' + restInterface.genFilePath(), false, 'UTF-8')]
+package [restInterface.genPackageValue()/];
+
+[restInterface.genDefaultImportsForRestBaseInterface()/]
+
+/**
+ * This is the base REST interface for [restInterface.restBaseInterfaceJavaName()/].
+ * 
+ * @generated
+ */
+public interface [restInterface.restBaseInterfaceJavaName()/] {
+
+	[for (op : Operation | restInterface.getAllOperations())]
+	[op.genDocumentation() /]
+	[if (op.inputParameters()->size() = 0)]@Get[else]@Post[/if][op.genConstraintsIfPresent()/]
+	[op.genSignature() /];
+	
+	[/for]
+}
+[/file]
+[/template]
+
+

@@ -1,0 +1,71 @@
+[comment encoding = UTF-8 /]
+[module operationUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::constraintClassJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::javaTypeServices /]
+
+
+[**
+ * Generates all owned (not inherited) methods of a class.
+ */]
+[template public genAllOwnedOperations(class : Class)]
+[for (op : Operation | class.ownedOperation) separator ('\n')]
+[op.genDocumentation()/][op.genConstraintsIfPresent()/]
+[op.genVisibility()/][op.genSignature()/] {
+	[genToDoImplBlock()/]
+}
+[/for]
+[/template]
+
+
+[**
+ * Generates the signature of an operation, e.g.,
+ * "void copyName(String name, int start)"
+ */]
+[template public genSignature(op : Operation)]
+[op.getReturnTypeName()/] [op.name.toLowerFirst()/]([op.parameters()/])
+[/template]
+
+
+[**
+ * Generates the visibility modifier for an operation.
+ */]
+[template public genVisibility(op : Operation)]
+[if (op.visibility <> VisibilityKind::_package)][op.visibility.toString() /] [/if]
+[/template]
+
+
+[**
+ * Generates the documentation for an operation.
+ */]
+[template public genDocumentation(op : Operation)]
+/**
+ * Documentation of the method [op.name.toLowerFirst()/].
+ * [for (aComment : Comment | op.ownedComment)] [aComment._body/][/for]
+[for (aParameter : Parameter | op.ownedParameter) ? (aParameter.direction <> ParameterDirectionKind::return)]
+ * @param [aParameter.name/]
+[/for]
+[if (not op.type.oclIsUndefined())]
+ * @return
+[/if]
+ * 
+ * @generated
+ */
+[/template]
+
+[**
+ * Generates the default ToDo block with an UnsupportedOperationException.
+ */]
+[template public genToDoImplBlock(traceabilityContext : OclAny)]
+// ToDo: Implement this method.
+throw new UnsupportedOperationException("This method is not yet implemented");
+[/template]
+
+
+[**
+ * Generates the parameters list of an operation, e.g.,
+ * "String name, int start"
+ */]
+[template private parameters(anOperation : Operation)]
+[for (param : Parameter | anOperation.ownedParameter->reject(param : Parameter | param.direction = ParameterDirectionKind::return)) separator(', ')][param.getTypeName()/] [param.name.toLowerFirst()/][/for]
+[/template]

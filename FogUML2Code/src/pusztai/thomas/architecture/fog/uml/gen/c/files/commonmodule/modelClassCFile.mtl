@@ -1,0 +1,32 @@
+[comment encoding = UTF-8 /]
+[module modelClassCFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::headerUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::includeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::attributeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::operationUtils/]
+
+[**
+ * Generates the .c file for a model class.
+ */]
+[template public genModelClassCFile(modelClass : Class) {
+	commonModuleSrcPath : String = commonModulePath() + '/' + cSrcPath() + '/';
+	className : String = modelClass.modelClassCName();
+}]
+[file (commonModuleSrcPath + modelClass.modelClassCFilePath(), false, 'UTF-8')]
+
+[modelClass.genDefaultIncludesForModelClass(true)/]
+
+[modelClass.genConstructorDefinition(className)/]
+
+[modelClass.genDestructorDefinition(className)/]
+
+[modelClass.genAllPropertyAccessorDefinitions(className)/]
+
+[modelClass.genAllOwnedOperationDefinitions(className)/]
+
+
+[/file]
+[/template]

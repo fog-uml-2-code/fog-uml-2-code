@@ -1,0 +1,134 @@
+[comment encoding = UTF-8 /]
+[module callOperationHandlerJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::generic::activityRealizationUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::activityStateJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::javaTypeServices/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils/]
+
+[**
+ * Generates a handler class for a CallOperationAction.
+ */]
+[template public genCallOperationHandlerJava(node : CallOperationAction, activity : Activity) {
+	qualifiedClassName : String = node.qualifiedHandlerClassName(activity);
+	className : String = qualifiedClassName.tokenize('.')->last();
+	classFilePath : String = node.qualifiedHandlerClassName(activity).replaceAll('\\.', '/') + '.java';
+	qualifiedPackageName : String = qualifiedClassName.substring(1, qualifiedClassName.size() - className.size() - 1);
+}]
+[file (activity.realizingModulePath() + '/' + javaSrcPath() + '/' + classFilePath, false, 'UTF-8')]
+package [qualifiedPackageName/];
+
+import io.micronaut.context.annotation.Prototype;
+import io.micronaut.http.client.exceptions.HttpClientException;
+import javax.inject.Inject;
+import pusztai.thomas.architecture.fog.activity.realization.CallOperationActionHandler;
+import [activity.qualifiedActivityStateServiceClass()/];
+
+[if (node.operation.inputParameters()->size() > 1)]
+import [qualifiedPackageName + '.params.' + node.paramsClassName()/];
+[/if]
+[for (type : Type | node.getAllRequiredImports())]
+import [type.getQualifiedName() /];
+[/for]
+
+/**
+ * This is the CallOperationAction handler for [node.name/].
+ * 
+ * @generated
+ */
+@Prototype
+public class [className/] implements CallOperationActionHandler<[node.paramsClassName()/], [node.operation.returnTypeName()/]> {
+
+	[activity.genInjectedActivityStateServiceField()/]
+
+	/**
+	 * @generated
+	 * @return The parameter(s) that should be passed to the upcoming call of the operation.
+	 */
+	@Override
+	public [node.paramsClassName()/] assembleParameters() {
+		[genToDoImplBlock()/]
+	}
+
+	/**
+	 * Handles the return value of the operation.
+	 * @generated
+	 * @param result The return value of the last operation call.
+	 */
+	@Override
+	public void handleResult([node.operation.returnTypeName()/] result) {
+		[genToDoImplBlock()/]
+	}
+
+	/**
+	 * Handles an error, if one occurred while making the REST request.
+	 * @generated
+	 * @param error The exception describing the error.
+	 */
+	public void handleError(HttpClientException error) {
+		[genToDoImplBlock()/]
+	}
+
+}
+
+[/file]
+[/template]
+
+
+[template private paramsClassName(node : CallOperationAction) {
+	op : Operation = node.operation;
+	paramsCount : Integer = op.inputParameters()->size();
+}]
+[if (paramsCount > 1)][node.name.toUpperFirst() + 'Params'/][else][if (paramsCount = 1)][op.inputParameters()->first().getTypeName()/][else]Void[/if][/if]
+[/template]
+
+
+[template private returnTypeName(op : Operation)]
+[if (op.returnResult()->size() > 0)][op.getReturnTypeName()/][else]Void[/if]
+[/template]
+
+
+[template private genParameterSequenceClass(node : CallOperationAction, qualifiedHandlerPackage : String, activity : Activity) {
+	qualifiedParamsPackage : String = qualifiedHandlerPackage + '.params';
+	className : String = node.paramsClassName();
+	classFilePath : String = qualifiedParamsPackage.replaceAll('\\.', '/') + '/' + className + '.java';
+	op : Operation = node.operation;
+}]
+[file (activity.realizingModulePath() + '/' + javaSrcPath() + '/' + classFilePath, false, 'UTF-8')]
+package [qualifiedParamsPackage/];
+
+import pusztai.thomas.architecture.fog.activity.realization.ParameterSequenceBase;
+
+[for (type : Type | node.getAllRequiredImports())]
+import [type.getQualifiedName() /];
+[/for]
+
+/**
+ * This is the class for the input parameters for [node.name/].
+ * 
+ * @generated
+ */
+public class [className/] extends ParameterSequenceBase {
+
+	public [className/]() {
+		super([op.inputParameters()->size()/]);
+	}
+
+	[for (param : Parameter | op.inputParameters())]
+	public [param.getTypeName()/] get[param.name.toUpperFirst()/]() {
+		return ([param.getTypeName()/]) getParam([i - 1/]);	
+	}
+
+	public void set[param.name.toUpperFirst()/]([param.getTypeName()/] value) {
+		setParam([i - 1/], value);
+	}
+	[/for]
+
+}
+
+[/file]
+[/template]
+
+

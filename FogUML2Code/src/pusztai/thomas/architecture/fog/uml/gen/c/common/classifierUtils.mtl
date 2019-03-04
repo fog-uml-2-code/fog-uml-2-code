@@ -1,0 +1,41 @@
+[comment encoding = UTF-8 /]
+[module classifierUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[**
+ * Returns the C struct name for the specified model class.
+ */]
+[template public modelClassCName(modelClass : Class)]
+[modelClass.name.toUpperFirst()/]
+[/template]
+
+[**
+ * Returns the C struct name for the specified REST base interface.
+ */]
+[template public restBaseInterfaceCName(restInterface : Interface)]
+[restInterface.name.toUpperFirst()/]
+[/template]
+
+[**
+ * Returns the C struct name for the specified REST controller.
+ */]
+[template public restControllerCName(endpointClassifier : Classifier)]
+[endpointClassifier.name.toUpperFirst()/]
+[/template]
+
+[**
+ * Returns the C struct name for the specified REST client interface.
+ */]
+[template public restClientInterfaceCName(restInterface : Interface)]
+[restInterface.name.toUpperFirst()/]Client
+[/template]
+
+[**
+ * Returns the C struct name for the specified singleton service.
+ */]
+[template public serviceClassCName(service : Class)]
+[service.name.toUpperFirst()/]
+[/template]
+
+[template public activityRealizationApplicationClassName(activity : Activity)]
+Application
+[/template]

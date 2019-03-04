@@ -1,0 +1,60 @@
+[comment encoding = UTF-8 /]
+[module activityRealizationUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+
+[**
+ *  Gets the fully qualified name of the target classifier specified CallOperationAction.
+ */]
+[template public qualifiedTargetClassifierName(node : CallOperationAction, activity : Activity) {
+	targetLanguage : String = activity.getActivityRealization().getActivityRealizationTargetLanguage();
+    target : Classifier = node.operation.owner.oclAsType(Classifier);
+}]
+[if (targetLanguage = 'Java')][target.qualifiedTargetName()/][else][/if]
+[/template]
+
+[template private qualifiedTargetName(service : Class)]
+[service.genPackageValue() + '.' + service.serviceClassJavaName()/]
+[/template]
+
+[template private qualifiedTargetName(restInterface : Interface)]
+[restInterface.genPackageValue() + '.' + restInterface.restClientInterfaceJavaName()/]
+[/template]
+
+[template private qualifiedTargetName(target : Classifier)]
+[throwError('Only classes and Interfaces are supported arguments for qualifiedTargetName()')/]
+[/template]
+
+
+[**
+ *  Gets the fully qualified name of the handler class for the specified node.
+ */]
+[template public qualifiedHandlerClassName(node : ActivityNode, activity : Activity) {
+	realization : Package = activity.getActivityRealization();
+	targetLanguage : String = realization.getActivityRealizationTargetLanguage();
+}]
+[if (targetLanguage = 'Java')][realization.qualifiedJavaPackage() + '.handlers.' + node.handlerSubPackage() + node.getHandlerClassName(activity).toUpperFirst()/][else][/if]
+[/template]
+
+[template private handlerSubPackage(node : ActivityNode)]
+[''/]
+[/template]
+
+[template private handlerSubPackage(node : CallOperationAction)]
+operationcalls.
+[/template]
+
+[template private handlerSubPackage(node : OpaqueAction)]
+opaqueactions.
+[/template]
+
+[template private handlerSubPackage(node : DecisionNode)]
+decisions.
+[/template]
+
+[template private handlerSubPackage(node : AcceptEventAction)]
+acceptevents.
+[/template]

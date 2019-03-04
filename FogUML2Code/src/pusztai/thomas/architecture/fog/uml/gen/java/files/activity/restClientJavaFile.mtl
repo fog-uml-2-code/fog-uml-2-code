@@ -1,0 +1,38 @@
+[comment encoding = UTF-8 /]
+
+[module restClientJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::constraintClassJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+
+[**
+ * Generates a client interface file for the specified REST interface using
+ * Micronaut annotations.
+ */]
+[template public genRestClientJavaFile(restInterface : Interface, activity : Activity)]
+[file (activity.modulePath() + '/' + restInterface.genRestClientFilePath(), false, 'UTF-8')]
+package [restInterface.genPackageValue()/];
+
+[restInterface.genDefaultImportsForRestClient()/]
+
+/**
+ * This is the client REST interface for [restInterface.restBaseInterfaceJavaName()/].
+ * 
+ * @generated
+ */
+@Client('/[restInterface.name.toLowerCase()/]')
+public interface [restInterface.restClientInterfaceJavaName()/] extends [restInterface.restBaseInterfaceJavaName()/] {
+
+	[for (op : Operation | restInterface.getAllOperations())]
+	@Override[op.genConstraintsIfPresent()/]
+	[op.genSignature() /];
+	
+	[/for]
+}
+[/file]
+[/template]
+
+

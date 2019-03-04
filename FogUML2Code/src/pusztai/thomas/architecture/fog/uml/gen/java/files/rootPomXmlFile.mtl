@@ -1,0 +1,50 @@
+[comment encoding = UTF-8 /]
+[module rootPomXmlFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::mavenUtils /]
+
+[**
+ * Generates a pom.xml file for the common module.
+ */]
+[template public genRootPomXmlFile(model : Model)]
+[file (javaModulesPath() + '/pom.xml', false, 'UTF-8')]
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>[model.mavenGroupId()/]</groupId>
+  <artifactId>[model.name.toLowerCase()/]</artifactId>
+  <version>[model.mavenProjectVersion()/]</version>
+  <packaging>pom</packaging>
+  <properties>
+    [model.mavenCommonProperties()/]
+  </properties>
+  <modules>
+    <module>common</module>
+  [model.restControllerModules()/]
+  [model.activityRealizationModules()/]
+  </modules>
+</project>
+
+[/file]
+[/template]
+
+[template private restControllerModules(fogModel : Model)]
+[for (restInterface : Interface | fogModel.getAllRestInterfaces())]
+	[if (restInterface.getRealizingClasses()->size() > 0)]
+		[for (controller : Class | restInterface.getRealizingClasses())]
+		  [if controller.getRestControllerTargetLanguage() = 'Java']<module>[controller.mavenControllerModuleId()/]</module>[/if]
+		[/for]
+	[else]
+	  [if restInterface.getRestControllerTargetLanguage() = 'Java']<module>[restInterface.mavenControllerModuleId()/]</module>[/if]
+	[/if]
+[/for]
+[/template]
+
+[template private activityRealizationModules(fogModel : Model)]
+[for (activity : Activity | fogModel.getAllActivities())]
+	[if (not activity.getActivityRealization().oclIsUndefined() and activity.getActivityRealization().getActivityRealizationTargetLanguage() = 'Java')]
+	  <module>[activity.realizingModulePath().tokenize('/')->last()/]</module>
+	[/if]
+[/for]
+[/template]

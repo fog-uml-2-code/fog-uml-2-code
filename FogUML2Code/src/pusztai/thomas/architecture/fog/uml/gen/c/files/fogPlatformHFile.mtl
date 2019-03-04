@@ -1,0 +1,96 @@
+[comment encoding = UTF-8 /]
+[module fogPlatformHFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::fileUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::headerUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::properties::codeGenerationProperties/]
+
+[**
+ *  Generates a header file with typedefs for basic types and globally needed includes
+ *  for the module of the specified REST endpoint controller.
+ */]
+[template public genFogPlatformHFile(endpointClassifier : Classifier) {
+	modulePath : String = endpointClassifier.restEndpointControllerModulePath();
+}]
+[endpointClassifier.genFogPlatformHFile(modulePath)/]
+[/template]
+
+[**
+ *  Generates a header file with typedefs for basic types and globally needed includes
+ *  for the module of the specified activity realization.
+ */]
+[template public genFogPlatformHFile(realizedActivity : Activity) {
+	modulePath : String = realizedActivity.modulePath();
+}]
+[realizedActivity.genFogPlatformHFile(modulePath)/]
+[/template]
+
+
+[**
+ *  Generates a header file with typedefs for basic types and globally needed includes
+ *  for a specific module.
+ *  The module is defined either by the endpointClassifier (in case of a REST controller module)
+ *  or by the realizedActivity (in case of an activity realization).
+ */]
+[template private genFogPlatformHFile(classifierOrActivity: OclAny, modulePath : String) {
+	headerName : String = fogPlatformHFileName();
+	filePath : String = modulePath + '/' + cSrcPath() + '/' + platformHeadersFolderName() + '/' + fogPlatformHFileName();
+}]
+[file (filePath, false, 'UTF-8')]
+[headerName.includeGuardStart()/]
+
+#include <inttypes.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stdlib.h>
+
+/**
+ * These integer types have at least the specified number of bits.
+ */
+
+typedef int_least8_t int8;
+typedef int_least16_t int16;
+typedef int_least32_t int32;
+typedef int_least64_t int64;
+
+/**
+ * The include files and C99 also define the following types:
+ * - bool
+ * - wchar_t
+ * - float_t
+ * - double_t
+*/
+
+/**
+ * The following types are the most commonly used ones and are defined according 
+ * to the resources of the platform, e.g., on most platforms int_t will be defined as int32,
+ * but on certain microcontrollers int_t will be defined as int16 or maybe even int8.
+ */
+
+typedef [classifierOrActivity.getIntType()/] int_t;
+
+typedef wchar_t char_t;
+typedef char_t* string_t;
+
+typedef [classifierOrActivity.getRealTypeSetting().getRealType()/] real_t;
+
+[headerName.includeGuardEnd()/]
+
+[/file]
+[/template]
+
+[template private getIntType(classifierOrActivity : OclAny) {
+	isClassifier : Boolean = classifierOrActivity.oclIsKindOf(Classifier);
+}]
+int[if isClassifier][classifierOrActivity.oclAsType(Classifier).getSettingDefaultIntBits()/][else][classifierOrActivity.oclAsType(Activity).getSettingDefaultIntBits()/][/if]
+[/template]
+
+[template private getRealTypeSetting(classifierOrActivity : OclAny) {
+	isClassifier : Boolean = classifierOrActivity.oclIsKindOf(Classifier);
+}]
+[if isClassifier][classifierOrActivity.oclAsType(Classifier).getSettingSmallReal()/][else][classifierOrActivity.oclAsType(Activity).getSettingSmallReal()/][/if]
+[/template]
+
+[template private getRealType(smallReal : String)]
+[if smallReal = '0']float_t[else]double_t[/if]
+[/template]

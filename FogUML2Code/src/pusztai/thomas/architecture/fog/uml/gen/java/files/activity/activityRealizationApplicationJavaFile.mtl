@@ -1,0 +1,46 @@
+[comment encoding = UTF-8 /]
+[module activityRealizationApplicationJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+
+[**
+ * Generates the main Application.java file for the module with the specified activity's realization.
+ */]
+[template public genActivityRealizationApplicationJavaFile(activity : Activity) {
+	realization : Package = activity.getActivityRealization();
+	activityResourcePath : String = '/' + activity.actvitityJsonPath().tokenize('/')->last();
+}]
+[file (activity.realizingModulePath() + '/' + javaSrcPath() + realization.packagePath() + activity.activityRealizationApplicationClassName() + '.java', false, 'UTF-8')]
+package [realization.qualifiedJavaPackage()/];
+
+import io.micronaut.context.event.StartupEvent;
+import io.micronaut.runtime.Micronaut;
+import io.micronaut.runtime.event.annotation.EventListener;
+import javax.inject.Inject;
+import pusztai.thomas.architecture.fog.activity.realization.execution.ActivityExecutionManager;
+import pusztai.thomas.architecture.fog.activity.realization.dto.ActivityInfoDto;
+
+
+public class Application {
+
+	@Inject
+	private ActivityExecutionManager executionManager;
+
+	public static void main(String['[]'/] args) {
+		Micronaut.run(Application.class);
+	}
+
+	@EventListener
+    private void onStartup(StartupEvent event) {
+        ActivityInfoDto activityInfo = ActivityInfoDto.loadFromResource("[activityResourcePath/]");
+		this.executionManager.loadActivity(activityInfo);
+		this.executionManager.startActivity();
+    }
+
+}
+
+[/file]
+[/template]

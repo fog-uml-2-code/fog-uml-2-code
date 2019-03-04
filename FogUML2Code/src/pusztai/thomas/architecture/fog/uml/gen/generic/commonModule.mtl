@@ -1,0 +1,49 @@
+[comment encoding = UTF-8 /]
+[module commonModule('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::commonmodule::commonModuleCMakeListsFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::commonModulePomXmlFile /]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::commonmodule::modelClassCFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::commonmodule::modelClassHFiles/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::commonmodule::restBaseInterfaceHFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::modelClassJavaFile /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::restBaseInterfaceJavaFile /]
+
+[** 
+ * Generates the common module in all target languages.
+ */]
+[template public genCommonModule(fogModel : Model)]
+
+[fogModel.genCommonModuleC()/]
+[fogModel.genCommonModuleJava()/]
+
+[/template]
+
+
+
+[template private genCommonModuleC(fogModel : Model)]
+[fogModel.genCommonModuleCMakeLists()/]
+[for (modelClass : Class | fogModel.getAllModelClasses())]
+	[modelClass.genModelClassHFiles()/]
+	[modelClass.genModelClassCFile()/]
+[/for]
+[for (restInterface : Interface | fogModel.getAllRestInterfaces())]
+	[restInterface.genRestBaseInterfaceHFile()/]
+[/for]
+[/template]
+
+
+
+[template private genCommonModuleJava(fogModel : Model)]
+
+[fogModel.genCommonModulePomXmlFile()/]
+[for (modelClass : Class | fogModel.getAllModelClasses())]
+	[modelClass.genModelClassJavaFile()/]
+[/for]
+
+[for (restInterface : Interface | fogModel.getAllRestInterfaces())]
+	[restInterface.genRestBaseInterfaceJavaFile()/]
+[/for]
+
+[/template]

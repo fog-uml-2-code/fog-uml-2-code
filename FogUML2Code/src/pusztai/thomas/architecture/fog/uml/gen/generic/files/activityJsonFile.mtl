@@ -1,0 +1,158 @@
+[comment encoding = UTF-8 /]
+[module activityJsonFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::generic::activityRealizationHandlers/]
+[import pusztai::thomas::architecture::fog::uml::gen::generic::activityRealizationUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+
+[**
+ *  Generates a JSON file for the specified activity.
+ */]
+[template public genActivityJson(activity : Activity, realization : Package)]
+[file (activity.getActivityJsonPath(realization), false, 'UTF-8')]
+{
+    "activity": {
+        "name": "[activity.name/]",
+        "initialNode": "[activity.getActivityInitialNode().getActivityNodeId(activity)/]",
+        "nodes": ['['/]
+            [for (node : ActivityNode | activity.node)  separator (',\n') after ('\n')]
+            [node.genActivityNode(activity)/][/for]
+        [']'/]
+    }
+[comment]
+ToDo: Generate a JSON representation of the activity:
+- Serialize all ActivityNodes to JSON
+- Create an ExecutorClass for each ActivityNode type
+- For each CallOperationAction (or similar) generate a result handler method
+  and call that with the result. There I can update the application state, including any last updated timestamps.
+- For each DecisionNode condition, generate and call a decision method.
+[/comment]
+}
+[/file]
+[/template]
+
+[template private genActivityNode(node : ActivityNode, activity : Activity)]
+{
+    [node.nodeHeader(activity, 'Error: NodeType not recognized')/]
+}
+[/template]
+
+
+[template private genActivityNode(node : CallOperationAction, activity : Activity)]
+{
+    [node.nodeHeader(activity, 'CallOperationAction')/],
+[comment]
+// For each NodeType define an interface in the activity-realization library and add the methods necessary to handle that node (e.g.,  getOperationCallParams() and handleResult())
+// Then generate a handler class for each node that needs one and reference it in the JSON.
+// Execution engine needs to take Micronaut BeanContext from application as a parameter, so that it can look up the instances of the client classes for the REST Interfaces:
+// 1. Look up the Class<T> for the REST interface
+// 2. Use the BeanContext to get an instance.
+[/comment]
+    "target": "[node.qualifiedTargetClassifierName(activity)/]",
+    "operation": "[node.operation.name.toLowerFirst()/]",
+    "handler": "[node.qualifiedHandlerClassName(activity)/]",[node.genHandlerClass(activity)/]
+    "nextNode": [node.outgoing->singleActivityNodeId(activity)/]
+}[/template]
+
+
+[template private genActivityNode(node : OpaqueAction, activity : Activity)]
+{
+    [node.nodeHeader(activity, 'OpaqueAction')/],
+    "handler": "[node.qualifiedHandlerClassName(activity)/]",[node.genHandlerClass(activity)/]
+    "nextNode": [node.outgoing->singleActivityNodeId(activity)/]
+}[/template]
+
+
+[template private genActivityNode(node : DecisionNode, activity : Activity) {
+	edgesWithConditions : Set(ActivityEdge) = node.outgoing->select(edge | edge.getEdgeDecisionMethodName() <> 'else');
+	elseEdge : ActivityEdge = node.outgoing->any(edge | edge.getEdgeDecisionMethodName() = 'else');
+}]
+{
+    [node.nodeHeader(activity, 'DecisionNode')/],
+    "handler": "[node.qualifiedHandlerClassName(activity)/]",[node.genHandlerClass(activity)/]
+    "conditions": ['['/]
+        [for (edge : ActivityEdge | edgesWithConditions) separator (',\n') after ('\n')]
+        {
+            "condition": "[edge.getEdgeDecisionMethodName()/]",
+            "nextNode": [edge.target.nodeIdValue(activity)/]
+        }[/for]
+    [']'/],
+    "elseNextNode": [if (not elseEdge.oclIsUndefined())][elseEdge.target.nodeIdValue(activity)/][else]null[/if]
+}[/template]
+
+
+[template private genActivityNode(node : InitialNode, activity : Activity)]
+{
+    [node.nodeHeader(activity, 'InitialNode')/],
+    "nextNode": [node.outgoing->singleActivityNodeId(activity)/]
+}[/template]
+
+
+[template private genActivityNode(node : AcceptEventAction, activity : Activity)]
+{
+    [if (not node.trigger.event->selectByKind(TimeEvent)->isEmpty())]
+    [node.nodeHeader(activity, 'AcceptTimeEventAction')/],
+    "durationMsec": [node.parseDurationToMsec()/],
+    [else]
+    [node.nodeHeader(activity, 'AcceptEventAction')/],
+	"handler": "[node.qualifiedHandlerClassName(activity)/]",[node.genHandlerClass(activity)/]
+    [/if]
+    "nextNode": [node.outgoing->singleActivityNodeId(activity)/]
+}[/template]
+
+
+[template private genActivityNode(node : ForkNode, activity : Activity)]
+{
+    [node.nodeHeader(activity, 'ForkNode')/],
+    "nextNodes": ['['/]
+        [for (nextNode : ActivityNode | node.outgoing.target) separator (',\n') after ('\n')]
+        [nextNode.nodeIdValue(activity)/][/for]
+    [']'/]
+}[/template]
+
+
+[template private genActivityNode(node : MergeNode, activity : Activity)]
+{
+    [node.nodeHeader(activity, 'MergeNode')/],
+    "prevNodes": ['['/]
+        [for (prevNode : ActivityNode | node.incoming.source) separator (',\n') after ('\n')]
+        [prevNode.nodeIdValue(activity)/][/for]
+    [']'/],
+    "nextNode": [node.outgoing->singleActivityNodeId(activity)/]
+}[/template]
+
+
+[template private genActivityNode(node : JoinNode, activity : Activity)]
+{
+    [node.nodeHeader(activity, 'JoinNode')/],
+    "prevNodes": ['['/]
+        [for (prevNode : ActivityNode | node.incoming.source) separator (',\n') after ('\n')]
+        [prevNode.nodeIdValue(activity)/][/for]
+    [']'/],
+    "nextNode": [node.outgoing->singleActivityNodeId(activity)/]
+}[/template]
+
+
+[template private singleActivityNodeId(outgoingEdges : Set(ActivityEdge), activity : Activity)]
+[if (outgoingEdges->size() = 1)][outgoingEdges.target.nodeIdValue(activity)/][else][throwError('Expected one outgoing ControlFlow, but found ' + outgoingEdges->size())/][/if]
+[/template]
+
+
+[template private getActivityJsonPath(activity : Activity, realization : Package) {
+	targetLanguage : String = realization.getActivityRealizationTargetLanguage();
+}]
+[if (targetLanguage = 'Java')][activity.actvitityJsonPath()/][/if][if (targetLanguage = 'C')][/if]
+[/template]
+
+
+[template private nodeHeader(node : ActivityNode, activity : Activity, type : String)]
+"id": [node.nodeIdValue(activity)/],
+"type": "[type/]",
+"name": "[node.qualifiedName/]"
+[/template]
+
+
+[template private nodeIdValue(node : ActivityNode, activity : Activity)]
+"[node.getActivityNodeId(activity)/]"
+[/template]

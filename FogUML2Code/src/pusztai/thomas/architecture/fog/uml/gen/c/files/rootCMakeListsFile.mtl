@@ -1,0 +1,40 @@
+[comment encoding = UTF-8 /]
+[module rootCMakeListsFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::cMakeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::fileUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+
+[**
+ *  Generates the root CMakeLists.txt
+ */]
+[template public genRootCMakeLists(fogModel : Model) {
+	filePath : String = cModulesPath() + '/' + cMakeListsFileName();
+}]
+[file (filePath, false, 'UTF-8')]
+[genCMakeMinVersionRequired()/]
+
+project("[fogModel.name/]")
+
+[genCMakeSetCStandard()/]
+
+# Include sub-projects.
+[for (restInterface : Interface | fogModel.getAllRestInterfaces())]
+[if (restInterface.getRealizingClasses()->size() > 0)]
+[for (controller : Class | restInterface.getRealizingClasses())]
+	[controller.addCMakeSubdirectoryIfTargetIsC()/]
+[/for]
+[else]
+[restInterface.addCMakeSubdirectoryIfTargetIsC()/]
+[/if]
+[/for]
+
+[/file]
+[/template]
+
+[template private addCMakeSubdirectoryIfTargetIsC(endpointClassifier : Classifier) {
+	targetLanguage : String = endpointClassifier.getRestControllerTargetLanguage();
+	realizedActivity : Activity = endpointClassifier.getRealizedActivity();
+}]
+[if targetLanguage = 'C' and realizedActivity.oclIsUndefined()]add_subdirectory("[endpointClassifier.restEndpointControllerModulePath().tokenize('/')->last()/]")[/if]
+[/template]

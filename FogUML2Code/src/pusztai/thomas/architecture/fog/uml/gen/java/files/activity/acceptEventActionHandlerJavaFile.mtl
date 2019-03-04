@@ -1,0 +1,49 @@
+[comment encoding = UTF-8 /]
+[module acceptEventActionHandlerJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::generic::activityRealizationUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::activityStateJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils/]
+
+[**
+ * Generates a handler class for an AcceptEventAction.
+ */]
+[template public genAcceptEventActionHandlerJava(node : AcceptEventAction, activity : Activity) {
+	qualifiedClassName : String = node.qualifiedHandlerClassName(activity);
+	className : String = qualifiedClassName.tokenize('.')->last();
+	classFilePath : String = node.qualifiedHandlerClassName(activity).replaceAll('\\.', '/') + '.java';
+	qualifiedPackageName : String = qualifiedClassName.substring(1, qualifiedClassName.size() - className.size() - 1);
+}]
+[file (activity.realizingModulePath() + '/' + javaSrcPath() + '/' + classFilePath, false, 'UTF-8')]
+package [qualifiedPackageName/];
+
+import io.micronaut.context.annotation.Prototype;
+import javax.inject.Inject;
+import pusztai.thomas.architecture.fog.activity.realization.AcceptEventActionHandler;
+
+import [activity.qualifiedActivityStateServiceClass()/];
+
+/**
+ * This is the AcceptEventAction handler for [node.name/].
+ * 
+ * @generated
+ */
+@Prototype
+public class [className/] implements AcceptEventActionHandler {
+
+	[activity.genInjectedActivityStateServiceField()/]
+
+	/**
+	 * Waits for the event and then receives the desired event.
+	 * @generated
+	 */
+	@Override
+	public void waitForAndAcceptEvent() {
+		[genToDoImplBlock()/]
+	}
+
+}
+
+[/file]
+[/template]

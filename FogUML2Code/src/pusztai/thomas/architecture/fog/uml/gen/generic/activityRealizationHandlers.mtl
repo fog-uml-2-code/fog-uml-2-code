@@ -1,0 +1,57 @@
+[comment encoding = UTF-8 /]
+[module activityRealizationHandlers('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::generic::activityRealizationUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::acceptEventActionHandlerJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::callOperationHandlerJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::decisionNodeHandlerJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::opaqueActionHandlerJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+
+[**
+ *  Generate a handler class for the specified CallOperationAction.
+ */]
+[template public genHandlerClass(node : CallOperationAction, activity : Activity) {
+	targetLanguage : String = activity.getActivityRealization().getActivityRealizationTargetLanguage();
+}]
+[if (targetLanguage = 'Java')]
+[node.genCallOperationHandlerJava(activity)/]
+[/if]
+[/template]
+
+
+[**
+ *  Generate a handler class for the specified OpaqueAction.
+ */]
+[template public genHandlerClass(node : OpaqueAction, activity : Activity) {
+	targetLanguage : String = activity.getActivityRealization().getActivityRealizationTargetLanguage();
+}]
+[if (targetLanguage = 'Java')]
+[node.genOpaqueActionHandlerJava(activity)/]
+[/if]
+[/template]
+
+
+[**
+ *  Generate a handler class for the specified DecisionNode.
+ */]
+[template public genHandlerClass(node : DecisionNode, activity : Activity) {
+	targetLanguage : String = activity.getActivityRealization().getActivityRealizationTargetLanguage();
+}]
+[if (targetLanguage = 'Java')]
+[node.genDecisionNodeHandlerJava(activity)/]
+[/if]
+[/template]
+
+
+[**
+ *  Generate a handler class for the specified AcceptEventAction.
+ */]
+[template public genHandlerClass(node : AcceptEventAction, activity : Activity) {
+	targetLanguage : String = activity.getActivityRealization().getActivityRealizationTargetLanguage();
+}]
+[if (targetLanguage = 'Java')]
+[node.genAcceptEventActionHandlerJava(activity)/]
+[/if]
+[/template]

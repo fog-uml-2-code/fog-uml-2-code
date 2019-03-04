@@ -1,0 +1,33 @@
+[comment encoding = UTF-8 /]
+[module modelClassJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::attributeUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::constraintClassJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+
+[**
+ * Generates a class for a model type.
+ */]
+[template public genModelClassJavaFile(modelClass : Class)]
+[file (modelClass.commonModulePath() + '/' + modelClass.genFilePath(), false, 'UTF-8')]
+package [modelClass.genPackageValue()/];
+
+[modelClass.genDefaultImportsForModelClass()/]
+
+/**
+ * Describes a [modelClass.name.toUpperFirst()/] model type.
+ * 
+ * @generated
+ */[modelClass.genConstraintsIfPresent()/]
+public class [modelClass.name.toUpperFirst()/] {
+
+	[modelClass.genAllPropertyFields()/]
+	[modelClass.genAllPropertyAccessors()/]
+	[modelClass.genAllOwnedOperations()/]
+}
+[/file]
+[/template]
+
+

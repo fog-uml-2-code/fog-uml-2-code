@@ -1,0 +1,28 @@
+[comment encoding = UTF-8 /]
+[module cTypeServices('http://www.eclipse.org/uml2/5.0.0/UML')/]
+
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+
+[query public getAllRequiredImports(classifier : Classifier) : Sequence(Type)
+	= classifier.getAllRequiredImports(classifier.getAllAttributesWithAssociations()->asSequence())
+/]
+
+[query public getAllRequiredImports(action : CallOperationAction) : Sequence(Type)
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.JavaTypeServices', 'getAllRequiredImports(org.eclipse.uml2.uml.CallOperationAction)', Sequence{action})
+/]
+
+[query public getQualifiedName(type : Type) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.CTypeServices', 'getQualifiedName(org.eclipse.uml2.uml.Type)', Sequence{type})
+/]
+
+[query public getTypeName(typedElement : TypedElement) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.CTypeServices', 'getTypeName(org.eclipse.uml2.uml.TypedElement)', Sequence{typedElement})
+/]
+
+[query public getReturnTypeName(op : Operation) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.CTypeServices', 'getReturnTypeName(org.eclipse.uml2.uml.Operation)', Sequence{op})
+/]
+
+[query private getAllRequiredImports(classifier : Classifier, attributes : Sequence(Property)) : Sequence(Type)
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.CTypeServices', 'getAllRequiredImports(org.eclipse.uml2.uml.Classifier, java.util.List)', Sequence{classifier, attributes})
+/]

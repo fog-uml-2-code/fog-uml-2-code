@@ -1,0 +1,47 @@
+[comment encoding = UTF-8 /]
+[module restBaseInterfaceHFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::headerUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::includeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::attributeUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::operationUtils/]
+
+[**
+ * Generates the .h files for a REST interface.
+ */]
+[template public genRestBaseInterfaceHFile(restInterface : Interface) {
+	commonModuleSrcPath : String = commonModulePath() + '/' + cSrcPath() + '/';
+}]
+[restInterface.genRestBaseInterfacePublicHFile(commonModuleSrcPath)/]
+[/template]
+
+[template private genRestBaseInterfacePublicHFile(restInterface : Interface, commonModuleSrcPath : String) {
+	interfaceName : String = restInterface.restBaseInterfaceCName();
+}]
+[file (commonModuleSrcPath + restInterface.restBaseInterfaceHeaderFilePath(), false, 'UTF-8')]
+[interfaceName.includeGuardStart()/]
+
+[restInterface.genDefaultIncludesForRestBaseInterface(false)/]
+
+/**
+ * [interfaceName/] REST interface.
+ */
+typedef struct [interfaceName/]* [interfaceName/];
+
+[restInterface.genConstructorDeclaration(interfaceName)/]
+
+[restInterface.genDestructorDeclaration(interfaceName)/]
+
+[for (op : Operation | restInterface.getAllOperations())]
+[op.genRestOpDeclaration(interfaceName)/]
+
+[/for]
+
+[interfaceName.includeGuardEnd()/]
+
+[/file]
+[/template]
+
+

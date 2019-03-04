@@ -1,0 +1,58 @@
+[comment encoding = UTF-8 /]
+[module activityRealizations('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::generic::files::activityJsonFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::activityRealizationApplicationJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::activityRealizationPomXmlFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::activityStateJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::restcontroller::restControllerApplicationJavaFile /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::restcontroller::restControllerJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::restClientJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::activity::serviceClassJavaFile/]
+
+[**
+ *  Generate one module for each activity realization.
+ */]
+[template public genActivityRealizations(fogModel : Model)]
+
+[for (activity : Activity | fogModel.getAllActivities())]
+	[if (not activity.getActivityRealization().oclIsUndefined())]
+		[activity.genActivityRealizationGeneric(activity.getActivityRealization(), fogModel)/]
+	[/if]
+[/for]
+
+[/template]
+
+
+[template public genActivityRealizationGeneric(activity : Activity, realization : Package, fogModel : Model) {
+	targetLanguage : String = realization.getActivityRealizationTargetLanguage();
+}]
+[if (targetLanguage = 'Java')]
+	[activity.genActivityRealizationJava(realization, fogModel)/]
+[/if]
+[if (targetLanguage = 'C')]
+	[activity.genActivityRealizationC(realization, fogModel)/]
+[/if]
+
+[activity.genActivityJson(realization)/]
+[/template]
+
+
+[template private genActivityRealizationC(activity : Activity, realization : Package, fogModel : Model)]
+[/template]
+
+
+[template private genActivityRealizationJava(activity : Activity, realization : Package, fogModel : Model)]
+[activity.genActivityRealizationPomXmlFile(fogModel)/]
+[activity.genActivityRealizationApplicationJavaFile()/]
+[activity.genActivityStateServiceJava()/]
+
+[for (restInterface : Interface | activity.getAllInvokedInterfaces())]
+	[restInterface.genRestClientJavaFile(activity)/]
+[/for]
+
+[for (service : Class | activity.getAllServiceClasses())]
+	[service.genServiceClassJavaFile(activity)/]
+[/for]
+[/template]

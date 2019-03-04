@@ -1,0 +1,52 @@
+[comment encoding = UTF-8 /]
+[module restControllerJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::constraintClassJavaFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::attributeUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+
+[**
+ * Generates a controller class file for the specified REST interface using
+ * Micronaut annotations.
+ */]
+[template public genRestControllerJavaFile(restInterface : Interface, controller : Class) {
+	endpointClassifier : Classifier = getDefiningClassifier(restInterface, controller);
+}]
+[file (endpointClassifier.restEndpointControllerModulePath() + '/' + endpointClassifier.genFilePath(), false, 'UTF-8')]
+package [endpointClassifier.genPackageValue()/];
+
+[restInterface.genDefaultImportsForRestController(controller)/]
+
+/**
+ * This is the REST controller for [restInterface.restBaseInterfaceJavaName()/].
+ * 
+ * @generated
+ */
+@Controller('/[restInterface.name.toLowerCase()/]')
+public class [endpointClassifier.name.toUpperFirst()/] implements [restInterface.restBaseInterfaceJavaName()/] {
+
+	[if (not controller.oclIsUndefined())]
+	[controller.genAllPropertyFields()/]
+	[controller.genAllPropertyAccessors()/]
+	[/if]
+
+	[for (op : Operation | restInterface.getAllOperations())]
+	@Override[op.genConstraintsIfPresent()/]
+	public [op.genSignature() /] {
+		// ToDo: Implement this method.
+	}
+	
+	[/for]
+
+	[if (not controller.oclIsUndefined())]
+	[controller.genAllOwnedOperations()/]
+	[/if]
+}
+[/file]
+[/template]
+
+

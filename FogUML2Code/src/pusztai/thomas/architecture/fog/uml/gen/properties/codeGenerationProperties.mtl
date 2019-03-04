@@ -1,0 +1,70 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module properties.
+ */]
+[module codeGenerationProperties('http://www.eclipse.org/uml2/4.0.0/UML')]
+
+
+[**
+ * The setting that tells the device to go into sleep mode for n milliseconds after each request (0 means no sleep).
+ * @param classifier The classifier that determines the module.
+ */]
+[template public getSettingSleepMsecAfterEachRequest(classifier : Classifier)]
+[classifier.name.getCodeGenProperty('sleep_after_each_request_for_msec')/]
+[/template]
+
+[**
+ * The setting that tells the device to go into sleep mode for n milliseconds after each request (0 means no sleep).
+ * @param activity The activity that determines the module.
+ */]
+[template public getSettingSleepMsecAfterEachRequest(activity : Activity)]
+[activity.name.getCodeGenProperty('sleep_after_each_request_for_msec')/]
+[/template]
+
+
+[**
+ * The setting that defines the number of bits of the default integer data type.
+ * @param classifier The classifier that determines the module.
+ */]
+[template public getSettingDefaultIntBits(classifier : Classifier)]
+[classifier.name.getCodeGenProperty('default_int_bits')/]
+[/template]
+
+[**
+ * The setting that defines the number of bits of the default integer data type.
+ * @param activity The activity that determines the module.
+ */]
+[template public getSettingDefaultIntBits(activity : Activity)]
+[activity.name.getCodeGenProperty('default_int_bits')/]
+[/template]
+
+
+[**
+ * The setting that defines whether single precision floating point numbers should be used or double precision floats.
+ * @param classifier The classifier that determines the module.
+ */]
+[template public getSettingSmallReal(classifier : Classifier)]
+[classifier.name.getCodeGenProperty('small_real')/]
+[/template]
+
+[**
+ * The setting that defines whether single precision floating point numbers should be used or double precision floats.
+ * @param activity The activity that determines the module.
+ */]
+[template public getSettingSmallReal(activity : Activity)]
+[activity.name.getCodeGenProperty('small_real')/]
+[/template]
+
+
+[template private getCodeGenProperty(deviceName : String, property : String) {
+	fullPropertyName : String = 'codegen.' + deviceName.toLowerCase() + '.' + property;
+	propertyValue : String = getProperty(fullPropertyName);
+}]
+[if (propertyValue <> '')][propertyValue/][else][getCodeGenDefaultProperty(property)/][/if]
+[/template]
+
+[template private getCodeGenDefaultProperty(property : String) {
+	fullPropertyName : String = 'codegen.default.' + property;
+}]
+[getProperty(fullPropertyName)/]
+[/template]

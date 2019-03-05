@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Acceleo FogUML2Code Module IDE Plug-in
-Bundle-SymbolicName: pusztai.thomas.architecture.fog.uml.gen.ui;singleton:=true
+Bundle-SymbolicName: FogUML2Code.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: pusztai.thomas.architecture.fog.uml.gen.ui.Activator
 Bundle-Vendor: Thomas Pusztai

@@ -67,7 +67,7 @@ public class GenerateAll {
 	 *            This will be used to display progress information to the user.
 	 * @throws IOException
 	 *             Thrown when the output cannot be saved.
-	 * @generated
+	 * @generated NOT
 	 */
 	public void doGenerate(IProgressMonitor monitor) throws IOException {
 		if (!targetFolder.getLocation().toFile().exists()) {
@@ -80,48 +80,6 @@ public class GenerateAll {
 		String generationID = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("FogUML2Code", "pusztai.thomas.architecture.fog.uml.gen.main.FogUml2Code", modelURI.toString(), targetFolder.getFullPath().toString(), new ArrayList<String>());
 		gen0.setGenerationID(generationID);
 		gen0.doGenerate(BasicMonitor.toMonitor(monitor));
-			
-		EObject model = gen0.getModel();
-		if (model != null) {
-				
-			
-			monitor.subTask("Loading...");
-			pusztai.thomas.architecture.fog.uml.gen.services.CConstraintServices gen1 = new pusztai.thomas.architecture.fog.uml.gen.services.CConstraintServices(model, targetFolder.getLocation().toFile(), arguments);
-			monitor.worked(1);
-			generationID = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("FogUML2Code", "pusztai.thomas.architecture.fog.uml.gen.services.CConstraintServices", modelURI.toString(), targetFolder.getFullPath().toString(), new ArrayList<String>());
-			gen1.setGenerationID(generationID);
-			gen1.doGenerate(BasicMonitor.toMonitor(monitor));
-			
-			monitor.subTask("Loading...");
-			pusztai.thomas.architecture.fog.uml.gen.services.CTypeServices gen2 = new pusztai.thomas.architecture.fog.uml.gen.services.CTypeServices(model, targetFolder.getLocation().toFile(), arguments);
-			monitor.worked(1);
-			generationID = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("FogUML2Code", "pusztai.thomas.architecture.fog.uml.gen.services.CTypeServices", modelURI.toString(), targetFolder.getFullPath().toString(), new ArrayList<String>());
-			gen2.setGenerationID(generationID);
-			gen2.doGenerate(BasicMonitor.toMonitor(monitor));
-			
-			monitor.subTask("Loading...");
-			pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices gen3 = new pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices(model, targetFolder.getLocation().toFile(), arguments);
-			monitor.worked(1);
-			generationID = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("FogUML2Code", "pusztai.thomas.architecture.fog.uml.gen.services.FogUmlServices", modelURI.toString(), targetFolder.getFullPath().toString(), new ArrayList<String>());
-			gen3.setGenerationID(generationID);
-			gen3.doGenerate(BasicMonitor.toMonitor(monitor));
-			
-			monitor.subTask("Loading...");
-			pusztai.thomas.architecture.fog.uml.gen.services.JavaConstraintServices gen4 = new pusztai.thomas.architecture.fog.uml.gen.services.JavaConstraintServices(model, targetFolder.getLocation().toFile(), arguments);
-			monitor.worked(1);
-			generationID = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("FogUML2Code", "pusztai.thomas.architecture.fog.uml.gen.services.JavaConstraintServices", modelURI.toString(), targetFolder.getFullPath().toString(), new ArrayList<String>());
-			gen4.setGenerationID(generationID);
-			gen4.doGenerate(BasicMonitor.toMonitor(monitor));
-			
-			monitor.subTask("Loading...");
-			pusztai.thomas.architecture.fog.uml.gen.services.JavaTypeServices gen5 = new pusztai.thomas.architecture.fog.uml.gen.services.JavaTypeServices(model, targetFolder.getLocation().toFile(), arguments);
-			monitor.worked(1);
-			generationID = org.eclipse.acceleo.engine.utils.AcceleoLaunchingUtil.computeUIProjectID("FogUML2Code", "pusztai.thomas.architecture.fog.uml.gen.services.JavaTypeServices", modelURI.toString(), targetFolder.getFullPath().toString(), new ArrayList<String>());
-			gen5.setGenerationID(generationID);
-			gen5.doGenerate(BasicMonitor.toMonitor(monitor));
-		}
-			
-		
 	}
 
 }

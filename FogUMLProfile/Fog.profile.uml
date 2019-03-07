@@ -1,6 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Profile xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_64pWQAB7Eemhcc6V9EGs0g" name="Fog" URI="http:///pusztai/thomas/architecture/fog/1.1" metamodelReference="_EFabQACREemhcc6V9EGs0g">
   <eAnnotations xmi:id="_na_QoACwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <contents xmi:type="ecore:EPackage" xmi:id="_mzC3EED_Eemck8s7R8OXew" name="Fog" nsURI="http:///pusztai/thomas/architecture/fog/1.1" nsPrefix="Fog">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_mzC3EUD_Eemck8s7R8OXew" name="FogDevice">
+        <eAnnotations xmi:id="_mzC3EkD_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Py23oACCEemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_mzC3E0D_Eemck8s7R8OXew" name="cpu" ordered="false" eType="_mzC3K0D_Eemck8s7R8OXew"/>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_mzC3FUD_Eemck8s7R8OXew" name="cpuCores" ordered="false">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_mzC3F0D_Eemck8s7R8OXew" name="cpuClockMhz" ordered="false">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_mzC3GUD_Eemck8s7R8OXew" name="eepromKb" ordered="false">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_mzC3G0D_Eemck8s7R8OXew" name="ramKb" ordered="false">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Real"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_mzC3HUD_Eemck8s7R8OXew" name="flashStorageKb" ordered="false">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_mzC3H0D_Eemck8s7R8OXew" name="batteryMAh" ordered="false">
+          <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/uml2/5.0.0/Types#//Integer"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="_mzC3IUD_Eemck8s7R8OXew" name="targetLanguage" ordered="false" lowerBound="1" eType="_mzC3NED_Eemck8s7R8OXew"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3I0D_Eemck8s7R8OXew" name="base_Interface" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3JUD_Eemck8s7R8OXew" name="base_Class" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3J0D_Eemck8s7R8OXew" name="base_Device" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Device"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3KUD_Eemck8s7R8OXew" name="base_Package" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_mzC3K0D_Eemck8s7R8OXew" name="CpuType">
+        <eAnnotations xmi:id="_mzC3LED_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_kO9IYACCEemhcc6V9EGs0g"/>
+        <eLiterals xmi:id="_mzC3LUD_Eemck8s7R8OXew" name="AVR_8bit"/>
+        <eLiterals xmi:id="_mzC3LkD_Eemck8s7R8OXew" name="ARM_32bit" value="1"/>
+        <eLiterals xmi:id="_mzC3L0D_Eemck8s7R8OXew" name="ARM_64bit" value="2"/>
+        <eLiterals xmi:id="_mzC3MED_Eemck8s7R8OXew" name="MIPS_32bit" value="3"/>
+        <eLiterals xmi:id="_mzC3MUD_Eemck8s7R8OXew" name="MIPS_64bit" value="4"/>
+        <eLiterals xmi:id="_mzC3MkD_Eemck8s7R8OXew" name="x86_32bit" value="5"/>
+        <eLiterals xmi:id="_mzC3M0D_Eemck8s7R8OXew" name="x86_64bit" value="6"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EEnum" xmi:id="_mzC3NED_Eemck8s7R8OXew" name="TargetLanguage">
+        <eAnnotations xmi:id="_mzC3NUD_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_t-9A0ACYEemhcc6V9EGs0g"/>
+        <eLiterals xmi:id="_mzC3NkD_Eemck8s7R8OXew" name="C"/>
+        <eLiterals xmi:id="_mzC3N0D_Eemck8s7R8OXew" name="CPlusPlus" value="1"/>
+        <eLiterals xmi:id="_mzC3OED_Eemck8s7R8OXew" name="Java" value="2"/>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_mzC3OUD_Eemck8s7R8OXew" name="DataModel">
+        <eAnnotations xmi:id="_mzC3OkD_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_tbUXAACSEemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3O0D_Eemck8s7R8OXew" name="base_Class" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3PUD_Eemck8s7R8OXew" name="base_Package" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_mzC3P0D_Eemck8s7R8OXew" name="RESTEndpoint">
+        <eAnnotations xmi:id="_mzC3QED_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_kF3FgAB8Eemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3QUD_Eemck8s7R8OXew" name="base_Interface" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_mzC3Q0D_Eemck8s7R8OXew" name="RESTController">
+        <eAnnotations xmi:id="_mzC3RED_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_k8lQIACSEemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3RUD_Eemck8s7R8OXew" name="base_Class" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_mzC3R0D_Eemck8s7R8OXew" name="ActivityRealization">
+        <eAnnotations xmi:id="_mzC3SED_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_UaEIwACBEemhcc6V9EGs0g"/>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3SUD_Eemck8s7R8OXew" name="base_Class" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Class"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3S0D_Eemck8s7R8OXew" name="base_Interface" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Interface"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3TUD_Eemck8s7R8OXew" name="base_Package" ordered="false">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Package"/>
+        </eStructuralFeatures>
+        <eStructuralFeatures xmi:type="ecore:EReference" xmi:id="_mzC3T0D_Eemck8s7R8OXew" name="realizedActivity" ordered="false" lowerBound="1">
+          <eType xmi:type="ecore:EClass" href="http://www.eclipse.org/uml2/5.0.0/UML#//Activity"/>
+        </eStructuralFeatures>
+      </eClassifiers>
+      <eSubpackages xmi:id="_mzC3UUD_Eemck8s7R8OXew" name="Devices" nsURI="http:///pusztai/thomas/architecture/fog/devices" nsPrefix="Fog.Devices">
+        <eAnnotations xmi:id="_mzC3UkD_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/4.0.0/UML" references="_9JRUEACGEemhcc6V9EGs0g"/>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_mzC3U0D_Eemck8s7R8OXew" name="ArduinoYun" eSuperTypes="_mzC3EUD_Eemck8s7R8OXew">
+          <eAnnotations xmi:id="_mzC3VED_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Dr1CIACHEemhcc6V9EGs0g"/>
+        </eClassifiers>
+        <eClassifiers xmi:type="ecore:EClass" xmi:id="_mzC3VkD_Eemck8s7R8OXew" name="RaspberryPi3BPlus" eSuperTypes="_mzC3EUD_Eemck8s7R8OXew">
+          <eAnnotations xmi:id="_mzC3V0D_Eemck8s7R8OXew" source="http://www.eclipse.org/uml2/2.0.0/UML" references="__9xfMACKEemhcc6V9EGs0g"/>
+        </eClassifiers>
+      </eSubpackages>
+    </contents>
     <contents xmi:type="ecore:EPackage" xmi:id="_na_QoQCwEemUUuzUq75umw" name="Fog" nsURI="http:///pusztai/thomas/architecture/fog/1.0" nsPrefix="Fog">
       <eClassifiers xmi:type="ecore:EClass" xmi:id="_na_QogCwEemUUuzUq75umw" name="FogDevice">
         <eAnnotations xmi:id="_na_QowCwEemUUuzUq75umw" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_Py23oACCEemhcc6V9EGs0g"/>

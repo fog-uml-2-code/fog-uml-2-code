@@ -40,7 +40,7 @@ You can now design your UML model.
 
 Once you have finished designing your UML model, you can generate code by right clicking the `.uml` file and selecting *Acceleo Model to Text -> Generate FogUML2Code*. The code will be generated in the `src-gen` subfolder of the project that contains the UML model. Building the generated Java modules requires Maven and the installation of the [fog-execution-framework-java](https://github.com/fog-uml-2-code/fog-execution-framework-java) into your local Maven repository. Building the generated C modules requires CMake.
 
-The generation process can be customized by creating a `codeGeneration.properties` file in your project. It contains a list of settings, which can be configured globally and individually for each module (REST controller or activity realization). The settings use the following scheme:
+The generation process can be customized by creating a `codeGeneration.properties` file in the same folder as your `.uml` file. It contains a list of settings, which can be configured globally and individually for each module (REST controller or activity realization). The settings use the following scheme:
 
 ```
 codegen.<module>.<setting_name> = <value>

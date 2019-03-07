@@ -1,7 +1,6 @@
 [comment encoding = UTF-8 /]
 [module activityStateJavaFile('http://www.eclipse.org/uml2/5.0.0/UML')]
 
-[import pusztai::thomas::architecture::fog::uml::gen::generic::activityRealizationHandlers/]
 [import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
 [import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils/]
 [import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]

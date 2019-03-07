@@ -22,17 +22,7 @@ public class CTypeServices extends TypeServicesBase {
 	 */
 	@Override
 	protected String getPrimitiveTypeName(PrimitiveType type) {
-		// The implementation of this method is very ugly, but
-		// I was not able to find another way of getting the UML type name.
-		
-		String strRep = type.toString();
-		int typeNameStart = strRep.lastIndexOf('#') + 1;
-		int typeNameEnd = strRep.lastIndexOf(')');
-		if (typeNameStart == 0 || typeNameEnd == -1) {
-			throw new RuntimeException("Unknown PrimitiveType: " + strRep);
-		}
-		
-		String umlName = strRep.substring(typeNameStart, typeNameEnd);
+		String umlName = type.getName();
 		switch (umlName) {
 		case "Integer":
 			return "int_t";
@@ -43,7 +33,7 @@ public class CTypeServices extends TypeServicesBase {
 		case "Boolean":
 			return "bool";
 		default:
-			throw new RuntimeException("Unknown PrimitiveType: " + strRep);
+			throw new RuntimeException("Unknown PrimitiveType: " + umlName);
 		}
 	}
 	

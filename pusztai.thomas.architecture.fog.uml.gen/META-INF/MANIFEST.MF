@@ -23,5 +23,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
 Export-Package: pusztai.thomas.architecture.fog.uml.gen.main,
- pusztai.thomas.architecture.fog.uml.gen.services
+ pusztai.thomas.architecture.fog.uml.gen.services,
+ pusztai.thomas.architecture.fog.uml.gen.properties
 

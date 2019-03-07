@@ -4,7 +4,7 @@ Bundle-Name: Acceleo Fog UML 2 Code Module IDE Plug-in
 Bundle-SymbolicName: pusztai.thomas.architecture.fog.uml.gen.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: pusztai.thomas.architecture.fog.uml.gen.ui.Activator
-Bundle-Vendor: Eclipse Modeling Project
+Bundle-Vendor: Thomas Pusztai
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources, 

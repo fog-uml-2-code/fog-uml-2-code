@@ -25,7 +25,7 @@ To install and use FogUML2Code you need to follow these steps:
 4. (optional) Install the [UML Designer](http://www.umldesigner.org/) Eclipse plugin or another UML editor for Eclipse.
 5. Clone the FogUML2Code repository.
 6. Import all projects from this repository into your Eclipse workspace (*File -> Import -> Existing Projects into Workspace*).
-7. Open `FogUML2Code.ui/plugin.xml` and on the *Overview* tab choose *Launch an Eclipse application*.
+7. Open `pusztai.thomas.architecture.fog.uml.gen.ui/plugin.xml` and on the *Overview* tab choose *Launch an Eclipse application*.
 
 
 ## Usage
@@ -47,4 +47,4 @@ codegen.<module>.<setting_name> = <value>
 ```
 
 By replacing `<module>` with `default` the global settings for all modules are set.
-By replacing it with the name of a module (the name of the REST controller or activity), the global setting can be overridden for that module. For a full list of available settings and example for overriding, see [codeGeneration.properties](./FogUML2Code/src/pusztai/thomas/architecture/fog/uml/gen/properties/codeGeneration.properties).
+By replacing it with the name of a module (the name of the REST controller or activity), the global setting can be overridden for that module. For a full list of available settings and example for overriding, see [codeGeneration.properties](./pusztai.thomas.architecture.fog.uml.gen/src/pusztai/thomas/architecture/fog/uml/gen/properties/codeGeneration.properties).

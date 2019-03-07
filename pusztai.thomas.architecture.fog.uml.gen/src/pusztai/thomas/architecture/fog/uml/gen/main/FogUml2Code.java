@@ -341,9 +341,6 @@ public class FogUml2Code extends AbstractAcceleoGenerator {
     @Override
     public void registerPackages(ResourceSet resourceSet) {
         super.registerPackages(resourceSet);
-        if (!isInWorkspace(org.eclipse.ocl.types.TypesPackage.class)) {
-            resourceSet.getPackageRegistry().put(org.eclipse.ocl.types.TypesPackage.eINSTANCE.getNsURI(), org.eclipse.ocl.types.TypesPackage.eINSTANCE);
-        }
         if (!isInWorkspace(org.eclipse.uml2.uml.UMLPackage.class)) {
             resourceSet.getPackageRegistry().put(org.eclipse.uml2.uml.UMLPackage.eINSTANCE.getNsURI(), org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
         }
@@ -355,9 +352,6 @@ public class FogUml2Code extends AbstractAcceleoGenerator {
         }
         if (!isInWorkspace(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.class)) {
             resourceSet.getPackageRegistry().put(org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE.getNsURI(), org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage.eINSTANCE);
-        }
-        if (!isInWorkspace(org.eclipse.uml2.uml.profile.standard.StandardPackage.class)) {
-            resourceSet.getPackageRegistry().put(org.eclipse.uml2.uml.profile.standard.StandardPackage.eINSTANCE.getNsURI(), org.eclipse.uml2.uml.profile.standard.StandardPackage.eINSTANCE);
         }
         
         /*

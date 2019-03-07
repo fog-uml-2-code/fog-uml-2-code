@@ -6,12 +6,10 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: pusztai.thomas.architecture.fog.uml.gen.Activator
 Bundle-Vendor: Thomas Pusztai
 Require-Bundle: org.eclipse.core.runtime, 
- org.eclipse.ocl, 
  org.eclipse.uml2.uml, 
+ org.eclipse.uml2.codegen.ecore, 
  org.eclipse.uml2.types, 
  org.eclipse.ocl.uml, 
- org.eclipse.uml2.codegen.ecore, 
- org.eclipse.uml2.uml.profile.standard, 
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.ocl,
@@ -25,5 +23,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
 Export-Package: pusztai.thomas.architecture.fog.uml.gen.main,
- pusztai.thomas.architecture.fog.uml.gen.services,
- pusztai.thomas.architecture.fog.uml.gen.properties
+ pusztai.thomas.architecture.fog.uml.gen.services
+

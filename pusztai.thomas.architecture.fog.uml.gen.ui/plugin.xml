@@ -15,7 +15,7 @@
                enablesFor="+"
                id="pusztai.thomas.architecture.fog.uml.gen.ui.popupMenus.acceleoGenerateFogUML2CodeAction"
                icon="icons/default.gif"
-               label="Generate Fog UML 2 Code"
+               label="Generate FogUML2Code"
                menubarPath="org.eclipse.acceleo.module.menu/acceleo"/>
       </objectContribution>
    </extension>

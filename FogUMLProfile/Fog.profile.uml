@@ -126,9 +126,11 @@
   <packagedElement xmi:type="uml:Stereotype" xmi:id="_tbUXAACSEemhcc6V9EGs0g" name="DataModel">
     <ownedAttribute xmi:id="_xibWUgCSEemhcc6V9EGs0g" name="base_Class" association="_xibWUACSEemhcc6V9EGs0g">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EHAyUED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_xibWVQCSEemhcc6V9EGs0g" name="base_Package" association="_xibWUwCSEemhcc6V9EGs0g">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_E2YZwED-Eemck8s7R8OXew"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Stereotype" xmi:id="_kF3FgAB8Eemhcc6V9EGs0g" name="RESTEndpoint">
@@ -144,49 +146,64 @@
   <packagedElement xmi:type="uml:Stereotype" xmi:id="_UaEIwACBEemhcc6V9EGs0g" name="ActivityRealization">
     <ownedAttribute xmi:id="_bEE58gCSEemhcc6V9EGs0g" name="base_Class" association="_bEE58ACSEemhcc6V9EGs0g">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Gks8wED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_bEE59QCSEemhcc6V9EGs0g" name="base_Interface" association="_bEE58wCSEemhcc6V9EGs0g">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Interface"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_HB6dMED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_bEE5-ACSEemhcc6V9EGs0g" name="base_Package" association="_bEE59gCSEemhcc6V9EGs0g">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_HeJtQED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_wZ5XQACuEemhcc6V9EGs0g" name="realizedActivity">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Activity"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Stereotype" xmi:id="_Py23oACCEemhcc6V9EGs0g" name="FogDevice">
-    <ownedAttribute xmi:id="_noygEACEEemhcc6V9EGs0g" name="cpu" type="_kO9IYACCEemhcc6V9EGs0g"/>
+    <ownedAttribute xmi:id="_noygEACEEemhcc6V9EGs0g" name="cpu" type="_kO9IYACCEemhcc6V9EGs0g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MWf8QED-Eemck8s7R8OXew"/>
+    </ownedAttribute>
     <ownedAttribute xmi:id="_1YCeUACEEemhcc6V9EGs0g" name="cpuCores">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OQnfkED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_-1P_oACEEemhcc6V9EGs0g" name="cpuClockMhz">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OxJZwED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_DTXCUACIEemhcc6V9EGs0g" name="eepromKb">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PJpZUED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_DXv6cACFEemhcc6V9EGs0g" name="ramKb">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PeK30ED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_IAJB4ACFEemhcc6V9EGs0g" name="flashStorageKb">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_P0EPUED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_N7XqMACFEemhcc6V9EGs0g" name="batteryMAh">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_QRHXsED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_N4K1IACZEemhcc6V9EGs0g" name="targetLanguage" type="_t-9A0ACYEemhcc6V9EGs0g"/>
     <ownedAttribute xmi:id="__TerYgCSEemhcc6V9EGs0g" name="base_Interface" association="__TerYACSEemhcc6V9EGs0g">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Interface"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_IzTiUED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="__TerZQCSEemhcc6V9EGs0g" name="base_Class" association="__TerYwCSEemhcc6V9EGs0g">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Class"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_JJJ2gED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="__TeraACSEemhcc6V9EGs0g" name="base_Device" association="__TerZgCSEemhcc6V9EGs0g">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Device"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_J_g2wED-Eemck8s7R8OXew"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_CpXP0gCYEemhcc6V9EGs0g" name="base_Package" association="_CpXP0ACYEemhcc6V9EGs0g">
       <type xmi:type="uml:Class" href="pathmap://UML_METAMODELS/UML.metamodel.uml#Package"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Kam3UED-Eemck8s7R8OXew"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_kO9IYACCEemhcc6V9EGs0g" name="CpuType">

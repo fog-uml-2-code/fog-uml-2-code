@@ -92,5 +92,5 @@ int[if isClassifier][classifierOrActivity.oclAsType(Classifier).getSettingDefaul
 [/template]
 
 [template private getRealType(smallReal : String)]
-[if smallReal = '0']float_t[else]double_t[/if]
+[if smallReal = '1']float_t[else]double_t[/if]
 [/template]

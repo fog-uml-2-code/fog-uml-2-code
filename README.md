@@ -20,7 +20,7 @@ FogUML2Code is an Eclipse plugin, using the Eclipse MDT UML2 metamodel, and is r
 
 To install and use FogUML2Code you need to follow these steps:
 1. Download and install the [Eclipse Modeling Tools](https://www.eclipse.org/downloads/packages/) package.
-2. Install *Acceleo* from the Eclipse Marketplace.
+2. Install [Acceleo](https://marketplace.eclipse.org/content/acceleo) from the Eclipse Marketplace.
 3. (optional) Install the [UML Designer](http://www.umldesigner.org/) Eclipse plugin or another UML editor for Eclipse.
 4. Clone the FogUML2Code repository.
 5. Import all projects from this repository into your Eclipse workspace (File -> Import -> Existing Projects into Workspace).

@@ -37,7 +37,7 @@
 [template public genDefaultImports(aClassifier : Classifier)]
 import java.util.*;
 import pusztai.thomas.architecture.fog.validation.*;
-[if (aClassifier.checkIfConstraintsPresent())]import [aClassifier.genPackageValue()/].constraints;[/if]
+[if (aClassifier.checkIfConstraintsPresent())]import [aClassifier.genPackageValue()/].constraints.*;[/if]
 
 [for (type : Type | aClassifier.getAllRequiredImports())]
 import [type.getQualifiedName() /];
@@ -52,7 +52,7 @@ import [type.getQualifiedName() /];
 [restInterface.genDefaultImports() /]
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
-[if (restInterface.checkIfConstraintsPresent())]import [restInterface.genPackageValue()/].constraints;[/if]
+[if (restInterface.checkIfConstraintsPresent())]import [restInterface.genPackageValue()/].constraints.*;[/if]
 // [/protected]
 [/template]
 

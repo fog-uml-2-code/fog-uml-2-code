@@ -24,7 +24,7 @@ public class CConstraintServices extends ConstraintServices {
 
 	@Override
 	protected String getSelfReplacement() {
-		return "*target";
+		return "(*target)";
 	}
 	
 	private String toLowerFirst(String str) {

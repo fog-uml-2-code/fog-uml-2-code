@@ -26,3 +26,7 @@
 [query private getAllRequiredImports(classifier : Classifier, attributes : Sequence(Property)) : Sequence(Type)
 	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.JavaTypeServices', 'getAllRequiredImports(org.eclipse.uml2.uml.Classifier, java.util.List)', Sequence{classifier, attributes})
 /]
+
+[query public getGenericParameterType(typedElement : TypedElement) : String
+	= invoke('pusztai.thomas.architecture.fog.uml.gen.services.JavaTypeServices', 'getGenericParameterType(org.eclipse.uml2.uml.TypedElement)', Sequence{typedElement})
+/]

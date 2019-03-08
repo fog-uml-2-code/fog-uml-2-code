@@ -19,6 +19,23 @@ public class JavaTypeServices extends TypeServicesBase {
 	}
 	
 	/**
+	 * @return The type name to be used as a generics parameter.
+	 */
+	public String getGenericParameterType(TypedElement typedElement) {
+		if (typedElement == null) {
+			return "Void";
+		}
+		Type type = typedElement.getType();
+		if (type instanceof PrimitiveType) {
+			if (type.getName().equals("Real")) {
+				return "Double";
+			}
+			return type.getName();
+		}
+		return getTypeName(typedElement);
+	}
+	
+	/**
 	 * Gets the Java type name for the specified UML PrimitiveType.
 	 */
 	@Override

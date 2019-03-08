@@ -39,7 +39,7 @@ import [type.getQualifiedName() /];
  * @generated
  */
 @Prototype
-public class [className/] implements CallOperationActionHandler<[node.paramsClassName()/], [node.operation.returnTypeName()/]> {
+public class [className/] implements CallOperationActionHandler<[node.paramsClassName()/], [node.operation.getReturnResult().getGenericParameterType()/]> {
 
 	[activity.genInjectedActivityStateServiceField()/]
 
@@ -58,7 +58,7 @@ public class [className/] implements CallOperationActionHandler<[node.paramsClas
 	 * @param result The return value of the last operation call.
 	 */
 	@Override
-	public void handleResult([node.operation.returnTypeName()/] result) {
+	public void handleResult([node.operation.getReturnResult().getGenericParameterType()/] result) {
 		[genToDoImplBlock()/]
 	}
 

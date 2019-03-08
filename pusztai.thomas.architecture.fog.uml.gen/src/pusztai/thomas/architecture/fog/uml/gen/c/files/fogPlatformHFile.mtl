@@ -43,6 +43,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /**
  * These integer types have at least the specified number of bits.

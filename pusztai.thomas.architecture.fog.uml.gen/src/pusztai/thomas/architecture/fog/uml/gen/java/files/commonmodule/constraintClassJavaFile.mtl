@@ -36,6 +36,7 @@ import io.micronaut.aop.MethodInvocationContext;
 import javax.inject.Singleton;
 
 import [owningClassifier.genPackageValue()/].[owningClassifier.name.toUpperFirst()/];
+[if (constraint.owner.oclIsKindOf(Operation))][constraint.owner.oclAsType(Operation).importMethodParamTypes()/][/if]
 
 /**
  * This class implements the constraint [constraint.name/].
@@ -48,7 +49,7 @@ public class [constraint.name.toUpperFirst()/] implements MethodInterceptor<[own
 	@Override
 	public Object intercept(MethodInvocationContext<[owningClassifier.name.toUpperFirst()/], Object> context) {
 		[owningClassifier.name.toUpperFirst()/] self = context.getTarget();
-		[if (constraint.owner.oclIsKindOf(Operation))][constraint.owner.oclAsType(Operation).extractMethodArgs()/][/if]
+		[if (constraint.owner.oclIsKindOf(Operation))][constraint.owner.oclAsType(Operation).extractMethodParams()/][/if]
 		boolean validationResult = [constraint.specification.oclAsType(OpaqueExpression).convertConstraintToCode()/];
 		if (validationResult) {
 			return context.proceed();
@@ -61,9 +62,19 @@ public class [constraint.name.toUpperFirst()/] implements MethodInterceptor<[own
 [/file]
 [/template]
 
-[template private extractMethodArgs(op : Operation)]
+[**
+ * Extracts the parameters of the constrained method from the context object into local variables.
+*/]
+[template private extractMethodParams(op : Operation)]
 [for (param : Parameter | op.ownedParameter->reject(param : Parameter | param.direction = ParameterDirectionKind::return))]
-[param.getTypeName()/] [param.name.toLowerFirst()/] = ([param.getTypeName()/]) context.getParameterValueMap().get("[param.name.toLowerFirst()/]");
-[/for]
+[param.getTypeName()/] [param.name.toLowerFirst()/] = ([param.getTypeName()/]) context.getParameterValueMap().get("[param.name.toLowerFirst()/]");[/for]
+[/template]
+
+[**
+ * Imports all types of the method's parameters.
+*/]
+[template private importMethodParamTypes(op : Operation)]
+[for (param : Parameter | op.ownedParameter->reject(param : Parameter | param.direction = ParameterDirectionKind::return or param.type.oclIsKindOf(PrimitiveType)))]
+import [param.type.getQualifiedName() /];[/for]
 [/template]
 

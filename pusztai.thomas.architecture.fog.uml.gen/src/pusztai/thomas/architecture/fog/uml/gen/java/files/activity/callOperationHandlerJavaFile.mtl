@@ -17,6 +17,9 @@
 	classFilePath : String = node.qualifiedHandlerClassName(activity).replaceAll('\\.', '/') + '.java';
 	qualifiedPackageName : String = qualifiedClassName.substring(1, qualifiedClassName.size() - className.size() - 1);
 }]
+[if (node.operation.inputParameters()->size() > 1)]
+	[node.genParameterSequenceClass(qualifiedPackageName, activity)/]
+[/if]
 [file (activity.realizingModulePath() + '/' + javaSrcPath() + '/' + classFilePath, false, 'UTF-8')]
 package [qualifiedPackageName/];
 
@@ -117,11 +120,11 @@ public class [className/] extends ParameterSequenceBase {
 	}
 
 	[for (param : Parameter | op.inputParameters())]
-	public [param.getTypeName()/] get[param.name.toUpperFirst()/]() {
-		return ([param.getTypeName()/]) getParam([i - 1/]);	
+	public [param.getGenericParameterType()/] get[param.name.toUpperFirst()/]() {
+		return ([param.getGenericParameterType()/]) getParam([i - 1/]);	
 	}
 
-	public void set[param.name.toUpperFirst()/]([param.getTypeName()/] value) {
+	public void set[param.name.toUpperFirst()/]([param.getGenericParameterType()/] value) {
 		setParam([i - 1/], value);
 	}
 	[/for]

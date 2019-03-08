@@ -12,8 +12,10 @@
 #include <[fogPlatformHFileName()/]>
 [for (type : Type | aClassifier.getAllRequiredImports())]
 #include <[type.headerFilePath()/]>
-[if (includePrivate and type.oclIsKindOf(Class))]include <[type.oclAsType(Class).modelClassPrivateHeaderFilePath()/]>;[/if]
+[if (includePrivate and type.oclIsKindOf(Class))]#include <[type.oclAsType(Class).modelClassPrivateHeaderFilePath()/]>[/if]
 [/for]
+[if (includePrivate)]#include <[aClassifier.headerFilePath()/]>
+[if (aClassifier.oclIsKindOf(Class))]#include <[aClassifier.oclAsType(Class).modelClassPrivateHeaderFilePath()/]>[/if][/if]
 [/template]
 
 [**

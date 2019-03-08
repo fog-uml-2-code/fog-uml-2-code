@@ -28,7 +28,7 @@
  * Generates the declaration of the getters and setters for all non-private attributes of the specified class.
  */]
 [template public genAllPropertyAccessorDeclarations(class : Class, classTypedefName : String)]
-[for (prop : Property | class.allAttributes()->select(p : Property | p.visibility <> VisibilityKind::private)) separator ('\n')]
+[for (prop : Property | class.getAllAttributesWithAssociations()->select(p : Property | p.visibility <> VisibilityKind::private)) separator ('\n')]
 [prop.genGetterSignature(classTypedefName)/];
 
 [prop.genSetterSignature(classTypedefName)/];
@@ -40,7 +40,7 @@
  * Generates the getters and setters for all non-private attributes of the specified class.
  */]
 [template public genAllPropertyAccessorDefinitions(class : Class, classTypedefName : String)]
-[for (prop : Property | class.allAttributes()->select(p : Property | p.visibility <> VisibilityKind::private)) separator ('\n')]
+[for (prop : Property | class.getAllAttributesWithAssociations()->select(p : Property | p.visibility <> VisibilityKind::private)) separator ('\n')]
 [prop.genGetter(classTypedefName)/]
 
 [prop.genSetter(classTypedefName, class)/]

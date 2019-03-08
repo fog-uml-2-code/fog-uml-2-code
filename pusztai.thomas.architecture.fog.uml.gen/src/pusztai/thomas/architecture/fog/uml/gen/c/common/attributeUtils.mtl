@@ -61,7 +61,7 @@
  */]
 [template private genGetter(prop : Property, classTypedefName : String)]
 [prop.genGetterSignature(classTypedefName)/] {
-	return target->[prop.name.toLowerFirst()/];
+	return [if (not prop.type.oclIsKindOf(PrimitiveType))]&[/if]target->[prop.name.toLowerFirst()/];
 }
 [/template]
 
@@ -79,7 +79,7 @@ bool [classTypedefName/]_set[prop.name.toUpperFirst()/]([classTypedefName/] targ
  */]
 [template public genSetter(prop : Property, classTypedefName : String, class : Class)]
 [prop.genSetterSignature(classTypedefName)/] {
-	target->[prop.name.toLowerFirst()/] = [prop.name.toLowerFirst()/];
+	target->[prop.name.toLowerFirst()/] = [if (not prop.type.oclIsKindOf(PrimitiveType))]*[/if][prop.name.toLowerFirst()/];
 	bool validationResult = true;
 	[class.genInvariantsIfPresent()/]
 	return validationResult;

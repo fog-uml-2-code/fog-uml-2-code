@@ -109,7 +109,7 @@ delete[classifierTypedefName/]
  * Gets the name of the shutdown function for the specified REST handler
 */]
 [template public getRestHandlerShutdownFunctionName(endpointClassifier : Classifier, classifierTypedefName : String)]
-[classifierTypedefName/]_setUpHandler
+[classifierTypedefName/]_shutdownHandler
 [/template]
 
 [**

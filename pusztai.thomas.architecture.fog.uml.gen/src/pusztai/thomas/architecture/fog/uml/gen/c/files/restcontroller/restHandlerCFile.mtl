@@ -64,7 +64,7 @@ void [op.getGeneratedName(classifierName)/]Handler(/* ToDo Insert parameters for
 	} else {
 		// ToDo: Send REST error response.
 	}
-[if (not op.type.oclIsUndefined())]
+[if (not op.type.oclIsUndefined() and not op.type.oclIsKindOf(PrimitiveType))]
 	[op.type.oclAsType(Classifier).getDtorName(op.getReturnTypeName())/](result);
 [/if]
 }

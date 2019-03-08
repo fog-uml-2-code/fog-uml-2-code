@@ -37,6 +37,7 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+    [model.fogExecutionFrameworkDependency('compile')/]
 	<dependency>
       <groupId>[model.mavenGroupId()/]</groupId>
       <artifactId>[model.mavenCommonModuleId()/]</artifactId>

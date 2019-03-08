@@ -49,7 +49,7 @@
 	endpointClassifier : Classifier = getDefiningClassifier(restInterface, controller);
 }]
 [restInterface.genDefaultIncludesForRestController(controller, false)/]
-#include "[endpointClassifier.restHandlerHFilePath()/]";
+#include "[endpointClassifier.restHandlerHFilePath()/]"
 [/template]
 
 [**

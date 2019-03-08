@@ -84,7 +84,7 @@ void [op.getGeneratedName(classifierName)/]Handler(/* ToDo Insert parameters for
 [template private genParameterList(op : Operation) {
 	params : Sequence(Parameter) = op.ownedParameter->asSequence()->select(param : Parameter | param.direction <> ParameterDirectionKind::return);
 }]
-[for (param : Parameter | params) before(', ') separator(', ')][param.name/][if (not op.type.oclIsUndefined())], [op.genResultParameter()/][/if][/for]
+[for (param : Parameter | params) before(', ') separator(', ')][param.name/][/for][if (not op.type.oclIsUndefined())], [op.genResultParameter()/][/if]
 [/template]
 
 [template private genResultParameter(op : Operation)]

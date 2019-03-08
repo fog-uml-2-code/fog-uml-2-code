@@ -62,7 +62,7 @@ import io.micronaut.http.annotation.Post;
 [template public genDefaultImportsForRestClient(restInterface : Interface)]
 // [protected ('for imports')]
 [restInterface.genDefaultImports() /]
-import io.micronaut.http.annotation.Client;
+import io.micronaut.http.client.annotation.Client;
 // [/protected]
 [/template]
 

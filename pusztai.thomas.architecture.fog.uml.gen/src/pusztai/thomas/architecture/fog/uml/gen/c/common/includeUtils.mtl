@@ -9,9 +9,9 @@
  * Generates the default include block for the given classifier.
  */]
 [template public genDefaultIncludes(aClassifier : Classifier, includePrivate : Boolean)]
-include <[fogPlatformHFileName()/]>;
+#include <[fogPlatformHFileName()/]>
 [for (type : Type | aClassifier.getAllRequiredImports())]
-include <[type.headerFilePath()/]>;
+#include <[type.headerFilePath()/]>
 [if (includePrivate and type.oclIsKindOf(Class))]include <[type.oclAsType(Class).modelClassPrivateHeaderFilePath()/]>;[/if]
 [/for]
 [/template]
@@ -39,7 +39,7 @@ include <[type.headerFilePath()/]>;
 [else]
 [restInterface.genDefaultIncludes(includePrivate) /]
 [/if]
-include <[restInterface.restBaseInterfaceHeaderFilePath()/]>
+#include <[restInterface.restBaseInterfaceHeaderFilePath()/]>
 [/template]
 
 [**
@@ -49,7 +49,7 @@ include <[restInterface.restBaseInterfaceHeaderFilePath()/]>
 	endpointClassifier : Classifier = getDefiningClassifier(restInterface, controller);
 }]
 [restInterface.genDefaultIncludesForRestController(controller, false)/]
-include "[endpointClassifier.restHandlerHFilePath()/]";
+#include "[endpointClassifier.restHandlerHFilePath()/]";
 [/template]
 
 [**

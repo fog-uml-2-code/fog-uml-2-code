@@ -9,6 +9,16 @@
 [/template]
 
 [**
+ * Returns the Java class name for the specified REST controller.
+ */]
+[template public restControllerJavaName(endpointClassifier : Classifier, restInterface : Interface) {
+	endpointClassifierName : String = endpointClassifier.name.toUpperFirst();
+	restInterfaceName : String = restInterface.name.toUpperFirst();
+}]
+[endpointClassifierName/][if (endpointClassifierName = restInterfaceName)]Controller[/if]
+[/template]
+
+[**
  * Returns the Java interface name for the specified REST client interface.
  */]
 [template public restClientInterfaceJavaName(restInterface : Interface)]

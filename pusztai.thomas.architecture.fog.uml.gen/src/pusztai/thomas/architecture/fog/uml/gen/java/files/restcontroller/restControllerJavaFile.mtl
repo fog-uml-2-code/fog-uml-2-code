@@ -16,7 +16,7 @@
 [template public genRestControllerJavaFile(restInterface : Interface, controller : Class) {
 	endpointClassifier : Classifier = getDefiningClassifier(restInterface, controller);
 }]
-[file (endpointClassifier.restEndpointControllerModulePath() + '/' + endpointClassifier.genFilePath(), false, 'UTF-8')]
+[file (endpointClassifier.restEndpointControllerModulePath() + '/' + javaSrcPath() + endpointClassifier.packagePath() + endpointClassifier.restControllerJavaName(restInterface) + '.java', false, 'UTF-8')]
 package [endpointClassifier.genPackageValue()/];
 
 [restInterface.genDefaultImportsForRestController(controller)/]
@@ -27,7 +27,7 @@ package [endpointClassifier.genPackageValue()/];
  * @generated
  */
 @Controller("/[restInterface.name.toLowerCase()/]")
-public class [endpointClassifier.name.toUpperFirst()/] implements [restInterface.restBaseInterfaceJavaName()/] {
+public class [endpointClassifier.restControllerJavaName(restInterface)/] implements [restInterface.restBaseInterfaceJavaName()/] {
 
 	[if (not controller.oclIsUndefined())]
 	[controller.genAllPropertyFields()/]
@@ -37,7 +37,7 @@ public class [endpointClassifier.name.toUpperFirst()/] implements [restInterface
 	[for (op : Operation | restInterface.getAllOperations())]
 	@Override[op.genConstraintsIfPresent()/]
 	public [op.genSignature() /] {
-		// ToDo: Implement this method.
+		[genToDoImplBlock()/]
 	}
 	
 	[/for]

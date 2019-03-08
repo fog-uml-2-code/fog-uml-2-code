@@ -74,6 +74,11 @@ typedef char_t* string_t;
 
 typedef [classifierOrActivity.getRealTypeSetting().getRealType()/] real_t;
 
+/**
+ * Define lowercase null, because it is used by the OCL expressions.
+ */
+#define null NULL
+
 [headerName.includeGuardEnd()/]
 
 [/file]

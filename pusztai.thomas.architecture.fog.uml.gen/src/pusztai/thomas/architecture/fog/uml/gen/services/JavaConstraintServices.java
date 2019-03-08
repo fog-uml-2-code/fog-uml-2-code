@@ -4,7 +4,7 @@ public class JavaConstraintServices extends ConstraintServices {
 
 	@Override
 	protected String getReplacementForFirstLevelVar(String varName) {
-		return "context.getParameterValueMap().get(\"".concat(varName).concat("\")");
+		return varName;
 	}
 
 	@Override

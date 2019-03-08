@@ -26,7 +26,7 @@ package [endpointClassifier.genPackageValue()/];
  * 
  * @generated
  */
-@Controller('/[restInterface.name.toLowerCase()/]')
+@Controller("/[restInterface.name.toLowerCase()/]")
 public class [endpointClassifier.name.toUpperFirst()/] implements [restInterface.restBaseInterfaceJavaName()/] {
 
 	[if (not controller.oclIsUndefined())]

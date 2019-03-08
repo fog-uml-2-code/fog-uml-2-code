@@ -27,7 +27,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      [model.fogExecutionFrameworkDependencyManagement()/]
     </dependencies>
   </dependencyManagement>
   <dependencies>

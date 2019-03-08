@@ -38,11 +38,7 @@
   </dependencyManagement>
   <dependencies>
     [model.fogExecutionFrameworkDependency('compile')/]
-	<dependency>
-      <groupId>[model.mavenGroupId()/]</groupId>
-      <artifactId>[model.mavenCommonModuleId()/]</artifactId>
-      <scope>compile</scope>
-    </dependency>
+	[model.mavenCommonModuleDependency()/]
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-inject</artifactId>

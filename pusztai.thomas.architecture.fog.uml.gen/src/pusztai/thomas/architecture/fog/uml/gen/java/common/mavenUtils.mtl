@@ -47,13 +47,14 @@ common
 
 
 [**
- * Gets fog-execution-framework-java dependency management entry
+ * Gets the common module dependency
  */]
-[template public fogExecutionFrameworkDependencyManagement(model : Model)]
+[template public mavenCommonModuleDependency(model : Model)]
 <dependency>
-  <groupId>pusztai.thomas.architecture.fog</groupId>
-  <artifactId>activity-realization</artifactId>
-  <version>${fog-execution-framework.version}</version>
+  <groupId>[model.mavenGroupId()/]</groupId>
+  <artifactId>[model.mavenCommonModuleId()/]</artifactId>
+  <version>1.0</version>
+  <scope>compile</scope>
 </dependency>
 [/template]
 
@@ -65,6 +66,7 @@ common
 <dependency>
   <groupId>pusztai.thomas.architecture.fog</groupId>
   <artifactId>activity-realization</artifactId>
+  <version>${fog-execution-framework.version}</version>
   <scope>[scope/]</scope>
 </dependency>
 [/template]

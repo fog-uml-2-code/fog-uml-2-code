@@ -21,7 +21,7 @@
 [/template]
 
 [template private genConstraint(constraint : Constraint, contextElement : Element, owningClassifier : Classifier)]
-[constraint.genConstraintClassJavaFile(owningClassifier)/][if (contextElement.oclIsKindOf(Operation))]@PreCondition([constraint.name.toUpperFirst()/])[else]@Invariant([constraint.name.toUpperFirst()/])[/if]
+[constraint.genConstraintClassJavaFile(owningClassifier)/][if (contextElement.oclIsKindOf(Operation))]@PreCondition([constraint.name.toUpperFirst()/].class)[else]@Invariant([constraint.name.toUpperFirst()/].class)[/if]
 [/template]
 
 [**

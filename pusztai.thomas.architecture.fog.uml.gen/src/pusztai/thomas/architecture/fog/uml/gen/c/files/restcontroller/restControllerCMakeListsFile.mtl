@@ -26,5 +26,7 @@ add_executable([endpointClassifier.cMakeProjectName()/] ${SRCS} ${[cMakeCommonLi
 
 target_include_directories([endpointClassifier.cMakeProjectName()/] PUBLIC "../[commonModuleFolderName()/]/[cSrcPath()/]" "[cSrcPath()/]/[platformHeadersFolderName()/]")
 
+target_link_libraries([endpointClassifier.cMakeProjectName()/] "ulfius")
+
 [/file]
 [/template]

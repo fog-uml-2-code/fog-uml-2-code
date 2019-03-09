@@ -56,6 +56,16 @@ struct _u_instance *HttpServer_getUlfiusInstance(HttpServer server) {
 	return &server->ulfiusInstance;
 }
 
+json_t *HttpRequest_getJsonBody(HttpRequest request) {
+	json_error_t jsonError;
+	return ulfius_get_json_body_request(request, &jsonError);
+}
+
+bool HttpResponse_setJsonBody(HttpResponse response, const unsigned int statusCode, const json_t *body) {
+	return ulfius_add_header_to_response(response, "Content-Type", "application/json") == U_OK &&
+		ulfius_set_json_body_response(response, statusCode, body) == U_OK;
+}
+
 [/file]
 [/template]
 

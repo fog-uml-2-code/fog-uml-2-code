@@ -15,6 +15,7 @@
 
 #include <fogPlatform.h>
 #include <ulfius.h>
+#include <jansson.h>
 
 /** An HttpServer handle */
 typedef struct HttpServer *HttpServer;
@@ -68,6 +69,16 @@ bool HttpServer_isStarted(HttpServer server);
  * Gets the Ulfius instance of the specified HttpServer.
  */
 struct _u_instance *HttpServer_getUlfiusInstance(HttpServer server);
+
+/**
+ * Gets the JSON body from the specified HttpRequest.
+ */
+json_t *HttpRequest_getJsonBody(HttpRequest request);
+
+/**
+ * Sets the JSON body and Content-Type header of the specified HttpResponse.
+ */
+bool HttpResponse_setJsonBody(HttpResponse response, const unsigned int statusCode, const json_t *body);
 
 ['HttpServer'.includeGuardEnd()/]
 

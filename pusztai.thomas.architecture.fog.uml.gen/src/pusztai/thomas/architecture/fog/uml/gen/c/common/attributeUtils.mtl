@@ -20,7 +20,8 @@
  * Generates the private field for an attribute.
  */]
 [template public genProperty(prop : Property)]
-[if (not prop.type.oclIsKindOf(PrimitiveType))]struct [/if][prop.getTypeName()/] [prop.name.toLowerFirst()/];
+[if (not prop.type.oclIsKindOf(PrimitiveType))]bool [prop.propertyIsSetFieldName()/];
+struct [/if][prop.getTypeName()/] [prop.propertyFieldName()/];
 [/template]
 
 
@@ -61,7 +62,7 @@
  */]
 [template private genGetter(prop : Property, classTypedefName : String)]
 [prop.genGetterSignature(classTypedefName)/] {
-	return [if (not prop.type.oclIsKindOf(PrimitiveType))]&[/if]target->[prop.name.toLowerFirst()/];
+	return [if (not prop.type.oclIsKindOf(PrimitiveType))]target->[prop.propertyIsSetFieldName()/] ? &target->[prop.propertyFieldName()/] : NULL[else]target->[prop.propertyFieldName()/][/if];
 }
 [/template]
 
@@ -70,7 +71,7 @@
  * Generates the setter for an attribute.
  */]
 [template public genSetterSignature(prop : Property, classTypedefName : String)]
-bool [classTypedefName/]_set[prop.name.toUpperFirst()/]([classTypedefName/] target, [prop.getTypeName()/] [prop.name.toLowerFirst()/])
+bool [classTypedefName/]_set[prop.name.toUpperFirst()/]([classTypedefName/] target, [prop.getTypeName()/] [prop.propertySetterParamName()/])
 [/template]
 
 
@@ -79,9 +80,36 @@ bool [classTypedefName/]_set[prop.name.toUpperFirst()/]([classTypedefName/] targ
  */]
 [template public genSetter(prop : Property, classTypedefName : String, class : Class)]
 [prop.genSetterSignature(classTypedefName)/] {
-	target->[prop.name.toLowerFirst()/] = [if (not prop.type.oclIsKindOf(PrimitiveType))]*[/if][prop.name.toLowerFirst()/];
+	[if (not prop.type.oclIsKindOf(PrimitiveType))]if ([prop.propertySetterParamName()/]) {
+		target->[prop.propertyFieldName()/] = *[prop.propertySetterParamName()/];
+		target->[prop.propertyIsSetFieldName()/] = true;
+	} else {
+		target->[prop.propertyIsSetFieldName()/] = false;
+	}
+	[else]target->[prop.propertyFieldName()/] = [prop.propertySetterParamName()/];[/if]
 	bool validationResult = true;
 	[class.genInvariantsIfPresent()/]
 	return validationResult;
 }
+[/template]
+
+[**
+ * Gets the name of the private field of the property.
+*/]
+[template public propertyFieldName(prop : Property)]
+[prop.name.toLowerFirst()/]
+[/template]
+
+[**
+ * Gets the name of the private _isSet field for the property.
+*/]
+[template public propertyIsSetFieldName(prop : Property)]
+[prop.name.toLowerFirst()/]_isSet
+[/template]
+
+[**
+ * Gets the name of the parameter of the setter for the property.
+*/]
+[template public propertySetterParamName(prop : Property)]
+[prop.name.toLowerFirst()/]
 [/template]

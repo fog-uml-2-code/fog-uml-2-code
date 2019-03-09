@@ -9,6 +9,7 @@
 [import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
 [import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils /]
 [import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::generic::restUtils/]
 
 [**
  * Generates a base interface file for the specified REST interface using
@@ -29,7 +30,7 @@ public interface [restInterface.restBaseInterfaceJavaName()/] {
 
 	[for (op : Operation | restInterface.getAllOperations())]
 	[op.genDocumentation() /]
-	[if (op.inputParameters()->size() = 0)]@Get[else]@Post[/if][op.genConstraintsIfPresent()/]
+	[if (op.inputParameters()->size() = 0)]@Get[else]@Post[/if]("/[op.restOperationUrl()/]")[op.genConstraintsIfPresent()/]
 	[op.genSignature() /];
 	
 	[/for]

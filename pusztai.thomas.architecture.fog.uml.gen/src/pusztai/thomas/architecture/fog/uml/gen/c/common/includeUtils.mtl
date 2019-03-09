@@ -42,6 +42,7 @@
 [restInterface.genDefaultIncludes(includePrivate) /]
 [/if]
 #include <[restInterface.restBaseInterfaceHeaderFilePath()/]>
+#include <[httpServerHFileName()/]>
 [/template]
 
 [**

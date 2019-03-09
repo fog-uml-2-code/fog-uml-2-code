@@ -6,6 +6,8 @@
 [import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::commonModulePomXmlFile /]
 [import pusztai::thomas::architecture::fog::uml::gen::c::files::commonmodule::modelClassCFile/]
 [import pusztai::thomas::architecture::fog::uml::gen::c::files::commonmodule::modelClassHFiles/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::commonmodule::httpServerCFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::commonmodule::httpServerHFile/]
 [import pusztai::thomas::architecture::fog::uml::gen::c::files::commonmodule::restBaseInterfaceHFile/]
 [import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::modelClassJavaFile /]
 [import pusztai::thomas::architecture::fog::uml::gen::java::files::commonmodule::restBaseInterfaceJavaFile /]
@@ -24,6 +26,8 @@
 
 [template private genCommonModuleC(fogModel : Model)]
 [fogModel.genCommonModuleCMakeLists()/]
+[fogModel.genHttpServerHFile()/]
+[fogModel.genHttpServerCFile()/]
 [for (modelClass : Class | fogModel.getAllModelClasses())]
 	[modelClass.genModelClassHFiles()/]
 	[modelClass.genModelClassCFile()/]

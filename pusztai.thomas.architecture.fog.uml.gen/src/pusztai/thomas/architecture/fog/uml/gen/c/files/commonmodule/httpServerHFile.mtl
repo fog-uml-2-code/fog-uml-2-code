@@ -1,0 +1,76 @@
+[comment encoding = UTF-8 /]
+[module httpServerHFile('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::headerUtils/]
+
+[**
+ * Generates the HttpServer.h file.
+*/]
+[template public genHttpServerHFile(aModel : Model) {
+	commonModuleSrcPath : String = commonModulePath() + '/' + cSrcPath() + '/';
+}]
+[file (commonModuleSrcPath + httpServerHFileName(), false, 'UTF-8')]
+['HttpServer'.includeGuardStart()/]
+
+#include <fogPlatform.h>
+#include <ulfius.h>
+
+/** An HttpServer handle */
+typedef struct HttpServer *HttpServer;
+
+typedef struct _u_request *HttpRequest;
+typedef struct _u_response *HttpResponse;
+
+/** Handler function type for an HTTP request. */
+typedef int(*HttpRequestHandler)(const HttpRequest request, HttpResponse response, void *userData);
+
+#define GET "GET"
+#define POST "POST"
+
+/**
+ * Creates a new HttpServer on the specified port.
+ */
+HttpServer newHttpServer(int_t port);
+
+/**
+ * Deletes the specified HttpServer.
+ */
+void deleteHttpServer(HttpServer server);
+
+/**
+ * Adds an endpoint to the specified HttpServer
+ * server: The HttpServer on which to add the endpoint.
+ * httpMethod: The HTTP method (GET, POST, etc.)
+ * url: The URL on which to register the endpoint. Variables can be defined with ':'
+ *      e.g., "/resource/:var"
+ * handler: A pointer to an HttpRequestHandler function.
+ * userData: An arbitrary pointer that will also be passed to the HttpRequestHandler function.
+ */
+bool HttpServer_addEndpoint(HttpServer server, const char *httpMethod, const char *url, HttpRequestHandler handler, void *userData);
+
+/**
+ * Starts the specified HttpServer.
+ */
+bool HttpServer_start(HttpServer server);
+
+/**
+ * Stops the specified HttpServer.
+ */
+void HttpServer_stop(HttpServer server);
+
+/**
+ * Gets whether the HttpServer is currently started.
+ */
+bool HttpServer_isStarted(HttpServer server);
+
+/**
+ * Gets the Ulfius instance of the specified HttpServer.
+ */
+struct _u_instance *HttpServer_getUlfiusInstance(HttpServer server);
+
+['HttpServer'.includeGuardEnd()/]
+
+[/file]
+[/template]
+

@@ -18,7 +18,7 @@
 [restInterface.genDefaultIncludesForRestHandler(controller)/]
 
 int main(int argc, char *argv['[]'/]) {
-	printf("REST Controller [endpointClassifier.name/] starting");
+	printf("REST Controller [endpointClassifier.name/] starting\n");
 	[endpointClassifier.getRestHandlerSetUpFunctionName(classifierName)/]();
 
 	// ToDo Run REST interface until program is stopped.

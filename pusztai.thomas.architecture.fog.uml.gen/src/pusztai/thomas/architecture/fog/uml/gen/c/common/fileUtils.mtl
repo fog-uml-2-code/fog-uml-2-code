@@ -177,3 +177,17 @@ fogPlatform.h
 platform-include
 [/template]
 
+[**
+ * Gets the name of the HttpServer header file (HttpServer.h).
+ */]
+[template public httpServerHFileName(traceabilityContext: OclAny)]
+HttpServer.h
+[/template]
+
+[**
+ * Gets the name of the HttpServer .c file (HttpServer.h).
+ */]
+[template public httpServerCFileName(traceabilityContext: OclAny)]
+HttpServer.c
+[/template]
+

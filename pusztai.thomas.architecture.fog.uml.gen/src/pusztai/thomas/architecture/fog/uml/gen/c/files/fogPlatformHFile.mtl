@@ -73,7 +73,7 @@ typedef int_least64_t int64;
 
 typedef [classifierOrActivity.getIntType()/] int_t;
 
-typedef wchar_t char_t;
+typedef char char_t;
 typedef char_t* string_t;
 
 typedef [classifierOrActivity.getRealTypeSetting().getRealType()/] real_t;

@@ -8,6 +8,7 @@
 [import pusztai::thomas::architecture::fog::uml::gen::java::common::attributeUtils /]
 [import pusztai::thomas::architecture::fog::uml::gen::java::common::operationUtils /]
 [import pusztai::thomas::architecture::fog::uml::gen::java::common::packageUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::generic::restUtils/]
 
 [**
  * Generates a controller class file for the specified REST interface using
@@ -26,7 +27,7 @@ package [endpointClassifier.genPackageValue()/];
  * 
  * @generated
  */
-@Controller("/[restInterface.name.toLowerCase()/]")
+@Controller("[restInterface.restEndpointBaseUrl()/]")
 public class [endpointClassifier.restControllerJavaName(restInterface)/] implements [restInterface.restBaseInterfaceJavaName()/] {
 
 	[if (not controller.oclIsUndefined())]

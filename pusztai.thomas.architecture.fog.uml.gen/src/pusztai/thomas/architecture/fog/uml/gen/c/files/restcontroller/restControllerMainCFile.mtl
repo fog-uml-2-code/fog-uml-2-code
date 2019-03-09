@@ -19,11 +19,30 @@
 
 int main(int argc, char *argv['[]'/]) {
 	printf("REST Controller [endpointClassifier.name/] starting\n");
-	[endpointClassifier.getRestHandlerSetUpFunctionName(classifierName)/]();
+	HttpServer server = newHttpServer(LISTEN_PORT);
+	if (!server) {
+		fprintf(stderr, "Error creating HTTP server\n");
+		return 1;
+	}
 
-	// ToDo Run REST interface until program is stopped.
+	// Add the endpoints
+	[endpointClassifier.getRestHandlerSetUpFunctionName(classifierName)/](server);
 
+	// Start the server
+	if (HttpServer_start(server)) {
+		printf("REST Controller [endpointClassifier.name/] started on port %d\n", HttpServer_getUlfiusInstance(server)->port);
+
+		// Wait for the user to press Enter to exit the program
+		getchar();
+	} else {
+		fprintf(stderr, "Error starting server\n");
+	}
+
+	printf("Stopping server\n");
 	[endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]();
+	HttpServer_stop(server);
+	deleteHttpServer(server);
+
 	return 0;
 }
 

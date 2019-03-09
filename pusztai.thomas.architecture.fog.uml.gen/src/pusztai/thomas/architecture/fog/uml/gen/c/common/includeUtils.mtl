@@ -42,7 +42,6 @@
 [restInterface.genDefaultIncludes(includePrivate) /]
 [/if]
 #include <[restInterface.restBaseInterfaceHeaderFilePath()/]>
-#include <[httpServerHFileName()/]>
 [/template]
 
 [**
@@ -52,6 +51,7 @@
 	endpointClassifier : Classifier = getDefiningClassifier(restInterface, controller);
 }]
 [restInterface.genDefaultIncludesForRestController(controller, false)/]
+#include <[httpServerHFileName()/]>
 #include "[endpointClassifier.restHandlerHFilePath()/]"
 [/template]
 

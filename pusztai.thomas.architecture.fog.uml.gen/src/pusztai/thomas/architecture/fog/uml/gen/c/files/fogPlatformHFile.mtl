@@ -45,6 +45,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/** Defines the port on which the REST server (if any) should listen. */
+#define LISTEN_PORT [classifierOrActivity.getListenPortSetting()/]
+
 /**
  * These integer types have at least the specified number of bits.
  */
@@ -60,7 +63,7 @@ typedef int_least64_t int64;
  * - wchar_t
  * - float_t
  * - double_t
-*/
+ */
 
 /**
  * The following types are the most commonly used ones and are defined according 
@@ -99,4 +102,10 @@ int[if isClassifier][classifierOrActivity.oclAsType(Classifier).getSettingDefaul
 
 [template private getRealType(smallReal : String)]
 [if smallReal = '1']float_t[else]double_t[/if]
+[/template]
+
+[template private getListenPortSetting(classifierOrActivity : OclAny) {
+	isClassifier : Boolean = classifierOrActivity.oclIsKindOf(Classifier);
+}]
+[if isClassifier][classifierOrActivity.oclAsType(Classifier).getSettingListenPort()/][else][classifierOrActivity.oclAsType(Activity).getSettingListenPort()/][/if]
 [/template]

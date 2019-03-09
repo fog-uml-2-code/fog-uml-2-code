@@ -55,6 +55,22 @@
 [activity.name.getCodeGenProperty('small_real')/]
 [/template]
 
+[**
+ * The setting that defines on which port the HTTP server should listen.
+ * @param classifier The classifier that determines the module.
+ */]
+[template public getSettingListenPort(classifier : Classifier)]
+[classifier.name.getCodeGenProperty('listen_port')/]
+[/template]
+
+[**
+ * The setting that defines on which port the HTTP server should listen.
+ * @param activity The activity that determines the module.
+ */]
+[template public getSettingListenPort(activity : Activity)]
+[activity.name.getCodeGenProperty('listen_port')/]
+[/template]
+
 
 [template private getCodeGenProperty(deviceName : String, property : String) {
 	fullPropertyName : String = 'codegen.' + deviceName.toLowerCase() + '.' + property;

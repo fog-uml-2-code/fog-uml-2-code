@@ -51,8 +51,7 @@ void [endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]() 
 	bool validationResult = true;
 	[op.genPreConditionIfPresent()/]
 	if (!validationResult) {
-		// ToDo: Return REST error.
-		return U_OK;
+		return U_CALLBACK_ERROR;
 	}
 [if (not op.type.oclIsUndefined())]
 	[op.getReturnTypeName()/] result;
@@ -67,14 +66,12 @@ void [endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]() 
 	[endpointClassifier.genInvariantsIfPresent()/]
 	if (validationResult) {
 		// ToDo: Send REST response.
-	} else {
-		// ToDo: Send REST error response.
 	}
 [if (not op.type.oclIsUndefined() and not op.type.oclIsKindOf(PrimitiveType))]
 	[op.type.oclAsType(Classifier).getDtorName(op.getReturnTypeName())/](result);
 [/if]
 
-	return U_OK;
+	return validationResult ? U_CALLBACK_COMPLETE : U_CALLBACK_ERROR;
 }
 
 [/for]

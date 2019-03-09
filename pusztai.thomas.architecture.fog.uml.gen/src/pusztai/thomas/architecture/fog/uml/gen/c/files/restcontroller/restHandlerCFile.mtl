@@ -10,6 +10,8 @@
 [import pusztai::thomas::architecture::fog::uml::gen::c::common::constraintUtils/]
 [import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
 [import pusztai::thomas::architecture::fog::uml::gen::services::cTypeServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::generic::restUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::files::restcontroller::restHandlerHFile/]
 
 [**
  * Generates the .c file for a REST controller.
@@ -24,9 +26,13 @@
 
 [classifierName/] restController;
 
-bool [endpointClassifier.getRestHandlerSetUpFunctionName(classifierName)/]() {
+bool [endpointClassifier.getRestHandlerSetUpFunctionName(classifierName)/](HttpServer server) {
 	restController = [endpointClassifier.getCtorName(classifierName)/]();
-	[genToDoImplBlock()/]
+
+	// Register all endpoints
+	[for (op : Operation | restInterface.getAllOperations())]
+	HttpServer_addEndpoint(server, [op.getHttpMethod()/], "[op.restEndpointCompleteUrl(restInterface)/]", &[op.restHandlerFnName(endpointClassifier)/], restController);
+	[/for]
 	return true;
 }
 
@@ -36,8 +42,8 @@ void [endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]() 
 }
 
 [for (op : Operation | restInterface.getAllOperations())]
-void [op.getGeneratedName(classifierName)/]Handler(/* ToDo Insert parameters for callback from ulfius library */) {
-	[classifierName/] target = restController;
+[op.genRestHandlerFnSignature(endpointClassifier)/] {
+	[classifierName/] target = ([classifierName/]) userData;
 [for (param : Parameter | op.ownedParameter->asSequence()->select(param : Parameter | param.direction <> ParameterDirectionKind::return))]
 	[param.genParameterExtration()/]
 [/for]
@@ -46,7 +52,7 @@ void [op.getGeneratedName(classifierName)/]Handler(/* ToDo Insert parameters for
 	[op.genPreConditionIfPresent()/]
 	if (!validationResult) {
 		// ToDo: Return REST error.
-		return;
+		return U_OK;
 	}
 [if (not op.type.oclIsUndefined())]
 	[op.getReturnTypeName()/] result;
@@ -67,6 +73,8 @@ void [op.getGeneratedName(classifierName)/]Handler(/* ToDo Insert parameters for
 [if (not op.type.oclIsUndefined() and not op.type.oclIsKindOf(PrimitiveType))]
 	[op.type.oclAsType(Classifier).getDtorName(op.getReturnTypeName())/](result);
 [/if]
+
+	return U_OK;
 }
 
 [/for]
@@ -89,4 +97,10 @@ void [op.getGeneratedName(classifierName)/]Handler(/* ToDo Insert parameters for
 
 [template private genResultParameter(op : Operation)]
 [if (op.type.oclIsKindOf(PrimitiveType))]&[/if]result
+[/template]
+
+[template private getHttpMethod(op : Operation) {
+	params : Sequence(Parameter) = op.ownedParameter->asSequence()->select(param : Parameter | param.direction <> ParameterDirectionKind::return);
+}]
+[if (params->size() = 0)]GET[else]POST[/if]
 [/template]

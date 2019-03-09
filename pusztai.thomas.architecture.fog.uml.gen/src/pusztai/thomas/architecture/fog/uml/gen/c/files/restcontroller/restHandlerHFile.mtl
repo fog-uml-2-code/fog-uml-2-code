@@ -24,15 +24,25 @@
 
 [restInterface.genDefaultIncludesForRestHandler(controller)/]
 
-bool [endpointClassifier.getRestHandlerSetUpFunctionName(classifierName)/]();
+bool [endpointClassifier.getRestHandlerSetUpFunctionName(classifierName)/](HttpServer server);
 
 void [endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]();
 
 [for (op : Operation | restInterface.getAllOperations())]
-void [op.getGeneratedName(classifierName)/]Handler(/* ToDo Insert parameters for callback from ulfius library */);
+[op.genRestHandlerFnSignature(endpointClassifier)/];
 
 [/for]
 [includeGuardName.includeGuardEnd()/]
 
 [/file]
+[/template]
+
+[template public restHandlerFnName(op : Operation, endpointClassifier : Classifier) {
+	classifierName : String = endpointClassifier.restControllerCName();
+}]
+[op.getGeneratedName(classifierName)/]Handler
+[/template]
+
+[template public genRestHandlerFnSignature(op : Operation, endpointClassifier : Classifier)]
+int [op.restHandlerFnName(endpointClassifier)/](const HttpRequest request, HttpResponse response, void *userData)
 [/template]

@@ -5,5 +5,19 @@
  * Gets the REST interface's base URL, e.g. '/myinterface'
  */]
 [template public restEndpointBaseUrl(restInterface : Interface)]
-[restInterface.name.toLowerCase()/]
+/[restInterface.name.toLowerCase()/]
+[/template]
+
+[**
+ * Gets the REST operation's URL, e.g. 'myoperation'
+ */]
+[template public restOperationUrl(operation : Operation)]
+[operation.name.toLowerCase()/]
+[/template]
+
+[**
+ * Gets the REST endpoint operation's complete URL, e.g. '/myinterface/myoperation'
+ */]
+[template public restEndpointCompleteUrl(operation : Operation, restInterface : Interface)]
+[restInterface.restEndpointBaseUrl()/]/[operation.restOperationUrl()/]
 [/template]

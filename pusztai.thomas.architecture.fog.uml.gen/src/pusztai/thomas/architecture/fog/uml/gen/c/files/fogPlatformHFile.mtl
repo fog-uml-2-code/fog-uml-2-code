@@ -44,6 +44,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 /** Defines the port on which the REST server (if any) should listen. */
 #define LISTEN_PORT [classifierOrActivity.getListenPortSetting()/]

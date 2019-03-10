@@ -41,6 +41,20 @@ json_object_set_new([jsonObjName/], "[varName/]", [varName.serializeToJson(varTy
 [/template]
 
 [**
+ * Deserializes the property propName of jsonObjName and writes it to target->propName.
+*/]
+[template public readFromJsonObject(propName : String, propType : Type, jsonObjName : String, isArray : Boolean) {
+	jsonProp : String = 'json_object_get(' + jsonObjName + ', "' + propName + '")';
+	temp : String = 'temp_' + propName;
+}]
+[if (not propType.oclIsKindOf(PrimitiveType))][propType.getQualifiedName()/] [temp/][else]target->[propName/][/if] = [jsonProp.deserializeFromJson(propType, isArray)/];
+[if (not propType.oclIsKindOf(PrimitiveType))]
+target->[propName/] = &[temp/];
+free([temp/]);
+[/if]
+[/template]
+
+[**
  * Gets the name of the JSON serialization function for the specified model class.
 */]
 [template public getJsonSerializationFunctionName(modelClass : Class, classTypedefName : String)]

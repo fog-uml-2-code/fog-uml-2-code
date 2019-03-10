@@ -147,6 +147,11 @@ json_t *[modelClass.getJsonSerializationFunctionName(classTypedefName)/]([classT
 */]
 [template public genJsonDeserializationFunctionDefinition(modelClass : Class, classTypedefName : String)]
 [classTypedefName/] [modelClass.getJsonDeserializationFunctionName(classTypedefName)/](json_t *json) {
+	[classTypedefName/] target = [modelClass.getCtorName(classTypedefName)/]();
+	[for (prop : Property | modelClass.getAllAttributesWithAssociations())]
+	[prop.propertyFieldName().readFromJsonObject(prop.type, 'json', prop.upperBound() > 1)/]
+	[/for]
+	return target;
 }
 [/template]
 

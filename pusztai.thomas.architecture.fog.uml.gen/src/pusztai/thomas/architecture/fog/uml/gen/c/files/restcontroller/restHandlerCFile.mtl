@@ -12,6 +12,7 @@
 [import pusztai::thomas::architecture::fog::uml::gen::services::cTypeServices /]
 [import pusztai::thomas::architecture::fog::uml::gen::generic::restUtils/]
 [import pusztai::thomas::architecture::fog::uml::gen::c::files::restcontroller::restHandlerHFile/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::jsonUtils/]
 
 [**
  * Generates the .c file for a REST controller.
@@ -65,7 +66,9 @@ void [endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]() 
 
 	[endpointClassifier.genInvariantsIfPresent()/]
 	if (validationResult) {
-		// ToDo: Send REST response.
+		[if (not op.type.oclIsUndefined())]['result'.serializeToJson(op.type, 'jsonBody', op.getReturnResult().getUpper() > 1)/][else]json_t *jsonBody = NULL;[/if]
+		HttpResponse_setJsonBody(response, 200, jsonBody);
+		[if (not op.type.oclIsUndefined())]json_decref(jsonBody);[/if]
 	}
 [if (not op.type.oclIsUndefined() and not op.type.oclIsKindOf(PrimitiveType))]
 	[op.type.oclAsType(Classifier).getDtorName(op.getReturnTypeName())/](result);

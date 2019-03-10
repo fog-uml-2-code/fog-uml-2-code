@@ -23,6 +23,7 @@
  */]
 [template public genDefaultIncludesForRestBaseInterface(restInterface : Interface, includePrivate : Boolean)]
 [restInterface.genDefaultIncludes(includePrivate) /]
+#include <jansson.h>
 [/template]
 
 [**

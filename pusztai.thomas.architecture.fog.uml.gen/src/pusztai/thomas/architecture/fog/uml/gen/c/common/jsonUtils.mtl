@@ -1,0 +1,52 @@
+[comment encoding = UTF-8 /]
+[module jsonUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::classifierUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::operationUtils/]
+[import pusztai::thomas::architecture::fog::uml::gen::services::cTypeServices/]
+
+[**
+ * Serializes the C variable with the name srcVar of type varType into the newly created json_t* variable destVar.
+ */]
+[template public serializeToJson(srcVar : String, varType : Type, destVar : String, isArray : Boolean)]
+json_t *[destVar/] = [if (varType.oclIsKindOf(PrimitiveType))][srcVar.serializePrimitiveVar(varType)/][else][srcVar.serializeObject(varType)/][/if];
+[/template]
+
+[**
+ * Serializes the json_t* variable with the name jsonVar into the newly created C variable destVar of type destType.
+ */]
+[template public deserializeFromJson(jsonVar : String, destType : Type, destVar : String, isArray : Boolean)]
+[destType.getQualifiedName()/] [destVar/] = [if (destType.oclIsKindOf(PrimitiveType))][jsonVar.deserializePrimitiveVar(destType)/][else][jsonVar.serializeObject(destType)/][/if];
+[/template]
+
+
+[template private serializePrimitiveVar(srcVar : String, varType : Type) {
+	isString : Boolean = varType.oclIsKindOf(String);
+	isInteger : Boolean = varType.oclIsKindOf(Integer);
+	isReal : Boolean = varType.oclIsKindOf(Real);
+	isBoolean : Boolean = varType.oclIsKindOf(Boolean);
+}]
+[if (isString)]json_string[/if][if (isInteger)]json_integer[/if][if (isReal)]json_real[/if][if (isBoolean)]json_boolean[/if]([srcVar/])
+[/template]
+
+[template private serializeObject(srcVar : String, varType : Type) {
+	modelClass : Class = varType.oclAsType(Class);
+}]
+[modelClass.getJsonSerializationFunctionName(modelClass.modelClassCName())/]([srcVar/])
+[/template]
+
+
+[template private deserializePrimitiveVar(jsonVar : String, destVarType : Type) {
+	isString : Boolean = destVarType.oclIsKindOf(String);
+	isInteger : Boolean = destVarType.oclIsKindOf(Integer);
+	isReal : Boolean = destVarType.oclIsKindOf(Real);
+	isBoolean : Boolean = destVarType.oclIsKindOf(Boolean);
+}]
+[if (isString)]json_string_value[/if][if (isInteger)]json_integer_value[/if][if (isReal)]json_real_value[/if][if (isBoolean)]json_boolean_value[/if]([jsonVar/])
+[/template]
+
+[template private deserializeObject(jsonVar : String, destVarType : Type) {
+	modelClass : Class = destVarType.oclAsType(Class);
+}]
+[modelClass.getJsonDeserializationFunctionName(modelClass.modelClassCName())/]([jsonVar/])
+[/template]

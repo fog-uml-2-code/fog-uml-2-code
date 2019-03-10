@@ -35,6 +35,10 @@ typedef struct [className/]* [className/];
 
 [modelClass.genDestructorDeclaration(className)/]
 
+[modelClass.genJsonDeserializationFunctionDeclaration(className)/]
+
+[modelClass.genJsonSerializationFunctionDeclaration(className)/]
+
 [modelClass.genAllPropertyAccessorDeclarations(className)/]
 [modelClass.genAllOwnedOperationDeclarations(className)/]
 

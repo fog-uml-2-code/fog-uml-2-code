@@ -113,6 +113,51 @@ delete[classifierTypedefName/]
 [/template]
 
 [**
+ * Generates the declaration of the JSON serialization function for the specified model class.
+*/]
+[template public genJsonSerializationFunctionDeclaration(modelClass : Class, classTypedefName : String)]
+json_t *[modelClass.getJsonSerializationFunctionName(classTypedefName)/]([classTypedefName/] target);
+[/template]
+
+[**
+ * Generates the definition of the JSON serialization function for the specified model class.
+*/]
+[template public genJsonSerializationFunctionDefinition(modelClass : Class, classTypedefName : String)]
+json_t *[modelClass.getJsonSerializationFunctionName(classTypedefName)/]([classTypedefName/] target) {
+	
+}
+[/template]
+
+[**
+ * Gets the name of the JSON serialization function for the specified model class.
+*/]
+[template public getJsonSerializationFunctionName(modelClass : Class, classTypedefName : String)]
+[classTypedefName/]_serializeToJson
+[/template]
+
+[**
+ * Generates the declaration of the JSON deserialization function for the specified model class.
+*/]
+[template public genJsonDeserializationFunctionDeclaration(modelClass : Class, classTypedefName : String)]
+[classTypedefName/] [modelClass.getJsonDeserializationFunctionName(classTypedefName)/](json_t *json);
+[/template]
+
+[**
+ * Generates the definition of the JSON deserialization function for the specified model class.
+*/]
+[template public genJsonDeserializationFunctionDefinition(modelClass : Class, classTypedefName : String)]
+[classTypedefName/] [modelClass.getJsonDeserializationFunctionName(classTypedefName)/](json_t *json) {
+}
+[/template]
+
+[**
+ * Gets the name of the JSON deserialization function for the specified model class.
+*/]
+[template public getJsonDeserializationFunctionName(modelClass : Class, classTypedefName : String)]
+[classTypedefName/]_deserializeFromJson
+[/template]
+
+[**
  * Generates the default ToDo block.
  */]
 [template public genToDoImplBlock(traceabilityContext : OclAny)]

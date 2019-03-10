@@ -23,6 +23,10 @@
 
 [modelClass.genDestructorDefinition(className)/]
 
+[modelClass.genJsonDeserializationFunctionDefinition(className)/]
+
+[modelClass.genJsonSerializationFunctionDefinition(className)/]
+
 [modelClass.genAllPropertyAccessorDefinitions(className)/]
 
 [modelClass.genAllOwnedOperationDefinitions(className)/]

@@ -2,21 +2,56 @@
 [module jsonUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
 
 [import pusztai::thomas::architecture::fog::uml::gen::c::common::classifierUtils/]
-[import pusztai::thomas::architecture::fog::uml::gen::c::common::operationUtils/]
 [import pusztai::thomas::architecture::fog::uml::gen::services::cTypeServices/]
 
 [**
  * Serializes the C variable with the name srcVar of type varType into the newly created json_t* variable destVar.
  */]
 [template public serializeToJson(srcVar : String, varType : Type, destVar : String, isArray : Boolean)]
-json_t *[destVar/] = [if (varType.oclIsKindOf(PrimitiveType))][srcVar.serializePrimitiveVar(varType)/][else][srcVar.serializeObject(varType)/][/if];
+json_t *[destVar/] = [srcVar.serializeToJson(varType, isArray)/];
 [/template]
 
 [**
- * Serializes the json_t* variable with the name jsonVar into the newly created C variable destVar of type destType.
+ * Serializes the C variable with the name srcVar of type varType without declaring a destination variable and without a terminating semicolon.
+ */]
+[template public serializeToJson(srcVar : String, varType : Type, isArray : Boolean)]
+[if (varType.oclIsKindOf(PrimitiveType))][srcVar.serializePrimitiveVar(varType)/][else][srcVar.serializeObject(varType)/][/if]
+[/template]
+
+[**
+ * Deserializes the json_t* variable with the name jsonVar into the newly created C variable destVar of type destType.
  */]
 [template public deserializeFromJson(jsonVar : String, destType : Type, destVar : String, isArray : Boolean)]
-[destType.getQualifiedName()/] [destVar/] = [if (destType.oclIsKindOf(PrimitiveType))][jsonVar.deserializePrimitiveVar(destType)/][else][jsonVar.serializeObject(destType)/][/if];
+[destType.getQualifiedName()/] [destVar/] = [jsonVar.deserializeFromJson(destType, isArray)/];
+[/template]
+
+[**
+ * Deserializes the json_t* variable with the name jsonVar and returns a C variable of type destType, 
+ * but does not declare a C variable and does not terminate with a semicolon.
+ */]
+[template public deserializeFromJson(jsonVar : String, destType : Type, isArray : Boolean)]
+[if (destType.oclIsKindOf(PrimitiveType))][jsonVar.deserializePrimitiveVar(destType)/][else][jsonVar.serializeObject(destType)/][/if]
+[/template]
+
+[**
+ * Serializes the C variable varName of type varType into the property varName of the json_t object jsonObjName.
+*/]
+[template public addToJsonObject(varName : String, varType : Type, jsonObjName : String, isArray : Boolean)]
+json_object_set_new([jsonObjName/], "[varName/]", [varName.serializeToJson(varType, isArray)/]);
+[/template]
+
+[**
+ * Gets the name of the JSON serialization function for the specified model class.
+*/]
+[template public getJsonSerializationFunctionName(modelClass : Class, classTypedefName : String)]
+[classTypedefName/]_serializeToJson
+[/template]
+
+[**
+ * Gets the name of the JSON deserialization function for the specified model class.
+*/]
+[template public getJsonDeserializationFunctionName(modelClass : Class, classTypedefName : String)]
+[classTypedefName/]_deserializeFromJson
 [/template]
 
 

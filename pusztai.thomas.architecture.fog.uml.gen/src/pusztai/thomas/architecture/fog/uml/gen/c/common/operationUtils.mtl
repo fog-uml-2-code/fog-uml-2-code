@@ -1,7 +1,10 @@
 [comment encoding = UTF-8 /]
 [module operationUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
 
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::attributeUtils/]
 [import pusztai::thomas::architecture::fog::uml::gen::services::cTypeServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices/]
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::jsonUtils/]
 
 [**
  * Generates the declaration of the constructor function for the specified classifier.
@@ -124,15 +127,12 @@ json_t *[modelClass.getJsonSerializationFunctionName(classTypedefName)/]([classT
 */]
 [template public genJsonSerializationFunctionDefinition(modelClass : Class, classTypedefName : String)]
 json_t *[modelClass.getJsonSerializationFunctionName(classTypedefName)/]([classTypedefName/] target) {
-	
+	json_t *json = json_object();
+	[for (prop : Property | modelClass.getAllAttributesWithAssociations())]
+	[prop.propertyFieldName().addToJsonObject(prop.type, 'json', prop.upperBound() > 1)/]
+	[/for]
+	return json;
 }
-[/template]
-
-[**
- * Gets the name of the JSON serialization function for the specified model class.
-*/]
-[template public getJsonSerializationFunctionName(modelClass : Class, classTypedefName : String)]
-[classTypedefName/]_serializeToJson
 [/template]
 
 [**
@@ -148,13 +148,6 @@ json_t *[modelClass.getJsonSerializationFunctionName(classTypedefName)/]([classT
 [template public genJsonDeserializationFunctionDefinition(modelClass : Class, classTypedefName : String)]
 [classTypedefName/] [modelClass.getJsonDeserializationFunctionName(classTypedefName)/](json_t *json) {
 }
-[/template]
-
-[**
- * Gets the name of the JSON deserialization function for the specified model class.
-*/]
-[template public getJsonDeserializationFunctionName(modelClass : Class, classTypedefName : String)]
-[classTypedefName/]_deserializeFromJson
 [/template]
 
 [**

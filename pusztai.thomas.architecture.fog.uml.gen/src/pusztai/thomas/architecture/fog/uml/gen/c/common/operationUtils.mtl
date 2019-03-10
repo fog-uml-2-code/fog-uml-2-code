@@ -75,7 +75,7 @@
  */]
 [template public genRestOpDefinition(op : Operation, classifierTypedefName : String)]
 [op.genRestOpSignature(classifierTypedefName)/] {
-	[genToDoImplBlock()/]
+	// ToDo: Set the value(s) of *result (if data type is a struct, copy all values) and then return true on success or false on failure.
 	return true;
 }
 [/template]

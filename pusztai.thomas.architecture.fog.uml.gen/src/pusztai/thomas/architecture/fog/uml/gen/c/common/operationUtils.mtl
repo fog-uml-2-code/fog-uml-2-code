@@ -127,9 +127,12 @@ json_t *[modelClass.getJsonSerializationFunctionName(classTypedefName)/]([classT
 */]
 [template public genJsonSerializationFunctionDefinition(modelClass : Class, classTypedefName : String)]
 json_t *[modelClass.getJsonSerializationFunctionName(classTypedefName)/]([classTypedefName/] target) {
+	if (!target) {
+		return json_null();
+	}
 	json_t *json = json_object();
 	[for (prop : Property | modelClass.getAllAttributesWithAssociations())]
-	[prop.propertyFieldName().addToJsonObject(prop.type, 'json', prop.upperBound() > 1)/]
+	[prop.addToJsonObject('json')/]
 	[/for]
 	return json;
 }

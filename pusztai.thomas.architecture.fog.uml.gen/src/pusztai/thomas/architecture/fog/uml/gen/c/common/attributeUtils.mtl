@@ -50,10 +50,18 @@ struct [/if][prop.getTypeName()/] [prop.propertyFieldName()/];
 
 
 [**
+ * Generates the name of the getter function for an attribute.
+ */]
+[template public getterFunctionName(prop : Property, classTypedefName : String)]
+[classTypedefName/]_get[prop.name.toUpperFirst()/]
+[/template]
+
+
+[**
  * Generates the signature of the getter for an attribute.
  */]
 [template private genGetterSignature(prop : Property, classTypedefName : String)]
-[prop.getTypeName()/] [classTypedefName/]_get[prop.name.toUpperFirst()/]([classTypedefName/] target)
+[prop.getTypeName()/] [prop.getterFunctionName(classTypedefName)/]([classTypedefName/] target)
 [/template]
 
 

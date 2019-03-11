@@ -47,11 +47,14 @@ json_object_set_new([jsonObjName/], "[varName/]", [if (varType.oclIsKindOf(Primi
 [/template]
 
 [**
- * Deserializes the property propName of jsonObjName and writes it to target->propName.
+ * Deserializes the specified property of jsonObjName and writes it to target->propName.
 */]
-[template public readFromJsonObject(propName : String, propType : Type, jsonObjName : String, isArray : Boolean) {
+[template public readFromJsonObject(prop : Property, jsonObjName : String) {
+	propName : String = prop.propertyFieldName();
+	propType : Type = prop.type;
 	jsonProp : String = 'json_object_get(' + jsonObjName + ', "' + propName + '")';
 	temp : String = 'temp_' + propName;
+	isArray : Boolean = prop.upperBound() > 1;
 }]
 [if (not propType.oclIsKindOf(PrimitiveType))][propType.getQualifiedName()/] [temp/][else]target->[propName/][/if] = [jsonProp.deserializeFromJson(propType, isArray)/];
 [if (not propType.oclIsKindOf(PrimitiveType))]

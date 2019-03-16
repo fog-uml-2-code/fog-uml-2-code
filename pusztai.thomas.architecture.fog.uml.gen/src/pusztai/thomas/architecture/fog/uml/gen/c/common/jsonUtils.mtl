@@ -1,6 +1,7 @@
 [comment encoding = UTF-8 /]
 [module jsonUtils('http://www.eclipse.org/uml2/5.0.0/UML')]
 
+[import pusztai::thomas::architecture::fog::uml::gen::c::common::attributeUtils/]
 [import pusztai::thomas::architecture::fog::uml::gen::c::common::classifierUtils/]
 [import pusztai::thomas::architecture::fog::uml::gen::services::cTypeServices/]
 
@@ -34,21 +35,26 @@ json_t *[destVar/] = [srcVar.serializeToJson(varType, isArray)/];
 [/template]
 
 [**
- * Serializes the C variable target->varName of type varType into the property varName of the json_t object jsonObjName.
+ * Serializes the specified property of the C variable 'target' into the property of the same name of the json_t object jsonObjName.
 */]
-[template public addToJsonObject(varName : String, varType : Type, jsonObjName : String, isArray : Boolean) {
+[template public addToJsonObject(prop : Property, propOwner : Class, jsonObjName : String) {
+	varName : String = prop.propertyFieldName();
 	targetVarPrimitive : String = 'target->' + varName;
-	targetVarObject : String = '&target->' + varName;
+	varType : Type = prop.type;
+	isArray : Boolean = prop.upperBound() > 1;
 }]
-json_object_set_new([jsonObjName/], "[varName/]", [if (varType.oclIsKindOf(PrimitiveType))][targetVarPrimitive.serializeToJson(varType, isArray)/][else][targetVarObject.serializeToJson(varType, isArray)/][/if]);
+json_object_set_new([jsonObjName/], "[varName/]", [if (varType.oclIsKindOf(PrimitiveType))][targetVarPrimitive.serializeToJson(varType, isArray)/][else][prop.getterFunctionCall(propOwner).serializeToJson(varType, isArray)/][/if]);
 [/template]
 
 [**
- * Deserializes the property propName of jsonObjName and writes it to target->propName.
+ * Deserializes the specified property of jsonObjName and writes it to target->propName.
 */]
-[template public readFromJsonObject(propName : String, propType : Type, jsonObjName : String, isArray : Boolean) {
+[template public readFromJsonObject(prop : Property, jsonObjName : String) {
+	propName : String = prop.propertyFieldName();
+	propType : Type = prop.type;
 	jsonProp : String = 'json_object_get(' + jsonObjName + ', "' + propName + '")';
 	temp : String = 'temp_' + propName;
+	isArray : Boolean = prop.upperBound() > 1;
 }]
 [if (not propType.oclIsKindOf(PrimitiveType))][propType.getQualifiedName()/] [temp/][else]target->[propName/][/if] = [jsonProp.deserializeFromJson(propType, isArray)/];
 [if (not propType.oclIsKindOf(PrimitiveType))]
@@ -105,3 +111,7 @@ if ([temp/]) {
 }]
 [modelClass.getJsonDeserializationFunctionName(modelClass.modelClassCName())/]([jsonVar/])
 [/template]
+
+[query private getterFunctionCall(prop : Property, propOwner : Class) : String
+	= prop.getterFunctionName(propOwner.modelClassCName()) + '(target)'
+/]

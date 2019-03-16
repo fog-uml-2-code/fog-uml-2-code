@@ -45,14 +45,15 @@ void [endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]() 
 [for (op : Operation | restInterface.getAllOperations())]
 [op.genRestHandlerFnSignature(endpointClassifier)/] {
 	[classifierName/] target = ([classifierName/]) userData;
-[for (param : Parameter | op.ownedParameter->asSequence()->select(param : Parameter | param.direction <> ParameterDirectionKind::return))]
-	[param.genParameterExtration()/]
-[/for]
+	[if (op.inputParameters()->size() > 0)]
+	json_t *reqBody = HttpRequest_getJsonBody(request);
+	[if (op.inputParameters()->size() > 1)][op.genMultipleParametersExtration('reqBody')/][else][op.inputParameters()->first().genSingleParameterExtraction('reqBody')/][/if]
+	json_decref(reqBody);[/if]
 
 	bool validationResult = true;
 	[op.genPreConditionIfPresent()/]
 	if (!validationResult) {
-		return U_CALLBACK_ERROR;
+		goto End;
 	}
 [if (not op.type.oclIsUndefined())]
 	[op.getReturnTypeName()/] result;
@@ -74,6 +75,8 @@ void [endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]() 
 	[op.type.oclAsType(Classifier).getDtorName(op.getReturnTypeName())/](result);
 [/if]
 
+End:
+	[op.genInputParametersDeletion()/]
 	return validationResult ? U_CALLBACK_COMPLETE : U_CALLBACK_ERROR;
 }
 
@@ -83,10 +86,41 @@ void [endpointClassifier.getRestHandlerShutdownFunctionName(classifierName)/]() 
 [/template]
 
 [**
- * Extracts the parameter from the REST request.
+ * Extracts multiple parameters from the REST request's JSON body.
 */]
-[template private genParameterExtration(param : Parameter)]
-[param.getTypeName()/] [param.name/]; // ToDo: Extract parameter
+[template private genMultipleParametersExtration(op : Operation, jsonReqVar : String)]
+[for (param : Parameter | op.inputParameters()) separator ('\n')][param.getTypeName()/] [param.name/][if (param.oclIsKindOf(Class))] = NULL[/if];[/for]
+[for (param : Parameter | op.inputParameters()) separator ('\n')][param.extractParameter(jsonReqVar)/][/for]
+[/template]
+
+[template private extractParameter(param : Parameter, jsonReqVar : String) {
+	paramName : String = param.name;
+	paramJson: String = paramName + '_json';
+}]
+json_t *[paramJson/] = json_object_get([jsonReqVar/], "[paramName/]");
+if ([paramJson/]) {
+	[paramName/] = [paramJson.deserializeFromJson(param.type, param.upperBound() > 1)/];
+	json_decref([paramJson/]);
+	[paramJson/] = NULL;
+}
+[/template]
+
+[**
+ * Extracts a single parameter from the REST request's JSON body
+*/]
+[template private genSingleParameterExtraction(param : Parameter, jsonReqVar : String)]
+[jsonReqVar.deserializeFromJson(param.type, param.name, param.upperBound() > 1)/]
+[/template]
+
+[**
+ * Generates delete statements for all complex parameters.
+*/]
+[template private genInputParametersDeletion(op : Operation) {
+	complexParams : OrderedSet(Parameter) = op.inputParameters()->select(param : Parameter | param.type.oclIsKindOf(Class));
+}]
+[for (param : Parameter | complexParams) separator ('\n')]if ([param.name/]) {
+	[param.type.oclAsType(Class).getDtorName(param.type.oclAsType(Class).modelClassCName())/]([param.name/]);
+}[/for]
 [/template]
 
 [template private genParameterList(op : Operation) {

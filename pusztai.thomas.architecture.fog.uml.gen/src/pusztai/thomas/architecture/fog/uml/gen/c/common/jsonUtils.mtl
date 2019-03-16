@@ -37,13 +37,13 @@ json_t *[destVar/] = [srcVar.serializeToJson(varType, isArray)/];
 [**
  * Serializes the specified property of the C variable 'target' into the property of the same name of the json_t object jsonObjName.
 */]
-[template public addToJsonObject(prop : Property, jsonObjName : String) {
+[template public addToJsonObject(prop : Property, propOwner : Class, jsonObjName : String) {
 	varName : String = prop.propertyFieldName();
 	targetVarPrimitive : String = 'target->' + varName;
 	varType : Type = prop.type;
 	isArray : Boolean = prop.upperBound() > 1;
 }]
-json_object_set_new([jsonObjName/], "[varName/]", [if (varType.oclIsKindOf(PrimitiveType))][targetVarPrimitive.serializeToJson(varType, isArray)/][else][prop.getterFunctionCall().serializeToJson(varType, isArray)/][/if]);
+json_object_set_new([jsonObjName/], "[varName/]", [if (varType.oclIsKindOf(PrimitiveType))][targetVarPrimitive.serializeToJson(varType, isArray)/][else][prop.getterFunctionCall(propOwner).serializeToJson(varType, isArray)/][/if]);
 [/template]
 
 [**
@@ -112,6 +112,6 @@ if ([temp/]) {
 [modelClass.getJsonDeserializationFunctionName(modelClass.modelClassCName())/]([jsonVar/])
 [/template]
 
-[query private getterFunctionCall(prop : Property) : String
-	= prop.getterFunctionName(prop.type.oclAsType(Class).modelClassCName()) + '(target)'
+[query private getterFunctionCall(prop : Property, propOwner : Class) : String
+	= prop.getterFunctionName(propOwner.modelClassCName()) + '(target)'
 /]

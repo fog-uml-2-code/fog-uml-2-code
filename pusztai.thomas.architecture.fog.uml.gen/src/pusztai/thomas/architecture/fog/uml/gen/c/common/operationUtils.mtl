@@ -132,7 +132,7 @@ json_t *[modelClass.getJsonSerializationFunctionName(classTypedefName)/]([classT
 	}
 	json_t *json = json_object();
 	[for (prop : Property | modelClass.getAllAttributesWithAssociations())]
-	[prop.addToJsonObject('json')/]
+	[prop.addToJsonObject(modelClass, 'json')/]
 	[/for]
 	return json;
 }

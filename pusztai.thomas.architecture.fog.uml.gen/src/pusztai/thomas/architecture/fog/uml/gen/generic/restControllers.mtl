@@ -11,6 +11,7 @@
 [import pusztai::thomas::architecture::fog::uml::gen::java::files::restcontroller::restControllerApplicationJavaFile /]
 [import pusztai::thomas::architecture::fog::uml::gen::java::files::restcontroller::restControllerJavaFile/]
 [import pusztai::thomas::architecture::fog::uml::gen::java::files::restcontroller::restControllerPomXmlFile /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::files::restcontroller::restControllerConfigFiles/]
 
 [**
  *  Generates the REST controllers.
@@ -63,6 +64,8 @@
 [if (endpointClassifier.getRealizedActivity().oclIsUndefined())]
 	[restInterface.genRestControllerPomXmlFile(controller, fogModel)/]
 	[restInterface.genRestControllerApplicationJavaFile(controller)/]
+	[restInterface.genRestControllerConfigYmlFile(controller)/]
+	[restInterface.genRestControllerLogbackXmlFile(controller)/]
 [/if]
 [restInterface.genRestControllerJavaFile(controller)/]
 [/template]

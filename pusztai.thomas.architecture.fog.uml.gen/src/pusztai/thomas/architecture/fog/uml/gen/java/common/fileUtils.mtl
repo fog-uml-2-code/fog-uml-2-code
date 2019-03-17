@@ -78,7 +78,7 @@ src/main/java
 [**
  * Gets the path for the resource files
  */]
-[template private resourcesSrcPath(traceabilityContext: OclAny)]
+[template public resourcesSrcPath(traceabilityContext: OclAny)]
 src/main/resources
 [/template]
 

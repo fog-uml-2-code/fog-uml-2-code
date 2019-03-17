@@ -17,6 +17,7 @@ public abstract class ConstraintServices {
 	private Pattern regexMethodArgs = Pattern.compile("(\\s|^)((?!self\\.|\\d|\\s|null\\b)[\\w\\(\\)\\\"\\.]+)", Pattern.MULTILINE);
 	private Pattern regexSelf = Pattern.compile("([^\\.]|)(self)(\\.)");
 	private Pattern regexPropertyAccessOperator = Pattern.compile("()(\\.)");
+	private Pattern regexCrLf = Pattern.compile("(.?)(\r\n)(.?)");
 	
 // Currently only int parameters are supported for method arguments. To change this, modifications would be needed:
 //
@@ -61,6 +62,11 @@ public abstract class ConstraintServices {
 		
 		constraint = executeStaticReplacement(constraint, regexSelf, getSelfReplacement());
 		constraint = executeStaticReplacement(constraint, regexPropertyAccessOperator, getPropertyAccessOperator());
+		
+		// If the UML model was created on Windows, the constraints have Windows line endings, so we convert them to Unix line endings.
+		// Otherwise we could have both types of line endings in one file.
+		constraint = executeStaticReplacement(constraint, regexCrLf, "\n");
+		
 		return constraint;
 	}
 	

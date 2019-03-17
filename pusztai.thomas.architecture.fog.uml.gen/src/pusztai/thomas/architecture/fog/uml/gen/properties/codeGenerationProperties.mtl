@@ -4,24 +4,6 @@
  */]
 [module codeGenerationProperties('http://www.eclipse.org/uml2/4.0.0/UML')]
 
-
-[**
- * The setting that tells the device to go into sleep mode for n milliseconds after each request (0 means no sleep).
- * @param classifier The classifier that determines the module.
- */]
-[template public getSettingSleepMsecAfterEachRequest(classifier : Classifier)]
-[classifier.name.getCodeGenProperty('sleep_after_each_request_for_msec')/]
-[/template]
-
-[**
- * The setting that tells the device to go into sleep mode for n milliseconds after each request (0 means no sleep).
- * @param activity The activity that determines the module.
- */]
-[template public getSettingSleepMsecAfterEachRequest(activity : Activity)]
-[activity.name.getCodeGenProperty('sleep_after_each_request_for_msec')/]
-[/template]
-
-
 [**
  * The setting that defines the number of bits of the default integer data type.
  * @param classifier The classifier that determines the module.

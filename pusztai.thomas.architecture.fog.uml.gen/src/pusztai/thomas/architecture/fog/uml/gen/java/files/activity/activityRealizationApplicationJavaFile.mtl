@@ -34,7 +34,7 @@ public class Application {
 	}
 
 	@EventListener
-    private void onStartup(StartupEvent event) {
+    void onStartup(StartupEvent event) {
         ActivityInfoDto activityInfo = ActivityInfoDto.loadFromResource("[activityResourcePath/]");
 		this.executionManager.loadActivity(activityInfo);
 		this.executionManager.startActivity();

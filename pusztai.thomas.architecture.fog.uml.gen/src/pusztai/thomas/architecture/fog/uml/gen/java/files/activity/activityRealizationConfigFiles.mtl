@@ -1,0 +1,47 @@
+[comment encoding = UTF-8 /]
+[module activityRealizationConfigFiles('http://www.eclipse.org/uml2/5.0.0/UML')]
+
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::fileUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::services::fogUmlServices /]
+[import pusztai::thomas::architecture::fog::uml::gen::java::common::mavenUtils /]
+[import pusztai::thomas::architecture::fog::uml::gen::properties::codeGenerationProperties/]
+
+[**
+ * Generates an application.yml file for the specified activity realization.
+ */]
+[template public genActivityRealizationConfigYmlFile(activity : Activity) {
+	realization : Package = activity.getActivityRealization();
+	activityResourcePath : String = activity.realizingModulePath() + '/' + resourcesSrcPath();
+}]
+[file (activityResourcePath + '/application.yml', false, 'UTF-8')]
+micronaut:
+  application:
+    name: [activity.mavenActivityModuleId()/]
+
+[/file]
+[/template]
+
+[**
+ * Generates a logback.xml file for the specified activity realization.
+ */]
+[template public genActivityRealizationLogbackXmlFile(activity : Activity) {
+	activityResourcePath : String = activity.realizingModulePath() + '/' + resourcesSrcPath();
+}]
+[file (activityResourcePath + '/logback.xml', false, 'UTF-8')]
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} ['['/]%thread[']'/] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
+
+[/file]
+[/template]

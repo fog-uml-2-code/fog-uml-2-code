@@ -36,6 +36,14 @@ common
 
 
 [**
+ * Gets the artifactId of the specified activity realization
+ */]
+[template public mavenActivityModuleId(activity : Activity)]
+[activity.name.toLowerCase()/]
+[/template]
+
+
+[**
  * Gets the Micronaut and JDK versions and the source encoding as XML
  */]
 [template public mavenCommonProperties(model : Model)]

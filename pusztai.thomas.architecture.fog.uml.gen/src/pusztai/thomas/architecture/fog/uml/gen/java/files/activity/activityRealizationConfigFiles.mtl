@@ -17,6 +17,9 @@
 micronaut:
   application:
     name: [activity.mavenActivityModuleId()/]
+  http:
+    services:
+      [activity.genRestClientSettings()/]
 
 [/file]
 [/template]
@@ -44,4 +47,13 @@ micronaut:
 </configuration>
 
 [/file]
+[/template]
+
+
+[template private genRestClientSettings(activity : Activity)]
+[for (restInterface : Interface | activity.getAllInvokedInterfaces())]
+[restInterface.name.toLowerCase()/]:
+  urls:
+    - http://localhost:[restInterface.getSettingListenPort()/]/[restInterface.name.toLowerCase()/]
+[/for]
 [/template]

@@ -23,7 +23,7 @@ package [restInterface.genPackageValue()/];
  * 
  * @generated
  */
-@Client("/[restInterface.name.toLowerCase()/]")
+@Client("[restInterface.name.toLowerCase()/]")
 public interface [restInterface.restClientInterfaceJavaName()/] extends [restInterface.restBaseInterfaceJavaName()/] {
 
 	[for (op : Operation | restInterface.getAllOperations())]

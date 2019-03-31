@@ -23,7 +23,7 @@ package [restInterface.genPackageValue()/];
  * 
  * @generated
  */
-@Client("[restInterface.name.toLowerCase()/]")
+@Client("${micronaut.http.services.[restInterface.name.toLowerCase()/].urls}")
 public interface [restInterface.restClientInterfaceJavaName()/] extends [restInterface.restBaseInterfaceJavaName()/] {
 
 	[for (op : Operation | restInterface.getAllOperations())]

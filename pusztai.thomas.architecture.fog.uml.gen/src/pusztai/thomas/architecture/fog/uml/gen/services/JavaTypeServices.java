@@ -43,13 +43,13 @@ public class JavaTypeServices extends TypeServicesBase {
 		String umlName = type.getName();
 		switch (umlName) {
 		case "Integer":
-			return "int";
+			return "Integer";
 		case "Real":
-			return "double";
+			return "Double";
 		case "String":
 			return "String";
 		case "Boolean":
-			return "boolean";
+			return "Boolean";
 		default:
 			throw new RuntimeException("Unknown PrimitiveType: " + umlName);
 		}
